@@ -1,0 +1,2064 @@
+#######
+Commits
+#######
+
+------------------------------------------------------------------------
+r11695 | nicolasmartin | 2019-10-14 15:00:35 +0200 (lun., 14 oct. 2019) | 2 lines
+
+Remove useless files for index styling
+
+------------------------------------------------------------------------
+r11694 | nicolasmartin | 2019-10-14 14:54:50 +0200 (lun., 14 oct. 2019) | 2 lines
+
+Fix to compilte TOP manual
+
+------------------------------------------------------------------------
+r11693 | nicolasmartin | 2019-10-14 14:53:52 +0200 (lun., 14 oct. 2019) | 2 lines
+
+Macros renaming
+
+------------------------------------------------------------------------
+r11690 | nicolasmartin | 2019-10-11 19:05:10 +0200 (ven., 11 oct. 2019) | 2 lines
+
+Update chapters according to previous commit
+
+------------------------------------------------------------------------
+r11688 | nicolasmartin | 2019-10-11 17:59:02 +0200 (ven., 11 oct. 2019) | 2 lines
+
+Load ''grffile'' package to avoid import issue with file extension
+
+------------------------------------------------------------------------
+r11687 | nicolasmartin | 2019-10-11 16:56:47 +0200 (ven., 11 oct. 2019) | 3 lines
+
+Temporary solution to solve LaTeX compilation issue with `\includegraphics` while waiting for TeXLive fix
+For reference, see https://github.com/MiKTeX/miktex-packaging/issues/131
+
+------------------------------------------------------------------------
+r11686 | agn | 2019-10-11 00:37:17 +0200 (ven., 11 oct. 2019) | 1 line
+
+FontAwesome fix for texlive on Mac
+------------------------------------------------------------------------
+r11685 | agn | 2019-10-11 00:16:22 +0200 (ven., 11 oct. 2019) | 1 line
+
+added OSMOSIS documentation to chap_ZDF.tex
+------------------------------------------------------------------------
+r11684 | agn | 2019-10-11 00:16:15 +0200 (ven., 11 oct. 2019) | 1 line
+
+chap_ZDF.tex now compiles
+------------------------------------------------------------------------
+r11683 | agn | 2019-10-11 00:16:09 +0200 (ven., 11 oct. 2019) | 1 line
+
+Monday morning
+------------------------------------------------------------------------
+r11682 | agn | 2019-10-11 00:16:02 +0200 (ven., 11 oct. 2019) | 1 line
+
+Sunday
+------------------------------------------------------------------------
+r11681 | agn | 2019-10-11 00:15:54 +0200 (ven., 11 oct. 2019) | 1 line
+
+Wednsday's changes
+------------------------------------------------------------------------
+r11680 | agn | 2019-10-11 00:15:47 +0200 (ven., 11 oct. 2019) | 1 line
+
+Thursday
+------------------------------------------------------------------------
+r11679 | agn | 2019-10-11 00:15:41 +0200 (ven., 11 oct. 2019) | 1 line
+
+Wednesday's additions
+------------------------------------------------------------------------
+r11678 | agn | 2019-10-11 00:15:35 +0200 (ven., 11 oct. 2019) | 1 line
+
+Tuesday's additions
+------------------------------------------------------------------------
+r11677 | agn | 2019-10-11 00:15:29 +0200 (ven., 11 oct. 2019) | 1 line
+
+added structure figure
+------------------------------------------------------------------------
+r11676 | agn | 2019-10-11 00:15:24 +0200 (ven., 11 oct. 2019) | 1 line
+
+Few more changes tp chap_ZDF.tex
+------------------------------------------------------------------------
+r11675 | agn | 2019-10-11 00:15:18 +0200 (ven., 11 oct. 2019) | 1 line
+
+started on flux-gradient relationship
+------------------------------------------------------------------------
+r11674 | agn | 2019-10-11 00:15:08 +0200 (ven., 11 oct. 2019) | 1 line
+
+start of OSMOSIS docs
+------------------------------------------------------------------------
+r11673 | nicolasmartin | 2019-10-10 17:24:32 +0200 (jeu., 10 oct. 2019) | 2 lines
+
+Fix missing LaTeX pkgs
+
+------------------------------------------------------------------------
+r11653 | davestorkey | 2019-10-04 14:34:02 +0200 (ven., 04 oct. 2019) | 2 lines
+
+Fix for bug in Smagorinsky scheme #2318.
+
+------------------------------------------------------------------------
+r11649 | clem | 2019-10-04 10:57:36 +0200 (ven., 04 oct. 2019) | 1 line
+
+change default parameters for landfast ice (Jef Lemieux pers. communication)
+------------------------------------------------------------------------
+r11640 | clem | 2019-10-02 14:06:19 +0200 (mer., 02 oct. 2019) | 1 line
+
+just correct a print
+------------------------------------------------------------------------
+r11632 | clem | 2019-10-01 20:57:51 +0200 (mar., 01 oct. 2019) | 1 line
+
+limit snow thickness after advection (with Prather) if snow load makes the ice-snow interface to deplet below sea surface (as for UM scheme)
+------------------------------------------------------------------------
+r11630 | nicolasmartin | 2019-10-01 19:37:49 +0200 (mar., 01 oct. 2019) | 2 lines
+
+Review of TRA chapter
+
+------------------------------------------------------------------------
+r11627 | clem | 2019-10-01 15:34:06 +0200 (mar., 01 oct. 2019) | 1 line
+
+change some wrong comments
+------------------------------------------------------------------------
+r11622 | nicolasmartin | 2019-10-01 13:10:55 +0200 (mar., 01 oct. 2019) | 2 lines
+
+Review of "Time Domain" and DOM chapters
+
+------------------------------------------------------------------------
+r11612 | clem | 2019-09-29 10:55:44 +0200 (dim., 29 sept. 2019) | 1 line
+
+make Prather the default advection scheme for ice simulations and drastically reduce the number of communications in Prather routine (by a factor of 10)
+------------------------------------------------------------------------
+r11608 | nicolasmartin | 2019-09-27 12:24:49 +0200 (ven., 27 sept. 2019) | 2 lines
+
+Review of "Model Basics" chapter
+
+------------------------------------------------------------------------
+r11601 | clem | 2019-09-26 16:54:45 +0200 (jeu., 26 sept. 2019) | 1 line
+
+correct the check on conservation for sea ice (does not impact sette tests)
+------------------------------------------------------------------------
+r11599 | nicolasmartin | 2019-09-25 22:19:45 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Cosmetic cleaning
+
+------------------------------------------------------------------------
+r11598 | nicolasmartin | 2019-09-25 22:00:42 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Add template of versioning record at the beginning of chapters
+
+------------------------------------------------------------------------
+r11597 | nicolasmartin | 2019-09-25 20:20:19 +0200 (mer., 25 sept. 2019) | 3 lines
+
+Continuation of coding rules application
+Recovery of some sections deleted by the previous commit
+
+------------------------------------------------------------------------
+r11596 | nicolasmartin | 2019-09-25 19:06:37 +0200 (mer., 25 sept. 2019) | 7 lines
+
+Application of some coding rules
+- Replace comments before sectioning cmds by a single line of 100 characters long to display when
+  every line should break
+- Replace multi blank lines by one single blank line
+- For list environment, put `\item`, label and content on the same line
+- Remove `\newpage` and comments line around ''figure'' envs
+
+------------------------------------------------------------------------
+r11595 | nicolasmartin | 2019-09-25 16:22:05 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Fix the paths for graphics searching
+
+------------------------------------------------------------------------
+r11594 | nicolasmartin | 2019-09-25 16:16:59 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Review svn:ignore and svn:externals properties (3)
+
+------------------------------------------------------------------------
+r11593 | nicolasmartin | 2019-09-25 16:14:06 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Review svn:ignore and svn:externals properties (2)
+
+------------------------------------------------------------------------
+r11592 | nicolasmartin | 2019-09-25 16:11:53 +0200 (mer., 25 sept. 2019) | 2 lines
+
+Review `svn:ignore` and `svn:externals` properties
+
+------------------------------------------------------------------------
+r11591 | nicolasmartin | 2019-09-25 13:52:24 +0200 (mer., 25 sept. 2019) | 1 line
+
+Cleaning, linking and renaming
+------------------------------------------------------------------------
+r11584 | nicolasmartin | 2019-09-20 13:16:06 +0200 (ven., 20 sept. 2019) | 6 lines
+
+Restoration of separate compilation of chapters or appendices
+The command to launch is almost the same as the manual, for instance
+{{{#!console
+$ latexmk -r latex/global/latexmkrc -cd latex/NEMO/subfiles/chap_time_domain
+}}}
+
+------------------------------------------------------------------------
+r11582 | nicolasmartin | 2019-09-20 11:44:31 +0200 (ven., 20 sept. 2019) | 3 lines
+
+New LaTeX commands `\nam` and `\np` to mention namelist content (step 2)
+Finally convert `\forcode{...}` following `\np{}{}` into optional arg of the new command `\np[]{}{}`
+
+------------------------------------------------------------------------
+r11579 | nicolasmartin | 2019-09-19 19:48:19 +0200 (jeu., 19 sept. 2019) | 2 lines
+
+Fix for the sort of the ''blocks'' index
+
+------------------------------------------------------------------------
+r11578 | nicolasmartin | 2019-09-19 19:44:36 +0200 (jeu., 19 sept. 2019) | 3 lines
+
+New LaTeX commands `\nam` and `\np` to mention namelist content (step 2)
+So far so good, the manual compiles successfully 4 times and everything seems in its right place
+
+------------------------------------------------------------------------
+r11577 | nicolasmartin | 2019-09-19 19:01:38 +0200 (jeu., 19 sept. 2019) | 22 lines
+
+New LaTeX commands `\nam` and `\np` to mention namelist content
+(Partial commit to serve as a backup before other large edits)
+In order to benefit of the syntax highlighting and to have a simpler syntax for 
+citing namelist block (`\nam`) and parameter (`\np`) with an optional variable assignment (\forcode{...}),
+at this time the only viable solution I found is to require a double marker for 
+what it looks like the same item:
+1. Marker with the real name: 'tra_adv' block or 'ln_flx' parameter
+2. Marker with underscore character escaping: 'tra\_adv' block or 'ln\_flx' parameter
+Despite many searches and attempts, I did not find a workaround to edit on-the-fly one or 
+the other marker.
+In fact, the problem is on one side that the LaTeX index interprets '_' as a switch for lowering like 
+in math mode while on the other hand the backslash is considered for Pygments as a typo in Fortran 
+(red box).
+
+For instance, `\nam` and `\np` have as of now the aforementioned 2 mandatory arguments in 
+the previous order (between braces) + an optional argument for `\np` when the parameter is defined
+(between brackets at the first position):
+- `\nam`: LaTeX code ` in the \nam{tra_adv}{tra\_adv} ` -> PDF ' in the &namtra_adv (namelist X.X) '
+  with syntax highlighting, the hyperlink and the index entry
+- `\np`:  LaTeX code `\np[=.true.]{ln_flx}{ln\_flx}` -> PDF `ln_flux=.true.` with 
+  syntax highlighting for the whole string and the entry in the 'parameters' index
+
+------------------------------------------------------------------------
+r11575 | clem | 2019-09-19 12:51:37 +0200 (jeu., 19 sept. 2019) | 1 line
+
+improve one output for sea ice. Does not change anything else in the code
+------------------------------------------------------------------------
+r11572 | nicolasmartin | 2019-09-19 10:47:06 +0200 (jeu., 19 sept. 2019) | 2 lines
+
+Review indexes style
+
+------------------------------------------------------------------------
+r11571 | nicolasmartin | 2019-09-19 10:44:07 +0200 (jeu., 19 sept. 2019) | 2 lines
+
+Cosmetic modifications on section titles
+
+------------------------------------------------------------------------
+r11567 | nicolasmartin | 2019-09-18 17:41:37 +0200 (mer., 18 sept. 2019) | 2 lines
+
+Style improvments
+
+------------------------------------------------------------------------
+r11565 | nicolasmartin | 2019-09-18 16:58:58 +0200 (mer., 18 sept. 2019) | 2 lines
+
+Cleaning of section titles
+
+------------------------------------------------------------------------
+r11563 | nicolasmartin | 2019-09-18 15:36:42 +0200 (mer., 18 sept. 2019) | 2 lines
+
+Miscellaneous changes
+
+------------------------------------------------------------------------
+r11562 | nicolasmartin | 2019-09-18 15:32:36 +0200 (mer., 18 sept. 2019) | 2 lines
+
+New page layout with shorter margins (manual at less than 300 pages)
+
+------------------------------------------------------------------------
+r11561 | nicolasmartin | 2019-09-18 15:24:34 +0200 (mer., 18 sept. 2019) | 2 lines
+
+Apply two thirds ratio on figures width as default
+
+------------------------------------------------------------------------
+r11560 | clem | 2019-09-18 13:31:36 +0200 (mer., 18 sept. 2019) | 1 line
+
+correct the conversion from 1cat to Ncat for ice data at the boundaries when using bdy
+------------------------------------------------------------------------
+r11558 | nicolasmartin | 2019-09-17 17:04:06 +0200 (mar., 17 sept. 2019) | 34 lines
+
+Review all `figure` envs + activation of `listoflistings`
+1. Figure env:
+   - Replace `center` sub-env with only `\centering` cmd
+   - Add alternate caption for `\listoffigures` (shorter one between square brackets, i.e. `\caption[]{}`)
+   - Place `\label` outside of `\caption` and remove useless `\protect`
+
+2. Namelist listings
+   - Put `\nlst` with the namelist inlcusion in a `listing` float env with caption and label
+   - Remove namelist duplicates
+-- This line, and those below, will be ignored--
+M    subfiles/apdx_triads.tex
+M    subfiles/chap_model_basics_zstar.tex
+M    subfiles/chap_SBC.tex
+M    subfiles/apdx_DOMAINcfg.tex
+M    subfiles/apdx_s_coord.tex
+M    subfiles/chap_DOM.tex
+M    subfiles/chap_ASM.tex
+M    subfiles/chap_DIU.tex
+M    subfiles/chap_cfgs.tex
+M    subfiles/chap_ZDF.tex
+M    subfiles/chap_OBS.tex
+M    subfiles/chap_model_basics.tex
+M    subfiles/chap_time_domain.tex
+M    subfiles/apdx_algos.tex
+M    subfiles/chap_TRA.tex
+M    subfiles/chap_DYN.tex
+M    subfiles/chap_misc.tex
+M    subfiles/chap_DIA.tex
+M    subfiles/apdx_invariants.tex
+M    subfiles/chap_LBC.tex
+M    subfiles/apdx_diff_opers.tex
+M    subfiles/chap_STO.tex
+M    subfiles/chap_LDF.tex
+
+------------------------------------------------------------------------
+r11554 | jchanut | 2019-09-17 11:46:30 +0200 (mar., 17 sept. 2019) | 2 lines
+
+#2078: add Franziska's fix to correct input/output paths with AGRIF
+
+------------------------------------------------------------------------
+r11552 | nicolasmartin | 2019-09-16 17:38:22 +0200 (lun., 16 sept. 2019) | 2 lines
+
+add unbreakable space after `\fortran` & `fninety`
+
+------------------------------------------------------------------------
+r11551 | nicolasmartin | 2019-09-16 16:53:24 +0200 (lun., 16 sept. 2019) | 2 lines
+
+Bugfix: no index entries in math env
+
+------------------------------------------------------------------------
+r11548 | clem | 2019-09-13 23:42:32 +0200 (ven., 13 sept. 2019) | 1 line
+
+deactivate the check of conservation in spitz12 because it is too tricky to use
+------------------------------------------------------------------------
+r11544 | nicolasmartin | 2019-09-13 16:37:38 +0200 (ven., 13 sept. 2019) | 2 lines
+
+Missing modifications from previous commit
+
+------------------------------------------------------------------------
+r11543 | nicolasmartin | 2019-09-13 15:57:52 +0200 (ven., 13 sept. 2019) | 7 lines
+
+Implementation of convention for labelling references + files renaming
+Now each reference is supposed to have the information of the chapter in its name
+to identify quickly which file contains the reference (`\label{$prefix:$chap_...`)
+
+Rename the appendices from 'annex_' to 'apdx_' to conform with the prefix used in labels (`apdx:...`)
+Suppress the letter numbering
+
+------------------------------------------------------------------------
+r11537 | clem | 2019-09-12 10:24:48 +0200 (jeu., 12 sept. 2019) | 1 line
+
+make sure SI3 doc can be compiled, plus small edits
+------------------------------------------------------------------------
+r11536 | smasson | 2019-09-11 15:54:18 +0200 (mer., 11 sept. 2019) | 1 line
+
+trunk: merge dev_r10984_HPC-13 into the trunk
+------------------------------------------------------------------------
+r11532 | smasson | 2019-09-11 15:30:16 +0200 (mer., 11 sept. 2019) | 1 line
+
+trunk: merge with v4
+------------------------------------------------------------------------
+r11524 | nicolasmartin | 2019-09-10 16:09:48 +0200 (mar., 10 sept. 2019) | 2 lines
+
+Bugfixes
+
+------------------------------------------------------------------------
+r11522 | nicolasmartin | 2019-09-10 12:21:20 +0200 (mar., 10 sept. 2019) | 5 lines
+
+Review the beginning of the manual
+Move the changelog to the common part shared between 3 manuals
+Add few paragraphs on the development workflow
+Improve the introduction of the manual
+
+------------------------------------------------------------------------
+r11515 | nicolasmartin | 2019-09-09 16:07:20 +0200 (lun., 09 sept. 2019) | 6 lines
+
+Style changes
+* logo for DOI links
+* Tweak cmds to apply manual color to chapter headings
+* Fix headings on bibliography and indexes sections
+* Remove ''minitoc'' pkg and use instead appropriate `\chaptertoc` custom cmd
+
+------------------------------------------------------------------------
+r11459 | cetlod | 2019-08-20 10:59:40 +0200 (mar., 20 août 2019) | 1 line
+
+Revision in chapter TRA : mainly removal obsolete CPP keys and update of namelist parameter
+------------------------------------------------------------------------
+r11445 | sciliberti | 2019-08-19 09:18:20 +0200 (lun., 19 août 2019) | 1 line
+
+#2216 revision of LBC chapter: main ones in bdy description and geometry
+------------------------------------------------------------------------
+r11435 | nicolasmartin | 2019-08-14 14:45:08 +0200 (mer., 14 août 2019) | 18 lines
+
+Various corrections on chapters
+
+Cleaning the indexes by fixing/removing wrong entries (or appending a `?` to unknown items) and
+improve the classification with new index definitions for CPP keys and namelist blocks:
+- from `\key{...}` cmd, ''key_'' prefix no longer precedes the index entry
+- namelist block declaration moves from `\ngn{nam...} `  to `\nam{...}` 
+  (i.e. ''\ngn{namtra\_ldf}'' -> ''\nam{tra\_ldf}'')
+  The expected prefix ''nam'' is added to the printed word but not the index entry.
+Now we have indexes with a better sorting instead of all CPP keys under 'K' and namelists blocks under 'N'.
+
+Fix missing space issues with alias commands by adding a trailing backslash (`\NEMO\`, `\ie\`, `\eg\`, ...).
+There is no perfect solution for this, and I prefer not using a particular package to solve it.
+
+Review the initial LaTeX code snippet for the historic changes in chapters 
+
+'''Finally, for readability and future diff visualisations, please avoid writing paragraphs with continuous lines'''.
+Break the lines around 80 to 100 characters long 
+
+------------------------------------------------------------------------
+r11433 | nicolasmartin | 2019-08-12 21:44:18 +0200 (lun., 12 août 2019) | 39 lines
+
+Pre-implementation of new cover page and new headings style for reference manuals
+
+==== Cover page
+
+The layout of the frontpage has been completely redesigned, 
+a coloured banner has been added to emphasize the title and easily identify each manual
+between them. 
+The chosen color for each document (blue for NEMO, gray for SI^3^ and green for TOP) will be
+used throughout the manual for the links and in the chapter headings. \\
+The list of authors (writers/editors/reviewers) for the version of the manual is given next to 
+the abstract, which is now included in the frontpage. 
+A link to an existing ORCID profile for the author precedes its name. \\
+Few settings have been added to each ''definitions.tex'' in order to adjust the rendering of the cover page (vertical spaces above and below the title, a subtitle, the width for authors list and 
+abstract section)
+
+==== Headings
+
+- header: chapter number and title for even pages, same infos for section otherwise
+- footer: name of the manual and page numbering with the total number of pages 
+  (reverse order between odd/even pages)
+
+For the chapter heading, a new style 'Bjornstrup' from ''fncychap'' package is now use.
+
+==== Abstract
+
+Split the section in two paragraphs for all manuals 
+
+1. Common description with almost the same sentences only customized by the general infos of the model
+2. Specific part for the characteristics of the model
+
+==== Troubleshooting
+
+As announced, I have introduced some icons from ''academicons'' and ''fontawesome'' packages.
+It required to switch from `pdflatex` to `xelatex` for the compilation and it prevents from now 
+the building of the whole document.
+Also the PDF generated does not look nice due to the font 
+
+Work in progress...
+
+------------------------------------------------------------------------
+r11418 | acc | 2019-08-07 14:25:51 +0200 (mer., 07 août 2019) | 1 line
+
+Minor correction to make sure full vertical velocity is used in diagnostic output from diawri.F90 when using adaptive-implicit vertical advection (ln_zad_Aimp=.true.)
+------------------------------------------------------------------------
+r11416 | jchanut | 2019-08-07 12:11:36 +0200 (mer., 07 août 2019) | 2 lines
+
+#1636: remove overwriting of before tracer gradients over partial cells by now values. Should make tracer diffusion more robust. Now density gradients are now computed in hpg_zps only.
+
+------------------------------------------------------------------------
+r11415 | jchanut | 2019-08-07 11:05:58 +0200 (mer., 07 août 2019) | 2 lines
+
+#2080, correct conditional statement
+
+------------------------------------------------------------------------
+r11414 | jchanut | 2019-08-07 10:58:09 +0200 (mer., 07 août 2019) | 2 lines
+
+#2292, add ztilde diffusive fluxes in Courant number computation
+
+------------------------------------------------------------------------
+r11411 | jchanut | 2019-08-06 17:08:55 +0200 (mar., 06 août 2019) | 2 lines
+
+#2305, a few corrections and comestic changes following Andrew's revision 11407
+
+------------------------------------------------------------------------
+r11410 | gsamson | 2019-08-06 16:50:38 +0200 (mar., 06 août 2019) | 1 line
+
+bugfix for negative Chl values in tra_qsr, see #2312
+------------------------------------------------------------------------
+r11407 | acc | 2019-08-06 15:36:27 +0200 (mar., 06 août 2019) | 1 line
+
+Final documentation tweaks to the adaptive-implicit vertical advection section of chap_ZDF.tex and associated code changes. The code changes are mostly cosmetic or to align with the documentation but this does include a modified version of traadv_fct.F90 (thanks to Jerome) which correctly accounts for any implicit component of the vertical velocity when computing anti-diffusive fluxes for flux correction. The changes have null effect when ln_zad_Aimp is .false. and have been SETTE tested with ORCA2_ICE_PISCES with ln_zad_Aimp = .true.
+------------------------------------------------------------------------
+r11388 | acc | 2019-08-01 18:09:07 +0200 (jeu., 01 août 2019) | 1 line
+
+Add adaptive-implicit vertical advection section to ZDF chapter. May still need a few tweaks next week and refers to an updated traadv_fct.F90 which is not yet submitted. Finals tests are in progress
+------------------------------------------------------------------------
+r11386 | jchanut | 2019-08-01 17:26:28 +0200 (jeu., 01 août 2019) | 2 lines
+
+#2216, correct description of grid scale dependent mixing coefficient
+
+------------------------------------------------------------------------
+r11351 | davestorkey | 2019-07-25 15:47:05 +0200 (jeu., 25 juil. 2019) | 2 lines
+
+Documentation: correction to slope definitions in Appendix B.
+
+------------------------------------------------------------------------
+r11346 | mdrudi | 2019-07-25 12:11:23 +0200 (jeu., 25 juil. 2019) | 1 line
+
+addition of changes record in chap_DIA.tex
+------------------------------------------------------------------------
+r11344 | clevy | 2019-07-25 10:52:10 +0200 (jeu., 25 juil. 2019) | 1 line
+
+#2216: updates to STO reference manual
+------------------------------------------------------------------------
+r11341 | clevy | 2019-07-25 10:27:15 +0200 (jeu., 25 juil. 2019) | 1 line
+
+bugfix stopar.F90 correct logical check
+------------------------------------------------------------------------
+r11340 | clevy | 2019-07-24 18:35:12 +0200 (mer., 24 juil. 2019) | 1 line
+
+#2216: updates to STO reference manual
+------------------------------------------------------------------------
+r11339 | acc | 2019-07-24 17:10:21 +0200 (mer., 24 juil. 2019) | 1 line
+
+Update of chap_misc.tex for v4.0 compatibility
+------------------------------------------------------------------------
+r11338 | gsamson | 2019-07-24 14:18:39 +0200 (mer., 24 juil. 2019) | 1 line
+
+add a missing CPP key description in SBC chapter
+------------------------------------------------------------------------
+r11337 | mikebell | 2019-07-24 12:31:16 +0200 (mer., 24 juil. 2019) | 1 line
+
+authors of annex A added
+------------------------------------------------------------------------
+r11336 | jchanut | 2019-07-24 12:30:54 +0200 (mer., 24 juil. 2019) | 2 lines
+
+Update LDF chapter, #2216
+
+------------------------------------------------------------------------
+r11335 | mikebell | 2019-07-24 12:16:18 +0200 (mer., 24 juil. 2019) | 1 line
+
+review of chap_model_basics, annex_A and annex_B
+------------------------------------------------------------------------
+r11333 | gsamson | 2019-07-23 17:17:14 +0200 (mar., 23 juil. 2019) | 1 line
+
+#2216: update SBC chapter with corresponding bibliography
+------------------------------------------------------------------------
+r11331 | davestorkey | 2019-07-23 15:02:57 +0200 (mar., 23 juil. 2019) | 2 lines
+
+Documentation: small corrections and tidy up of Appendix B.
+
+------------------------------------------------------------------------
+r11330 | acc | 2019-07-23 13:33:32 +0200 (mar., 23 juil. 2019) | 1 line
+
+Rename annex_F.tex to annex_DOMAINcfg.tex to avoid incorrect order association (it currently appears as appendix E). Alter references accordingly and fix minor latex error in annex_DOMAINcfg.tex
+------------------------------------------------------------------------
+r11326 | acc | 2019-07-23 12:59:20 +0200 (mar., 23 juil. 2019) | 1 line
+
+Delete spurious appendix D inadvertently reinstated in appendices.tex
+------------------------------------------------------------------------
+r11323 | acc | 2019-07-22 17:05:02 +0200 (lun., 22 juil. 2019) | 1 line
+
+Correct a missing reference and add the author table to new appendix
+------------------------------------------------------------------------
+r11321 | acc | 2019-07-22 16:08:52 +0200 (lun., 22 juil. 2019) | 1 line
+
+Introduce new appendix to hold material removed from chap_DOM.tex but which is still relevant to DOMAINcfg.
+------------------------------------------------------------------------
+r11318 | jchanut | 2019-07-22 11:24:56 +0200 (lun., 22 juil. 2019) | 2 lines
+
+#2216, wrong namelist name in ZDF chapter 
+
+------------------------------------------------------------------------
+r11316 | djlea | 2019-07-19 19:20:02 +0200 (ven., 19 juil. 2019) | 2 lines
+
+#2297 Updates to OBS and ASM documentation
+
+------------------------------------------------------------------------
+r11313 | emanuelaclementi | 2019-07-19 18:31:10 +0200 (ven., 19 juil. 2019) | 1 line
+
+Added Surface wave-induced mixing section in ZDF Chapter
+------------------------------------------------------------------------
+r11312 | acc | 2019-07-19 18:15:22 +0200 (ven., 19 juil. 2019) | 1 line
+
+Updated DOM chapter for v4.0 compatibility. Much reduced since many choices and options are now external to NEMO and moved to the DOMAINcfg tool (but they are not  documented there). Should consider creating an appendix as a temporary home for some of the material
+------------------------------------------------------------------------
+r11310 | nicolasmartin | 2019-07-19 17:29:48 +0200 (ven., 19 juil. 2019) | 3 lines
+
+Revert to no background color for inline code
+For instance, avoiding bad style when mixing index entries like `\np` with `\forcode`
+
+------------------------------------------------------------------------
+r11299 | nicolasmartin | 2019-07-18 16:27:43 +0200 (jeu., 18 juil. 2019) | 6 lines
+
+Review of the coding rules chapter: convert it to a shared file for 3 manuals
+- Move ''annex_D.tex'' and ''NEMO_coding_conv.tex'' to ''./latex/global''
+- Rename ''NEMO_coding_conv.tex'' to ''coding_rules.tex'' and redesign it as a chapter and not
+  a standalone document
+- Edit ''document.tex'' to include the coding rules by default at the end of the appendix
+
+------------------------------------------------------------------------
+r11293 | jchanut | 2019-07-18 15:21:40 +0200 (jeu., 18 juil. 2019) | 2 lines
+
+#2292, Fixes courant number computation in adaptive vertical advection
+
+------------------------------------------------------------------------
+r11292 | nicolasmartin | 2019-07-18 15:20:29 +0200 (jeu., 18 juil. 2019) | 2 lines
+
+Removal of obsolete symbolic links
+
+------------------------------------------------------------------------
+r11287 | jchanut | 2019-07-18 11:54:49 +0200 (jeu., 18 juil. 2019) | 2 lines
+
+#2291, Adaptive vertical advection: change order of calls with split explicit free surface
+
+------------------------------------------------------------------------
+r11281 | jchanut | 2019-07-17 15:51:21 +0200 (mer., 17 juil. 2019) | 2 lines
+
+#2290, fixes bugs with adaptive vertical advection
+
+------------------------------------------------------------------------
+r11276 | mdrudi | 2019-07-17 15:08:21 +0200 (mer., 17 juil. 2019) | 1 line
+
+revision of CMIP specific diagnostics in chap_DIA.tex in NEMO doc
+------------------------------------------------------------------------
+r11242 | jchanut | 2019-07-10 11:59:14 +0200 (mer., 10 juil. 2019) | 2 lines
+
+Remove useless ll_nnogather case if no folding. Prevents from out of bound arrays with small mpp subdomains (<5) and no folding. Should be investigated further. 
+
+------------------------------------------------------------------------
+r11233 | clem | 2019-07-09 17:09:44 +0200 (mar., 09 juil. 2019) | 1 line
+
+change a comment in dommsk
+------------------------------------------------------------------------
+r11229 | clem | 2019-07-09 14:22:12 +0200 (mar., 09 juil. 2019) | 1 line
+
+debug BDY-ice by allowing any number of categories as input. Ticket #2300 may also be solved
+------------------------------------------------------------------------
+r11225 | jchanut | 2019-07-08 14:42:50 +0200 (lun., 08 juil. 2019) | 2 lines
+
+#2216, Finalize ZDF chapter - OSMOSIS and Adaptive vertical advection subsections to be updated
+
+------------------------------------------------------------------------
+r11218 | mdrudi | 2019-07-05 11:19:53 +0200 (ven., 05 juil. 2019) | 1 line
+
+revision of chap_DIA.tex in NEMO doc
+------------------------------------------------------------------------
+r11214 | jchanut | 2019-07-04 12:30:41 +0200 (jeu., 04 juil. 2019) | 2 lines
+
+#2216: add AGRIF_DEMO test case in place of Agulhas and remove cpp keys
+
+------------------------------------------------------------------------
+r11213 | jchanut | 2019-07-04 11:29:44 +0200 (jeu., 04 juil. 2019) | 2 lines
+
+#2216: Add Romain's update of ZDF chapter
+
+------------------------------------------------------------------------
+r11212 | nicolasmartin | 2019-07-03 21:21:59 +0200 (mer., 03 juil. 2019) | 13 lines
+
+Mainly some modifications to enable the compilation of the manual by dedicated LaTeX editors
+The compilation options have been gathered within ''latexmkrc'' RC file for Latexmk, 
+this has been tested successfully for 2 cross-platform softwares: ''Texmaker'' & ''TeXstudio''
+Don't be able to test it under ''TeXShop'' for MacOS, but it should be portable as
+it requires only to modify the configuration of few cmds: LaTeX, PdfLaTeX, Latexmk & PDF viewer
+For a comprehensive list of available LaTeX editors, see https://en.wikibooks.org/wiki/LaTeX/Installation#Cross-platform)
+
+Other changes
+- Rectification of the required list for LaTeX pkgs
+- Append ''thanks.tex'' with the first reviewers of chapters
+- Configuration of the background color for namelists
+- Testing of colors for different types of links
+
+------------------------------------------------------------------------
+r11204 | smueller | 2019-07-01 16:37:33 +0200 (lun., 01 juil. 2019) | 2 lines
+
+Merge of changeset [11175] into the trunk (ticket #2295)
+
+------------------------------------------------------------------------
+r11190 | nicolasmartin | 2019-06-26 18:54:46 +0200 (mer., 26 juin 2019) | 3 lines
+
+Duplicate symbolic links to ''.ist'' index style file (1 in ./main and 1 in ./build)
+For unknown reason, the LaTeX compilation process seems to differ between Mac and Linux: Mac wants to have the index style file in ''./build'' whereas Linux requires it in ''./main''.
+
+------------------------------------------------------------------------
+r11189 | nicolasmartin | 2019-06-26 18:24:07 +0200 (mer., 26 juin 2019) | 2 lines
+
+Enabling index links by moving ''hyperref'' pkg at the end of the LaTeX preamble
+
+------------------------------------------------------------------------
+r11188 | jchanut | 2019-06-26 18:02:11 +0200 (mer., 26 juin 2019) | 2 lines
+
+Add missing link for NEMO doc compilation
+
+------------------------------------------------------------------------
+r11187 | nicolasmartin | 2019-06-26 17:56:45 +0200 (mer., 26 juin 2019) | 9 lines
+
+Modifications and bugfixes
+- Correction of the layout standard Right: `scrreprt` instead of `scrreport`
+- Switch to 2-columns for the bibliography
+- Update `svn:ignore` property for list of figures and tables
+- Update LaTeX dependencies
+- Move `\triad` command declaration to ''./global/latex/new_cmds.tex'' with `\DeclareRobustCommand` specific prefix to prevent issue with \listoffigures
+- LaTeX typos
+- Ignore todonotes.tex for time being
+
+------------------------------------------------------------------------
+r11184 | jchanut | 2019-06-26 16:56:21 +0200 (mer., 26 juin 2019) | 2 lines
+
+Update time domain chapter, #2216
+
+------------------------------------------------------------------------
+r11181 | nicolasmartin | 2019-06-25 19:06:21 +0200 (mar., 25 juin 2019) | 2 lines
+
+Extension of the last changes to SI^3^ and TOP
+
+------------------------------------------------------------------------
+r11179 | nicolasmartin | 2019-06-25 15:46:19 +0200 (mar., 25 juin 2019) | 2 lines
+
+Add alternate section titles to avoid useless index links in ToC
+
+------------------------------------------------------------------------
+r11178 | nicolasmartin | 2019-06-25 13:57:04 +0200 (mar., 25 juin 2019) | 2 lines
+
+Supplement of the last bugfix
+
+------------------------------------------------------------------------
+r11177 | nicolasmartin | 2019-06-25 13:14:45 +0200 (mar., 25 juin 2019) | 2 lines
+
+Bugfix for LaTeX compilation
+
+------------------------------------------------------------------------
+r11176 | nicolasmartin | 2019-06-24 21:55:11 +0200 (lun., 24 juin 2019) | 20 lines
+
+Implementation of multi-indexes instead of an indiscrimate aggregate index
+Creation of 5 sections under ''Indexes'' chapter for the most relevant lists of index entries:
+namelist blocks and parameters, CPP keys, modules and subroutines.
+- ''indexes.tex'' & ''index.ist'': new file in ''global'' directory for index management
+- Add symbolic links under ''main'' to non-existing *.idx before LaTeX compilation to reduce
+  trivial error messages with `makeindex`
+- Create ''latexmkrc'' init file loaded latexmk with '-r' option in order to
+  apply the style rules to the indexes with the sequence of several compilations
+
+Other changes:
+- Define a ''preamble.tex'' with the list of files to load from ''global'' folder
+- Integrate 'Citation' subsubsection in new ''info_page.tex'' for the 2^nd^ page along with 'frontpage.tex' for the cover,
+  in order to have a clear distinction with `\maketitle` in the main LaTeX document
+- Move 'Foreword' chapter from ''subfiles'' to ''main'' as more appropriate
+
+Bugfixes with few attempts of HTML export
+- One single location for defining the paths to search for images with `\graphicspath` in ''packages.tex''
+- Renaming of authors variables (`\1stauthor` -> `\firstauthor` and so one)
+- Update of LaTeX dependencies in terms of new pkgs (''DEPS'')
+
+------------------------------------------------------------------------
+r11174 | nicolasmartin | 2019-06-21 19:19:25 +0200 (ven., 21 juin 2019) | 4 lines
+
+Extension renaming 
+As .tex extension seems to be recognized natively by Trac for syntax highlighting, prefer to use it for all files under ''./latex/global''.
+The difference between .tex or .sty is a bit cryptic for what I currently know
+
+------------------------------------------------------------------------
+r11173 | nicolasmartin | 2019-06-21 18:55:47 +0200 (ven., 21 juin 2019) | 2 lines
+
+Removal of bad file
+
+------------------------------------------------------------------------
+r11172 | nicolasmartin | 2019-06-21 14:35:16 +0200 (ven., 21 juin 2019) | 2 lines
+
+Add missing files from previous commits
+
+------------------------------------------------------------------------
+r11171 | nicolasmartin | 2019-06-21 14:33:03 +0200 (ven., 21 juin 2019) | 2 lines
+
+Duplicate the new building process to SI^3^ and TOP
+
+------------------------------------------------------------------------
+r11170 | nicolasmartin | 2019-06-21 12:18:45 +0200 (ven., 21 juin 2019) | 8 lines
+
+Review of the overall building of any reference manual
+Implementation of a compilation process shared between the 3 manuals: now a global ''document.tex'' will be used as the main LaTeX file (a symbolic link will refer to it in each ''./engine/main'' directory).
+At the time of the manual building, a few small LaTeX files will be imported on the fly from the corresponding folder ''./latex/engine/main''.
+- ''definitions.tex'': engine, title, author(s), IPSL publication number and DOI ID
+- ''thanks.tex'': list of collaborators to be thanked for the writing/reviewing
+- ''chapters.tex'': ordered list of chapters (relative path to ''subfiles'')
+- ''appendices.tex'': ordered list of subordinate chapters (relative path to ''subfiles'')
+
+------------------------------------------------------------------------
+r11167 | nicolasmartin | 2019-06-21 11:09:29 +0200 (ven., 21 juin 2019) | 2 lines
+
+Move DOI images into ''badges'' folder
+
+------------------------------------------------------------------------
+r11160 | mathiot | 2019-06-20 18:47:37 +0200 (jeu., 20 juin 2019) | 1 line
+
+merge branch branch_ticket2259 : update nn_fsbc, nn_itend, rn_rdt of ORCA2 and related configuration (ticket #2259), update on sette will be commited soon
+------------------------------------------------------------------------
+r11159 | mathiot | 2019-06-20 17:48:06 +0200 (jeu., 20 juin 2019) | 1 line
+
+fix ticket #2301 (remove iceneg_pres and iceneg_volu from ICE_AGRIF file_def_nemo-ice.xml)
+------------------------------------------------------------------------
+r11154 | nicolasmartin | 2019-06-20 15:43:31 +0200 (jeu., 20 juin 2019) | 2 lines
+
+Bugfixes and changes remaining in the directory
+
+------------------------------------------------------------------------
+r11152 | nicolasmartin | 2019-06-20 15:11:32 +0200 (jeu., 20 juin 2019) | 2 lines
+
+Modifications in NEMO manual disseminated to SI^3^ and TOP
+
+------------------------------------------------------------------------
+r11151 | nicolasmartin | 2019-06-20 14:59:58 +0200 (jeu., 20 juin 2019) | 10 lines
+
+New version of ''NEMO_manual.tex''
+New class `scrreport` for the document (KOMA-script version of default `report`)
+Foreword is now placed before ToC.
+All figures are configured with `1.0\textwidth` as default.
+For compatibilty, `\frontmatter`, `\mainmatter` and `\backmatter` cmds have been removed and old fonts in LaTeX subfiles have been replaced 
+- `\bf` -> `\mathbf` or `\bfseries`
+- `\it` -> `\itshape`
+- `\rm` -> `\mathrm` or `\rmfamily`
+- `\tt` -> `\ttfamily`
+
+------------------------------------------------------------------------
+r11150 | nicolasmartin | 2019-06-20 14:13:29 +0200 (jeu., 20 juin 2019) | 4 lines
+
+New version of ''foreword.tex''
+Most of the content have been transfered to the common ''frontpages.tex''.
+''foreword.tex'' now contains only the 'Abstract' section which is specific for each manual.
+
+------------------------------------------------------------------------
+r11148 | nicolasmartin | 2019-06-20 12:34:10 +0200 (jeu., 20 juin 2019) | 8 lines
+
+Reorganisation of the ''latex'' directory
+Creation of ''frontpages.tex'' to standardise the look of the manuals and few !LaTeX files to facilitate the overall modifications
+- ''minted''       : syntax highlighting
+- ''packages.sty'' : !LaTeX packages to load
+- ''styles.sty''   : gathering of all rules affecting the style
+- ''new_cmds.sty'' : custom LaTeX commands
+- ''todonotes.sty'': insertion of TODO bubbles inline or at the margin
+
+------------------------------------------------------------------------
+r11146 | nicolasmartin | 2019-06-20 12:00:00 +0200 (jeu., 20 juin 2019) | 2 lines
+
+Add DOI badges of the3 reference manuals
+
+------------------------------------------------------------------------
+r11128 | nicolasmartin | 2019-06-17 15:54:04 +0200 (lun., 17 juin 2019) | 2 lines
+
+Create ''styles'' folder to gather common files between manuals: ''NEMO.sty'' and ''ametsoc.bst''
+
+------------------------------------------------------------------------
+r11126 | nicolasmartin | 2019-06-17 15:24:58 +0200 (lun., 17 juin 2019) | 2 lines
+
+Reintroducing ''ametsoc.bst'' in ''latex'' shared folder
+
+------------------------------------------------------------------------
+r11125 | nicolasmartin | 2019-06-17 15:08:12 +0200 (lun., 17 juin 2019) | 4 lines
+
+Move BibTex style file and BibTool cfg to `/utils/dev` global directory for developers
+As these files will be used for the buidling of the 3 manuals (NEMO, SI^3^ and TOP),
+it is relevant to place them in a unique location of the repository and refer to with external definitions
+
+------------------------------------------------------------------------
+r11124 | nicolasmartin | 2019-06-17 14:49:53 +0200 (lun., 17 juin 2019) | 34 lines
+
+
+Editing of ''ametsoc.bst'' to generate hyperlinks for DOIs or URLs
+New version of bibtool resource file:
+- Braces as entries delimiter
+- All entry types in lowercase (`^@...`)
+- Normalisation of ''pages'' field (`[0-9]+--[0-9]`)
+- Deletion of ''url'' field if doi is here
+- Definition of fields order
+  {{{
+  sort.order =
+  { * =
+        # title     # chapter     # pages
+        # journal   # booktitle   # edition # editor # series 
+        # volume    # number      
+        # author    # institution # school
+        # year      # month
+        # publisher # issn        # isbn
+        # doi       # url
+  }
+  }}}
+- coding the format of citations keys
+  {{{
+  key.format =
+  { %s(bibkey) # %-2n(author)_
+       {   
+            %+5.1W(journal)
+               # %0s(@book         ) { bk   } # %0s(@inbook       ) { ibk  }
+               # %0s(@incollection ) { icol } # %0s(@inproceedings) { iprc }
+               # %0s(@phdthesis    ) { phd  } # %0s(@techreport   ) { rpt  }
+       }
+    %2d(year)                    
+  }
+}}}
+
+------------------------------------------------------------------------
+r11123 | nicolasmartin | 2019-06-17 14:22:27 +0200 (lun., 17 juin 2019) | 2 lines
+
+Modification of LaTeX subfiles accordingly to new citations keys
+
+------------------------------------------------------------------------
+r11122 | nicolasmartin | 2019-06-17 14:05:58 +0200 (lun., 17 juin 2019) | 6 lines
+
+Upload advanced version of the NEMO bibliography
+- Apply global pattern for citation keys: `1stauthor{.2ndauthor{.ea}}_{journal|type}year`
+- Sorting entry fields wisely
+- Removal of redundancies ('doi'='url') by keeping only the DOI field
+- Manual editing for disambiguation with lowercase letter starting from the first item: `*a`, `*b`
+
+------------------------------------------------------------------------
+r11121 | nicolasmartin | 2019-06-17 12:31:12 +0200 (lun., 17 juin 2019) | 6 lines
+
+Fixes on BibTeX fields
+- Restoration of few missing entries from previous cleaning
+- Protection of some french names with "von" part
+- Use of the proper syntax for doubles quotes: {{{`` ... ''}}}
+- Addition of backslash for underscore character in URL
+
+------------------------------------------------------------------------
+r11120 | nicolasmartin | 2019-06-17 12:14:19 +0200 (lun., 17 juin 2019) | 2 lines
+
+Modification of the building process with dedicated `build` sub-folder
+
+------------------------------------------------------------------------
+r11118 | cetlod | 2019-06-17 10:51:25 +0200 (lun., 17 juin 2019) | 1 line
+
+Bugfix on sea-ice effect on production, see ticket 2299
+------------------------------------------------------------------------
+r11116 | nicolasmartin | 2019-06-14 20:21:45 +0200 (ven., 14 juin 2019) | 2 lines
+
+Removing of unnecessary entries
+
+------------------------------------------------------------------------
+r11115 | nicolasmartin | 2019-06-14 19:25:48 +0200 (ven., 14 juin 2019) | 2 lines
+
+Fixed version with unused references
+
+------------------------------------------------------------------------
+r11114 | cetlod | 2019-06-14 16:51:53 +0200 (ven., 14 juin 2019) | 1 line
+
+trunk:small bug fix in the previous bug correction, ticket #2296
+------------------------------------------------------------------------
+r11112 | mocavero | 2019-06-14 15:57:28 +0200 (ven., 14 juin 2019) | 1 line
+
+Update the chapter on reference configurations for 4.0 release, see #2216
+------------------------------------------------------------------------
+r11109 | cetlod | 2019-06-14 13:57:22 +0200 (ven., 14 juin 2019) | 1 line
+
+trunk:bug fix of the ticket #2296
+------------------------------------------------------------------------
+r11106 | nicolasmartin | 2019-06-13 20:54:01 +0200 (jeu., 13 juin 2019) | 4 lines
+
+Push a second review of NEMO manual from side-by-side edition of 2 previous versions (r11051 & r11052)
+I will made a final review with the first upload of the new version (r11075) and will reduce significantly it as almost the half of the references are not used.
+Would have save time by checking the unused entries before...
+
+------------------------------------------------------------------------
+r11078 | jchanut | 2019-06-05 16:17:09 +0200 (mer., 05 juin 2019) | 2 lines
+
+#2284
+
+------------------------------------------------------------------------
+r11077 | jchanut | 2019-06-05 16:13:02 +0200 (mer., 05 juin 2019) | 2 lines
+
+Correct bathymetry at U-points, #2289
+
+------------------------------------------------------------------------
+r11075 | nicolasmartin | 2019-06-04 18:16:20 +0200 (mar., 04 juin 2019) | 4 lines
+
+Submission of an intermediate version of NEMO bibliography
+Manual merge of 2 existing BibTeX entries per each reference in order not to lose a field
+It remains to make a check from the diff view under Trac or a diff tool and a final cleaning for indentation and new citations keys
+
+------------------------------------------------------------------------
+r11072 | girrmann | 2019-06-04 15:14:57 +0200 (mar., 04 juin 2019) | 1 line
+
+trunk : fix bug in flather for bdy, see #2287
+------------------------------------------------------------------------
+r11060 | nicolasmartin | 2019-05-27 15:20:51 +0200 (lun., 27 mai 2019) | 8 lines
+
+Backup a merged bibliography with duplicates commented
+BibTool determines double entries from successive identical citation keys so
+the procedure was in 2 steps
+1. Process r11051 & r11052 versions of NEMO_manual.bib to have the same pattern for citation key
+2. Merge the 2 versions with BibTool configured for duplicate checking: \\
+   `bibtool -d -- preserve.keys=on -- sort=on input_files -o output_file`
+It remains to clean the bibliography by deleting the doubles.
+
+------------------------------------------------------------------------
+r11058 | nicolasmartin | 2019-05-24 21:41:56 +0200 (ven., 24 mai 2019) | 15 lines
+
+Add a configuration file as resource for BibTool to define standard format for our bibliographies
+After the import of several new versions of references, I found some discrepancies that it was easy to address with BibTool
+- Set a common pattern for citation key: `author1[_authors2[_ea]]_journalyear`
+- Suppress a good bunch of trivial fields to reduce the size of the biblio in the different exports
+  `address chapter institution isbn issn issue keywords language note number organisation pages pdf series school type volume`
+  Open to discussion but to me a DOI entry is sufficient if someone wants more information
+- Prevent the use of tab for fields indentation,
+  better readability for the bib file on Trac browser or in the output of SVN diff
+- Apply the following order of fields for every entry
+  `author # title # booktitle # journal # publisher # editor # year # month # doi # url`
+To apply the rules to a BibTex file, run
+{{{#!console
+bibtool -r bibtool.rsc input_file -o output_file
+}}}
+
+------------------------------------------------------------------------
+r11052 | nicolasmartin | 2019-05-24 12:05:52 +0200 (ven., 24 mai 2019) | 4 lines
+
+Upload draft version for new NEMO biblio
+This is the result of the publications collecting on CrossRef.
+By mistake, previous commit was supposed to be the one but it was just a small edition.
+
+------------------------------------------------------------------------
+r11051 | nicolasmartin | 2019-05-24 11:50:21 +0200 (ven., 24 mai 2019) | 2 lines
+
+Backup intermediate version before further minor modifications
+
+------------------------------------------------------------------------
+r11043 | nicolasmartin | 2019-05-23 15:51:08 +0200 (jeu., 23 mai 2019) | 2 lines
+
+Several fixes for the LaTeX compilation of the manuals
+
+------------------------------------------------------------------------
+r11041 | clem | 2019-05-23 14:28:27 +0200 (jeu., 23 mai 2019) | 1 line
+
+debug corner points for ice bdy
+------------------------------------------------------------------------
+r11037 | nicolasmartin | 2019-05-22 21:03:12 +0200 (mer., 22 mai 2019) | 9 lines
+
+Review entries of TOP bibliography
+Continuation of the work to complete the BibTeX entries with the help of
+DOI resolver for the retrieval and CrossRef API for the identification.
+
+Add `byrd-co2-2008.txt` & `edc-co2.txt` for information which give the original
+references for using particular CO2 data set from NOAA-NCEI
+- https://www1.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/byrd/byrd-co2-2008.txt
+- https://www1.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/edc-co2.txt
+
+------------------------------------------------------------------------
+r11034 | nicolasmartin | 2019-05-21 22:42:45 +0200 (mar., 21 mai 2019) | 3 lines
+
+Add a simple shell script to build the user guide
+It checks Python deps, cleans the previous build and exports the guide in HTML format
+
+------------------------------------------------------------------------
+r11033 | nicolasmartin | 2019-05-21 22:36:30 +0200 (mar., 21 mai 2019) | 2 lines
+
+Modify the shell code in order to run as expected on different OS (Linux or MacOS)
+
+------------------------------------------------------------------------
+r11032 | nicolasmartin | 2019-05-21 22:34:05 +0200 (mar., 21 mai 2019) | 2 lines
+
+Fix few issues in TOP bibliography
+
+------------------------------------------------------------------------
+r11031 | nicolasmartin | 2019-05-21 21:41:02 +0200 (mar., 21 mai 2019) | 2 lines
+
+Update the chapters following the new keys for BibTeX entries
+
+------------------------------------------------------------------------
+r11030 | nicolasmartin | 2019-05-21 20:42:31 +0200 (mar., 21 mai 2019) | 8 lines
+
+Reconstruction of SI^3^ bibliography in bib format
+Use of ''biblio'' Emacs package to retrieve BibTeX entries from
+- existing DOIs in the bbl file
+- DOIs identified by searching from CrossRef API
+- classical request on web search engine (few)
+2 references are missing (+ one paper is submitted): TEOS-10 and MaykutThorndike73 and the file was then processed with bibtool for reformatting.
+I plan to reproduce this procedure for reviewing the other bibliographies (NEMO & TOP) and the references in the user guide.
+
+------------------------------------------------------------------------
+r11026 | nicolasmartin | 2019-05-21 16:54:06 +0200 (mar., 21 mai 2019) | 2 lines
+
+Apply previous for SI^3^ specific namelists
+
+------------------------------------------------------------------------
+r11025 | nicolasmartin | 2019-05-21 16:51:24 +0200 (mar., 21 mai 2019) | 2 lines
+
+Set mime-type to `text/x-fortran` to all namelists
+
+------------------------------------------------------------------------
+r11023 | nicolasmartin | 2019-05-21 12:21:04 +0200 (mar., 21 mai 2019) | 2 lines
+
+Fix typos with comma followed by 'and' in author entries
+
+------------------------------------------------------------------------
+r11022 | nicolasmartin | 2019-05-21 11:49:50 +0200 (mar., 21 mai 2019) | 2 lines
+
+Fix the relative path for the bibliography style file to apply it globally
+
+------------------------------------------------------------------------
+r11020 | nicolasmartin | 2019-05-20 22:26:45 +0200 (lun., 20 mai 2019) | 3 lines
+
+Apply `svn:ignore` property on TOP subfolders from `./doc/.svnignore` file
+Cmd to run globally: `svn pset -R svn:ignore -F .svnignore latex`
+
+------------------------------------------------------------------------
+r11019 | nicolasmartin | 2019-05-20 22:21:43 +0200 (lun., 20 mai 2019) | 4 lines
+
+Apply more or less same modifications on TOP as for SI^3^ for compliance
+Despite remaining issues with references, TOP manual can be build like NEMO & SI^3^ with `./build_manual.sh TOP`
+For the record, the building of the 3 manuals can be launched with `./manual_build.sh all`
+
+------------------------------------------------------------------------
+r11016 | nicolasmartin | 2019-05-20 21:03:20 +0200 (lun., 20 mai 2019) | 2 lines
+
+Move figures of TOP manual to global location
+
+------------------------------------------------------------------------
+r11015 | nicolasmartin | 2019-05-20 20:57:09 +0200 (lun., 20 mai 2019) | 12 lines
+
+Modification of the content to be in line with the NEMO manual
+SI^3^ manual can now be build like the NEMO manual with `./manual_build.sh SI3`
+- Mimick the directory organisation with `main` and `subfiles` folders.
+- Regarding the particular case of namelists
+  - Remove the duplicates already contained in the global `namelists` folder at 1st level of `./doc`
+  - Keep the `namelists` sub-folder only for `namdyn_adv` & `namsbc` which already exist in ocean namelists
+- Rewriting of `SI3_manual.tex` with `NEMO_manual.tex` as template to easily highlight differences
+- Updating of several paths for figures/namelists inclusion or LaTeX files referencing
+- LaTeX source:
+  - Replacement of `\forfile` command for namelists with pre-configured `\nlst` alias
+  -      "      "" `\bm` with `\mathbf` (save installation of an extra package) 
+
+------------------------------------------------------------------------
+r11013 | nicolasmartin | 2019-05-20 18:32:57 +0200 (lun., 20 mai 2019) | 2 lines
+
+Add explicit option for latexmk to ensure PDF export
+
+------------------------------------------------------------------------
+r11010 | nicolasmartin | 2019-05-20 17:30:58 +0200 (lun., 20 mai 2019) | 2 lines
+
+Move figures of SI3 manual to global location
+
+------------------------------------------------------------------------
+r11008 | nicolasmartin | 2019-05-20 17:07:21 +0200 (lun., 20 mai 2019) | 2 lines
+
+Fix execution rights on new scripts
+
+------------------------------------------------------------------------
+r11007 | nicolasmartin | 2019-05-20 16:58:48 +0200 (lun., 20 mai 2019) | 2 lines
+
+Edit NEMO_manual LaTeX files to comply with previous path modification
+
+------------------------------------------------------------------------
+r11005 | nicolasmartin | 2019-05-20 16:53:03 +0200 (lun., 20 mai 2019) | 2 lines
+
+Updating of the namelists
+
+------------------------------------------------------------------------
+r11004 | nicolasmartin | 2019-05-20 16:51:02 +0200 (lun., 20 mai 2019) | 7 lines
+
+Review of main building script
+- Exportig Python package checking to external script `check_pkg.py` for sharing it with the verification of deps for the user guide (sphinx, extension and theme)
+- Renaming to explicit `manual_build.sh`
+- Addition of basic checking for LaTeX installation (latexmk binary)
+- Implementation of loop and argument reading in order to use the same script for the 3 manuals
+- Improvment of code commentary
+
+------------------------------------------------------------------------
+r10996 | girrmann | 2019-05-17 18:02:04 +0200 (ven., 17 mai 2019) | 1 line
+
+trunk : fixed reproductibility issue in dynkeg.F90 with bdy, see #2283
+------------------------------------------------------------------------
+r10994 | clem | 2019-05-17 15:08:34 +0200 (ven., 17 mai 2019) | 1 line
+
+couple of commits to 1) deal with ice concentration reaching 1 (so, no more limitations in the max ice concentration imposed in the namelist), 2) deal with very small negative values that can occur due to roundoff errors
+------------------------------------------------------------------------
+r10991 | nicolasmartin | 2019-05-16 22:54:07 +0200 (jeu., 16 mai 2019) | 2 lines
+
+First part of content synchronisation between trunk & 4.0
+
+------------------------------------------------------------------------
+r10990 | nicolasmartin | 2019-05-16 21:07:17 +0200 (jeu., 16 mai 2019) | 20 lines
+
+Global review of the building and editing operations on NEMO guide
+- Addition of README.rst for users and editors
+- Waiver of the use of `requirements_*` files for the installation of Python dependencies,
+  instead run the following commands
+  - `pip install sphinx sphinxcontrib.bibtex sphinx_rtd_theme`
+    for building and offline editing   (`make html    `)
+  - `pip install sphinx-autobuild`
+    for online editing on local server (`make htmllive`)
+- Put offline and online editing builds in distinct folders to prevent confusion and
+  provide a backup for comparison
+  - `make html    ` -> ''./build/html    ''
+  - `make htmllive` -> ''./build/htmllive''
+- Fix a coding issue in `conf.py` to display a clean revision number
+
+Due to the state of the forge server (deprecated Python 3 library),
+the guide builded internally does not have the expected rendering and
+thus can not be made available to users in this version.
+As a consequence, the online version of the guide will be updated upon request and
+imported from a external build.
+
+------------------------------------------------------------------------
+r10983 | girrmann | 2019-05-15 14:50:08 +0200 (mer., 15 mai 2019) | 1 line
+
+trunk: Remove Potential MPI deadlock if rimwidth>1, see #2282
+------------------------------------------------------------------------
+r10982 | girrmann | 2019-05-15 14:37:26 +0200 (mer., 15 mai 2019) | 1 line
+
+trunk:Regroup communication report, See #2281
+------------------------------------------------------------------------
+r10973 | cetlod | 2019-05-13 17:08:48 +0200 (lun., 13 mai 2019) | 1 line
+
+trunk : bugfix in Lability of big particles, see ticket #2278
+------------------------------------------------------------------------
+r10951 | jamesharle | 2019-05-09 12:27:16 +0200 (jeu., 09 mai 2019) | 3 lines
+
+namelist_cfg REWIND moved inside loop for nambdy_dta reading as, by
+default, there is only a single nambdy_dta block (See ticket #2274)
+
+------------------------------------------------------------------------
+r10945 | clem | 2019-05-07 19:29:25 +0200 (mar., 07 mai 2019) | 1 line
+
+finish repairing the code when only ice dynamics is activated
+------------------------------------------------------------------------
+r10934 | jamesharle | 2019-05-07 11:29:45 +0200 (mar., 07 mai 2019) | 3 lines
+
+Update code to accommodate multiple instances of nb_jpk_bdy (See ticket
+#2274)
+
+------------------------------------------------------------------------
+r10932 | clem | 2019-05-05 21:45:27 +0200 (dim., 05 mai 2019) | 1 line
+
+make sure a simulation can run when some parts of ice thermodynamics are deactivated (only for very specific use)
+------------------------------------------------------------------------
+r10930 | clem | 2019-05-05 21:37:21 +0200 (dim., 05 mai 2019) | 1 line
+
+solve a problem of conservation when ice advection is called twice (because of a cfl that is too large)
+------------------------------------------------------------------------
+r10926 | clem | 2019-05-03 14:32:10 +0200 (ven., 03 mai 2019) | 1 line
+
+complete previous commit
+------------------------------------------------------------------------
+r10924 | clem | 2019-05-03 12:00:23 +0200 (ven., 03 mai 2019) | 1 line
+
+solve a problem of restartability and reproducibility if ln_cndflx is activated in the ice model (used for coupling at the Met-Office)
+------------------------------------------------------------------------
+r10911 | clem | 2019-04-29 18:11:12 +0200 (lun., 29 avril 2019) | 1 line
+
+Major change: the advection scheme UMx has been revisited to clean all the unphysical values which occured. Minor change: the ref config SPITZ12 has been slightly modified to test more parameterizations that are available in the code (melt ponds and landfast)
+------------------------------------------------------------------------
+r10909 | clem | 2019-04-29 17:58:14 +0200 (lun., 29 avril 2019) | 1 line
+
+correct a problem with indices for ice BDY at the eastern and northern boundaries
+------------------------------------------------------------------------
+r10907 | clem | 2019-04-29 17:54:07 +0200 (lun., 29 avril 2019) | 1 line
+
+solve ticket #2275
+------------------------------------------------------------------------
+r10896 | cetlod | 2019-04-26 10:41:49 +0200 (ven., 26 avril 2019) | 1 line
+
+Adding a first Draft of TOP documentation
+------------------------------------------------------------------------
+r10891 | clem | 2019-04-24 14:36:13 +0200 (mer., 24 avril 2019) | 1 line
+
+1) correct ice velocity at the ice edge => it changes (slightly) the ice properties at the edge. 2) apply bdy_ice_dyn at each subtime step of rheology => it changes ice velocties at the boundaries quite drastically.
+------------------------------------------------------------------------
+r10882 | clem | 2019-04-17 17:40:17 +0200 (mer., 17 avril 2019) | 1 line
+
+correct the comments on the units of salt fluxes that were confusing
+------------------------------------------------------------------------
+r10873 | cetlod | 2019-04-15 14:34:21 +0200 (lun., 15 avril 2019) | 1 line
+
+trunk : Initialisation of some local arrays, see ticket:2272
+------------------------------------------------------------------------
+r10869 | cetlod | 2019-04-15 12:34:03 +0200 (lun., 15 avril 2019) | 1 line
+
+trunk:Change units of Nitrogen deposition data in PISCES, see ticket:2271
+------------------------------------------------------------------------
+r10835 | smueller | 2019-04-03 17:04:18 +0200 (mer., 03 avril 2019) | 2 lines
+
+Merge of changesets [10832] and [10833] into the trunk, see ticket #2267
+
+------------------------------------------------------------------------
+r10824 | clem | 2019-04-02 15:32:49 +0200 (mar., 02 avril 2019) | 1 line
+
+output cfl diagnostics (courant numbers) in netcdf => add cfl_cu, cfl_cv, cfl_cw
+------------------------------------------------------------------------
+r10817 | smasson | 2019-03-29 18:23:45 +0100 (ven., 29 mars 2019) | 1 line
+
+trunk: report [10815] and [10816] from v4
+------------------------------------------------------------------------
+r10814 | nicolasmartin | 2019-03-29 17:50:37 +0100 (ven., 29 mars 2019) | 3 lines
+
+Add DRAFT watermark as default for the PDF export of the manual
+Do not check how it looks with the HTML version
+
+------------------------------------------------------------------------
+r10808 | smasson | 2019-03-27 21:36:05 +0100 (mer., 27 mars 2019) | 1 line
+
+trunk: update namelist_ref, according to changes done in v4 in [10779] and [10807]
+------------------------------------------------------------------------
+r10794 | cetlod | 2019-03-22 10:25:28 +0100 (ven., 22 mars 2019) | 1 line
+
+trunk : minor bugfix in PISCES
+------------------------------------------------------------------------
+r10790 | nicolasmartin | 2019-03-21 17:47:24 +0100 (jeu., 21 mars 2019) | 2 lines
+
+Add revision number to the guide homepage and limite verbosity of LaTeX compilation
+
+------------------------------------------------------------------------
+r10788 | cetlod | 2019-03-21 12:15:14 +0100 (jeu., 21 mars 2019) | 1 line
+
+trunk: Some bugfixes at ice/biogeochmeical interfaces, see ticket #2262
+------------------------------------------------------------------------
+r10786 | clem | 2019-03-20 19:59:24 +0100 (mer., 20 mars 2019) | 1 line
+
+fix tickets #2256 and #2257
+------------------------------------------------------------------------
+r10784 | clem | 2019-03-20 19:36:44 +0100 (mer., 20 mars 2019) | 1 line
+
+solve ticket #2261
+------------------------------------------------------------------------
+r10781 | clem | 2019-03-20 19:19:05 +0100 (mer., 20 mars 2019) | 1 line
+
+increase the number max of communications (only necessary when bdy + ice + barotropic window = 2)
+------------------------------------------------------------------------
+r10742 | jchanut | 2019-03-12 12:00:06 +0100 (mar., 12 mars 2019) | 2 lines
+
+Bug with ENT scheme #2254
+
+------------------------------------------------------------------------
+r10721 | cetlod | 2019-02-25 11:46:32 +0100 (lun., 25 févr. 2019) | 1 line
+
+trunk : Minor bugfixes on Offline configurations, see ticket 2251
+------------------------------------------------------------------------
+r10720 | cetlod | 2019-02-25 11:46:18 +0100 (lun., 25 févr. 2019) | 1 line
+
+trunk : Minor bugfixes on Offline configurations, see ticket 2251
+------------------------------------------------------------------------
+r10716 | mathiot | 2019-02-22 16:26:39 +0100 (ven., 22 févr. 2019) | 1 line
+
+missing #undef ERRVAL in r10665 (ticket #2228)
+------------------------------------------------------------------------
+r10714 | mathiot | 2019-02-22 16:13:22 +0100 (ven., 22 févr. 2019) | 1 line
+
+fix ticket #1595 included into the trunk
+------------------------------------------------------------------------
+r10702 | mathiot | 2019-02-20 10:44:07 +0100 (mer., 20 févr. 2019) | 1 line
+
+merge branch fix_ticket2238_solution1 into the trunk (ticket #2238)
+------------------------------------------------------------------------
+r10694 | cetlod | 2019-02-18 16:20:20 +0100 (lun., 18 févr. 2019) | 1 line
+
+Minor correction of offline block-namelist
+------------------------------------------------------------------------
+r10691 | mathiot | 2019-02-15 17:41:15 +0100 (ven., 15 févr. 2019) | 1 line
+
+merge fix_ticket2229 into the trunk (ticket #2229)
+------------------------------------------------------------------------
+r10665 | mathiot | 2019-02-13 11:40:04 +0100 (mer., 13 févr. 2019) | 1 line
+
+include fix for ticket #2228
+------------------------------------------------------------------------
+r10647 | smueller | 2019-02-07 15:38:10 +0100 (jeu., 07 févr. 2019) | 2 lines
+
+Merge of changeset [10646] into the trunk; see ticket #2236
+
+------------------------------------------------------------------------
+r10645 | jamesharle | 2019-02-07 10:30:03 +0100 (jeu., 07 févr. 2019) | 2 lines
+
+Update variable name for ticket #2233
+
+------------------------------------------------------------------------
+r10641 | jamesharle | 2019-02-06 13:48:11 +0100 (mer., 06 févr. 2019) | 3 lines
+
+Correction for un-initialised variable wn_25h in 25hour meaning
+diagnostics (see ticket #2233).
+
+------------------------------------------------------------------------
+r10638 | nicolasmartin | 2019-02-05 20:33:19 +0100 (mar., 05 févr. 2019) | 2 lines
+
+Use explicit `@HEAD` for external definitons + HTTPS URLs for Zenodo badges
+
+------------------------------------------------------------------------
+r10629 | smasson | 2019-02-04 17:07:39 +0100 (lun., 04 févr. 2019) | 1 line
+
+trunk: bugfix in mpp for bdy, back to v3.6, see #2213, #2224, #2225
+------------------------------------------------------------------------
+r10627 | nicolasmartin | 2019-02-01 20:23:41 +0100 (ven., 01 févr. 2019) | 2 lines
+
+Right mime-type `text/x-bibtex` and not `text/x-tex`
+
+------------------------------------------------------------------------
+r10626 | nicolasmartin | 2019-02-01 20:19:22 +0100 (ven., 01 févr. 2019) | 2 lines
+
+Fix typo in previous commit
+
+------------------------------------------------------------------------
+r10625 | nicolasmartin | 2019-02-01 20:12:59 +0100 (ven., 01 févr. 2019) | 2 lines
+
+Set mime-type for online rendering
+
+------------------------------------------------------------------------
+r10617 | smasson | 2019-02-01 11:07:11 +0100 (ven., 01 févr. 2019) | 1 line
+
+trunk: missing bugfix on sbccpl and add TOYATM in tools
+------------------------------------------------------------------------
+r10615 | smasson | 2019-01-31 18:15:42 +0100 (jeu., 31 janv. 2019) | 1 line
+
+trunk: improve information/error messages in mppini
+------------------------------------------------------------------------
+r10614 | smueller | 2019-01-31 18:10:55 +0100 (jeu., 31 janv. 2019) | 2 lines
+
+Merge of changeset [10613] into the trunk
+
+------------------------------------------------------------------------
+r10611 | clem | 2019-01-31 15:48:06 +0100 (jeu., 31 janv. 2019) | 1 line
+
+go back to regular EVP instead of adaptive EVP because of model crash
+------------------------------------------------------------------------
+r10610 | nicolasmartin | 2019-01-30 16:51:15 +0100 (mer., 30 janv. 2019) | 2 lines
+
+Add LaTeX requirements file + downloading of `figures` directory if not present when compiling
+
+------------------------------------------------------------------------
+r10609 | nicolasmartin | 2019-01-30 16:22:57 +0100 (mer., 30 janv. 2019) | 2 lines
+
+Add another Python requirements file for online edition of NEMO guide with sphinx-autobuild (`make htmllive`)
+
+------------------------------------------------------------------------
+r10608 | nicolasmartin | 2019-01-30 14:38:36 +0100 (mer., 30 janv. 2019) | 2 lines
+
+Rectify Python3 requirements for guide compilation (tested in virtualenv)
+
+------------------------------------------------------------------------
+
+#######
+Changes
+#######
+
+M       cfgs/AGRIF_DEMO/EXPREF/1_namelist_cfg
+M       cfgs/AGRIF_DEMO/EXPREF/2_namelist_cfg
+M       cfgs/AGRIF_DEMO/EXPREF/3_namelist_cfg
+M       cfgs/AGRIF_DEMO/EXPREF/namelist_cfg
+M       cfgs/AGRIF_DEMO/zooms.bib
+M       cfgs/AMM12/EXPREF/context_nemo.xml
+M       cfgs/AMM12/EXPREF/file_def_nemo-oce.xml
+M       cfgs/AMM12/EXPREF/namelist_cfg
+M       cfgs/C1D_PAPA/EXPREF/namelist_cfg
+M       cfgs/C1D_PAPA/MY_SRC/usrdef_nam.F90
+M       cfgs/GYRE_BFM/EXPREF/context_nemo.xml
+M       cfgs/GYRE_BFM/EXPREF/namelist_cfg
+M       cfgs/GYRE_PISCES/EXPREF/context_nemo.xml
+M       cfgs/GYRE_PISCES/EXPREF/namelist_cfg
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/context_nemo.xml
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/file_def_nemo-ice.xml
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/file_def_nemo-oce.xml
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/file_def_nemo-pisces.xml
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/namelist_cfg
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/namelist_ice_cfg
+M       cfgs/ORCA2_ICE_PISCES/EXPREF/namelist_top_cfg
+M       cfgs/ORCA2_OFF_PISCES/EXPREF/context_nemo.xml
+M       cfgs/ORCA2_OFF_PISCES/EXPREF/file_def_nemo.xml
+M       cfgs/ORCA2_OFF_PISCES/EXPREF/namelist_cfg
+M       cfgs/ORCA2_OFF_PISCES/EXPREF/namelist_top_cfg
+M       cfgs/ORCA2_OFF_TRC/EXPREF/context_nemo.xml
+M       cfgs/ORCA2_OFF_TRC/EXPREF/namelist_cfg
+M       cfgs/ORCA2_SAS_ICE/EXPREF/namelist_cfg
+M       cfgs/README.rst
+M       cfgs/SHARED/domain_def_nemo.xml
+M       cfgs/SHARED/field_def_nemo-ice.xml
+M       cfgs/SHARED/field_def_nemo-oce.xml
+M       cfgs/SHARED/field_def_nemo-pisces.xml
+M       cfgs/SHARED/grid_def_nemo.xml
+M       cfgs/SHARED/namelist_ice_ref
+M       cfgs/SHARED/namelist_pisces_ref
+M       cfgs/SHARED/namelist_ref
+M       cfgs/SHARED/namelist_top_ref
+M       cfgs/SPITZ12/EXPREF/file_def_nemo-ice.xml
+M       cfgs/SPITZ12/EXPREF/file_def_nemo-oce.xml
+M       cfgs/SPITZ12/EXPREF/namelist_cfg
+M       cfgs/SPITZ12/EXPREF/namelist_ice_cfg
+A       doc/bin
+A       doc/bin/manuals_checking.sh
+A       doc/bin/nlsts_releases.sh
+A       doc/bin/nlsts_update.sh
+D       doc/guide_build.sh
+D       doc/latex/DEPS
+D       doc/latex/global
+D       doc/latex/global/ametsoc.bst
+D       doc/latex/global/annex_D.tex
+D       doc/latex/global/coding_rules.tex
+D       doc/latex/global/document.tex
+D       doc/latex/global/epilogue.tex
+D       doc/latex/global/frontpage.tex
+D       doc/latex/global/highlighting.tex
+D       doc/latex/global/index.ist
+D       doc/latex/global/index.tex
+D       doc/latex/global/info_page.tex
+D       doc/latex/global/latexmk.pl
+D       doc/latex/global/new_cmds.tex
+D       doc/latex/global/packages.tex
+D       doc/latex/global/prologue.tex
+D       doc/latex/global/styles.tex
+D       doc/latex/global/todonotes.tex
+M       doc/latex/HTML_latex2html.sh
+D       doc/latex/NEMO/build
+D       doc/latex/NEMO/main/abstract.tex
+A       doc/latex/NEMO/main/ametsoc.bst
+D       doc/latex/NEMO/main/appendices.tex
+D       doc/latex/NEMO/main/authors.tex
+D       doc/latex/NEMO/main/bibliography.bib
+D       doc/latex/NEMO/main/blocks.idx
+D       doc/latex/NEMO/main/chapters.tex
+D       doc/latex/NEMO/main/introduction.tex
+D       doc/latex/NEMO/main/keys.idx
+D       doc/latex/NEMO/main/modules.idx
+A       doc/latex/NEMO/main/NEMO_coding_conv.tex
+A       doc/latex/NEMO/main/NEMO_manual.bib
+A       doc/latex/NEMO/main/NEMO_manual.ist
+A       doc/latex/NEMO/main/NEMO_manual.sty
+M       doc/latex/NEMO/main/NEMO_manual.tex
+D       doc/latex/NEMO/main/parameters.idx
+D       doc/latex/NEMO/main/settings.tex
+D       doc/latex/NEMO/main/subroutines.idx
+A       doc/latex/NEMO/subfiles/annex_A.tex
+A       doc/latex/NEMO/subfiles/annex_B.tex
+A       doc/latex/NEMO/subfiles/annex_C.tex
+A       doc/latex/NEMO/subfiles/annex_D.tex
+A       doc/latex/NEMO/subfiles/annex_E.tex
+A       doc/latex/NEMO/subfiles/annex_iso.tex
+D       doc/latex/NEMO/subfiles/apdx_algos.tex
+D       doc/latex/NEMO/subfiles/apdx_diff_opers.tex
+D       doc/latex/NEMO/subfiles/apdx_DOMAINcfg.tex
+D       doc/latex/NEMO/subfiles/apdx_invariants.tex
+D       doc/latex/NEMO/subfiles/apdx_s_coord.tex
+D       doc/latex/NEMO/subfiles/apdx_triads.tex
+D       doc/latex/NEMO/subfiles/blocks.idx
+M       doc/latex/NEMO/subfiles/chap_ASM.tex
+D       doc/latex/NEMO/subfiles/chap_cfgs.tex
+A       doc/latex/NEMO/subfiles/chap_CONFIG.tex
+M       doc/latex/NEMO/subfiles/chap_conservation.tex
+M       doc/latex/NEMO/subfiles/chap_DIA.tex
+M       doc/latex/NEMO/subfiles/chap_DIU.tex
+M       doc/latex/NEMO/subfiles/chap_DOM.tex
+M       doc/latex/NEMO/subfiles/chap_DYN.tex
+M       doc/latex/NEMO/subfiles/chap_LBC.tex
+M       doc/latex/NEMO/subfiles/chap_LDF.tex
+M       doc/latex/NEMO/subfiles/chap_misc.tex
+M       doc/latex/NEMO/subfiles/chap_model_basics.tex
+M       doc/latex/NEMO/subfiles/chap_model_basics_zstar.tex
+M       doc/latex/NEMO/subfiles/chap_OBS.tex
+M       doc/latex/NEMO/subfiles/chap_SBC.tex
+M       doc/latex/NEMO/subfiles/chap_STO.tex
+M       doc/latex/NEMO/subfiles/chap_time_domain.tex
+M       doc/latex/NEMO/subfiles/chap_TRA.tex
+M       doc/latex/NEMO/subfiles/chap_ZDF.tex
+A       doc/latex/NEMO/subfiles/foreword.tex
+A       doc/latex/NEMO/subfiles/introduction.tex
+D       doc/latex/NEMO/subfiles/keys.idx
+D       doc/latex/NEMO/subfiles/modules.idx
+D       doc/latex/NEMO/subfiles/parameters.idx
+D       doc/latex/NEMO/subfiles/subroutines.idx
+D       doc/latex/SI3/build
+A       doc/latex/SI3/Figures
+A       doc/latex/SI3/Figures/albedo_cloud_correction.png
+A       doc/latex/SI3/Figures/albedo_dependencies.png
+A       doc/latex/SI3/Figures/drafts
+A       doc/latex/SI3/Figures/drafts/ice_cats.ai
+A       doc/latex/SI3/Figures/drafts/Ice_scheme.pptx
+A       doc/latex/SI3/Figures/drafts/radiation_atm_ice_oce.pptx
+A       doc/latex/SI3/Figures/drafts/radiative_transfer.ppt
+A       doc/latex/SI3/Figures/drafts/thermogrid.ppt
+A       doc/latex/SI3/Figures/drafts/time_stepping.pptx
+A       doc/latex/SI3/Figures/g_h.png
+A       doc/latex/SI3/Figures/ice_cats.eps
+A       doc/latex/SI3/Figures/ice_cats_new.eps
+A       doc/latex/SI3/Figures/ice_scheme.png
+A       doc/latex/SI3/Figures/Openwater_eb.png
+A       doc/latex/SI3/Figures/radiation_atm_ice_oce.png
+A       doc/latex/SI3/Figures/radiative_transfer.png
+A       doc/latex/SI3/Figures/scripts
+A       doc/latex/SI3/Figures/scripts/albedo_cloud_correction.m
+A       doc/latex/SI3/Figures/scripts/albedo_hi.m
+A       doc/latex/SI3/Figures/scripts/ice_cats.pro
+A       doc/latex/SI3/Figures/scripts/Thermal_properties.pro
+A       doc/latex/SI3/Figures/Thermal_properties.png
+A       doc/latex/SI3/Figures/thermogrid.eps
+A       doc/latex/SI3/Figures/time_stepping.png
+A       doc/latex/SI3/Figures/yield_curve.png
+D       doc/latex/SI3/main
+D       doc/latex/SI3/main/abstract.tex
+D       doc/latex/SI3/main/appendices.tex
+D       doc/latex/SI3/main/authors.tex
+D       doc/latex/SI3/main/bibliography.bib
+D       doc/latex/SI3/main/blocks.idx
+D       doc/latex/SI3/main/chapters.tex
+D       doc/latex/SI3/main/introduction.tex
+D       doc/latex/SI3/main/keys.idx
+D       doc/latex/SI3/main/modules.idx
+D       doc/latex/SI3/main/parameters.idx
+D       doc/latex/SI3/main/settings.tex
+D       doc/latex/SI3/main/SI3_manual.tex
+D       doc/latex/SI3/main/subroutines.idx
+A       doc/latex/SI3/namelists/namalb
+A       doc/latex/SI3/namelists/namdia
+A       doc/latex/SI3/namelists/namdyn
+M       doc/latex/SI3/namelists/namdyn_adv
+A       doc/latex/SI3/namelists/namdyn_rdgrft
+A       doc/latex/SI3/namelists/namdyn_rhg
+A       doc/latex/SI3/namelists/namforcing
+A       doc/latex/SI3/namelists/namini
+A       doc/latex/SI3/namelists/namitd
+A       doc/latex/SI3/namelists/nampar
+D       doc/latex/SI3/namelists/namsbc
+A       doc/latex/SI3/namelists/namthd
+A       doc/latex/SI3/namelists/namthd_da
+A       doc/latex/SI3/namelists/namthd_do
+A       doc/latex/SI3/namelists/namthd_pnd
+A       doc/latex/SI3/namelists/namthd_sal
+A       doc/latex/SI3/namelists/namthd_zdf
+D       doc/latex/SI3/subfiles
+D       doc/latex/SI3/subfiles/abstract_foreword.tex
+D       doc/latex/SI3/subfiles/blocks.idx
+D       doc/latex/SI3/subfiles/chap_bdy_agrif.tex
+D       doc/latex/SI3/subfiles/chap_domain.tex
+D       doc/latex/SI3/subfiles/chap_dynamics.tex
+D       doc/latex/SI3/subfiles/chap_interfaces.tex
+D       doc/latex/SI3/subfiles/chap_miscellaneous.tex
+D       doc/latex/SI3/subfiles/chap_model_basics.tex
+D       doc/latex/SI3/subfiles/chap_output_diagnostics.tex
+D       doc/latex/SI3/subfiles/chap_radiative_transfer.tex
+D       doc/latex/SI3/subfiles/chap_ridging_rafting.tex
+D       doc/latex/SI3/subfiles/chap_single_category_use.tex
+D       doc/latex/SI3/subfiles/chap_thermo.tex
+D       doc/latex/SI3/subfiles/chap_transport.tex
+D       doc/latex/SI3/subfiles/keys.idx
+D       doc/latex/SI3/subfiles/modules.idx
+D       doc/latex/SI3/subfiles/parameters.idx
+D       doc/latex/SI3/subfiles/subroutines.idx
+D       doc/latex/SI3/subfiles/todolist.tex
+A       doc/latex/SI3/tex_main
+A       doc/latex/SI3/tex_main/SI3_manual.bbl
+A       doc/latex/SI3/tex_main/SI3_manual.tex
+A       doc/latex/SI3/tex_sub
+A       doc/latex/SI3/tex_sub/abstract_foreword.tex
+A       doc/latex/SI3/tex_sub/ametsoc.bst
+A       doc/latex/SI3/tex_sub/chap_bdy_agrif.tex
+A       doc/latex/SI3/tex_sub/chap_domain.tex
+A       doc/latex/SI3/tex_sub/chap_dynamics.tex
+A       doc/latex/SI3/tex_sub/chap_interfaces.tex
+A       doc/latex/SI3/tex_sub/chap_miscellaneous.tex
+A       doc/latex/SI3/tex_sub/chap_model_basics.tex
+A       doc/latex/SI3/tex_sub/chap_output_diagnostics.tex
+A       doc/latex/SI3/tex_sub/chap_radiative_transfer.tex
+A       doc/latex/SI3/tex_sub/chap_ridging_rafting.tex
+A       doc/latex/SI3/tex_sub/chap_single_category_use.tex
+A       doc/latex/SI3/tex_sub/chap_thermo.tex
+A       doc/latex/SI3/tex_sub/chap_transport.tex
+A       doc/latex/SI3/tex_sub/introduction.tex
+A       doc/latex/SI3/tex_sub/todolist.tex
+D       doc/latex/.svnignore
+D       doc/latex/TOP/build
+D       doc/latex/TOP/main
+D       doc/latex/TOP/main/abstract.tex
+D       doc/latex/TOP/main/appendices.tex
+D       doc/latex/TOP/main/authors.tex
+D       doc/latex/TOP/main/bibliography.bib
+D       doc/latex/TOP/main/blocks.idx
+D       doc/latex/TOP/main/chapters.tex
+D       doc/latex/TOP/main/introduction.tex
+D       doc/latex/TOP/main/keys.idx
+D       doc/latex/TOP/main/modules.idx
+D       doc/latex/TOP/main/parameters.idx
+D       doc/latex/TOP/main/settings.tex
+D       doc/latex/TOP/main/subroutines.idx
+D       doc/latex/TOP/main/TOP_manual.tex
+D       doc/latex/TOP/subfiles
+D       doc/latex/TOP/subfiles/blocks.idx
+D       doc/latex/TOP/subfiles/byrd-co2-2008.txt
+D       doc/latex/TOP/subfiles/edc-co2.txt
+D       doc/latex/TOP/subfiles/keys.idx
+D       doc/latex/TOP/subfiles/miscellaneous.tex
+D       doc/latex/TOP/subfiles/model_description.tex
+D       doc/latex/TOP/subfiles/model_setup.tex
+D       doc/latex/TOP/subfiles/modules.idx
+D       doc/latex/TOP/subfiles/parameters.idx
+D       doc/latex/TOP/subfiles/subroutines.idx
+D       doc/manual_build.sh
+M       doc/namelists/namage
+M       doc/namelists/namalb
+M       doc/namelists/nambdy
+M       doc/namelists/nambdy_dta
+M       doc/namelists/namberg
+M       doc/namelists/namc14_fcg
+M       doc/namelists/namc14_sbc
+M       doc/namelists/namc14_typ
+M       doc/namelists/namc1d_uvd
+M       doc/namelists/namcfc
+A       doc/namelists/namdct
+M       doc/namelists/namdia
+D       doc/namelists/nam_diadct
+M       doc/namelists/nam_diaharm
+M       doc/namelists/namdom
+D       doc/namelists/namdom_domcfg
+M       doc/namelists/namdta_dyn
+M       doc/namelists/namdyn
+M       doc/namelists/namdyn_adv
+M       doc/namelists/namdyn_rdgrft
+M       doc/namelists/namdyn_rhg
+M       doc/namelists/namdyn_vor
+M       doc/namelists/namflo
+A       doc/namelists/namforcing
+M       doc/namelists/namhsb
+M       doc/namelists/namini
+M       doc/namelists/namitd
+M       doc/namelists/namlobdet
+M       doc/namelists/namlobdom
+M       doc/namelists/namlobnut
+M       doc/namelists/namlobopt
+M       doc/namelists/namlobphy
+M       doc/namelists/namlobrat
+M       doc/namelists/namlobsed
+M       doc/namelists/namlobzoo
+M       doc/namelists/nammpp
+M       doc/namelists/namobs
+M       doc/namelists/namp4zlim
+M       doc/namelists/namp4zmes
+M       doc/namelists/namp4zmort
+M       doc/namelists/namp4zprod
+M       doc/namelists/namp4zzoo
+M       doc/namelists/namp5zlim
+M       doc/namelists/namp5zmes
+M       doc/namelists/namp5zmort
+M       doc/namelists/namp5zprod
+M       doc/namelists/namp5zquota
+M       doc/namelists/namp5zzoo
+M       doc/namelists/nampar
+M       doc/namelists/nampisatm
+M       doc/namelists/nampisbio
+M       doc/namelists/nampiscal
+M       doc/namelists/nampisdmp
+M       doc/namelists/nampisext
+M       doc/namelists/nampisfer
+M       doc/namelists/nampisice
+M       doc/namelists/nampislig
+M       doc/namelists/nampismass
+M       doc/namelists/nampismod
+M       doc/namelists/nampisopt
+M       doc/namelists/nampispoc
+M       doc/namelists/nampisrem
+M       doc/namelists/nampissbc
+M       doc/namelists/namrun
+M       doc/namelists/namsbc
+M       doc/namelists/namsbc_apr
+M       doc/namelists/namsbc_blk
+M       doc/namelists/namsbc_flx
+M       doc/namelists/namsbc_iif
+M       doc/namelists/namsbc_isf
+M       doc/namelists/namsbc_rnf
+M       doc/namelists/namsbc_sas
+M       doc/namelists/namsbc_ssr
+M       doc/namelists/namsbc_wave
+M       doc/namelists/namthd
+M       doc/namelists/namthd_da
+M       doc/namelists/namthd_do
+M       doc/namelists/namthd_pnd
+M       doc/namelists/namthd_sal
+M       doc/namelists/namthd_zdf
+M       doc/namelists/namtra_eiv
+M       doc/namelists/namtra_mle
+M       doc/namelists/namtra_qsr
+M       doc/namelists/namtrc
+M       doc/namelists/namtrc_adv
+M       doc/namelists/namtrc_bc
+M       doc/namelists/namtrc_bdy
+M       doc/namelists/namtrc_dmp
+M       doc/namelists/namtrc_dta
+M       doc/namelists/namtrc_ice
+M       doc/namelists/namtrc_ldf
+M       doc/namelists/namtrc_rad
+M       doc/namelists/namtrc_run
+M       doc/namelists/namtrc_snk
+M       doc/namelists/namtrc_trd
+M       doc/namelists/namtsd
+M       doc/namelists/namwad
+D       doc/namelists/namzgr_domcfg
+D       doc/namelists/namzgr_sco_domcfg
+A       doc/PDF_creation.sh
+D       doc/README.rst
+M       doc/rst/Makefile
+M       doc/rst/README.rst
+M       doc/rst/requirements.txt
+M       doc/rst/source/configurations.bib
+M       doc/rst/source/conf.py
+M       doc/rst/source/definitions.rst
+M       doc/rst/source/global.rst
+M       doc/rst/source/_templates/layout.html
+A       doc/.svnignore
+D       doc/tools
+D       doc/tools/check_pkg.py
+D       doc/tools/manuals_checking.sh
+D       doc/tools/nlsts_releases.sh
+D       doc/tools/nlsts_update.sh
+D       doc/tools/shr_func.sh
+M       INSTALL.rst
+M       README.rst
+M       REFERENCES.bib
+M       src/ICE/ice1d.F90
+M       src/ICE/icealb.F90
+M       src/ICE/icecor.F90
+M       src/ICE/icectl.F90
+M       src/ICE/icedia.F90
+M       src/ICE/icedyn_adv.F90
+M       src/ICE/icedyn_adv_pra.F90
+M       src/ICE/icedyn_adv_umx.F90
+M       src/ICE/icedyn.F90
+M       src/ICE/icedyn_rdgrft.F90
+M       src/ICE/icedyn_rhg_evp.F90
+M       src/ICE/icedyn_rhg.F90
+M       src/ICE/ice.F90
+M       src/ICE/iceistate.F90
+M       src/ICE/iceitd.F90
+M       src/ICE/icerst.F90
+M       src/ICE/icesbc.F90
+M       src/ICE/icestp.F90
+M       src/ICE/icethd_da.F90
+M       src/ICE/icethd_dh.F90
+M       src/ICE/icethd_do.F90
+M       src/ICE/icethd.F90
+M       src/ICE/icethd_pnd.F90
+M       src/ICE/icethd_sal.F90
+M       src/ICE/icethd_zdf_bl99.F90
+M       src/ICE/icethd_zdf.F90
+M       src/ICE/iceupdate.F90
+M       src/ICE/icevar.F90
+M       src/ICE/icewri.F90
+M       src/NST/agrif_top_update.F90
+M       src/NST/agrif_user.F90
+M       src/OCE/ASM/asminc.F90
+M       src/OCE/BDY/bdydta.F90
+M       src/OCE/BDY/bdydyn2d.F90
+M       src/OCE/BDY/bdydyn3d.F90
+M       src/OCE/BDY/bdyice.F90
+M       src/OCE/BDY/bdyini.F90
+M       src/OCE/BDY/bdylib.F90
+M       src/OCE/BDY/bdy_oce.F90
+M       src/OCE/BDY/bdytides.F90
+M       src/OCE/BDY/bdytra.F90
+M       src/OCE/BDY/bdyvol.F90
+M       src/OCE/C1D/c1d.F90
+M       src/OCE/C1D/dtauvd.F90
+M       src/OCE/C1D/dyndmp.F90
+M       src/OCE/C1D/step_c1d.F90
+M       src/OCE/CRS/crsdom.F90
+M       src/OCE/CRS/crsini.F90
+M       src/OCE/CRS/crslbclnk.F90
+M       src/OCE/DIA/dia25h.F90
+M       src/OCE/DIA/diacfl.F90
+M       src/OCE/DIA/diadct.F90
+M       src/OCE/DIA/diaharm.F90
+M       src/OCE/DIA/diahsb.F90
+M       src/OCE/DIA/diahth.F90
+M       src/OCE/DIA/diaptr.F90
+M       src/OCE/DIA/diatmb.F90
+M       src/OCE/DIA/diawri.F90
+M       src/OCE/DIU/diurnal_bulk.F90
+M       src/OCE/DOM/domain.F90
+M       src/OCE/DOM/dommsk.F90
+M       src/OCE/DOM/domvvl.F90
+M       src/OCE/DOM/domwri.F90
+M       src/OCE/DOM/dtatsd.F90
+M       src/OCE/DOM/iscplhsb.F90
+M       src/OCE/DOM/iscplini.F90
+M       src/OCE/DYN/dynadv.F90
+M       src/OCE/DYN/dynhpg.F90
+M       src/OCE/DYN/dynkeg.F90
+M       src/OCE/DYN/dynspg.F90
+M       src/OCE/DYN/dynspg_ts.F90
+M       src/OCE/DYN/dynvor.F90
+M       src/OCE/DYN/dynzdf.F90
+M       src/OCE/DYN/sshwzv.F90
+M       src/OCE/DYN/wet_dry.F90
+M       src/OCE/FLO/flo4rk.F90
+M       src/OCE/FLO/floats.F90
+M       src/OCE/FLO/floblk.F90
+M       src/OCE/FLO/flodom.F90
+M       src/OCE/FLO/flo_oce.F90
+M       src/OCE/FLO/florst.F90
+M       src/OCE/FLO/flowri.F90
+M       src/OCE/ICB/icbclv.F90
+M       src/OCE/ICB/icbini.F90
+M       src/OCE/ICB/icblbc.F90
+M       src/OCE/ICB/icb_oce.F90
+M       src/OCE/ICB/icbrst.F90
+M       src/OCE/ICB/icbstp.F90
+M       src/OCE/ICB/icbutl.F90
+M       src/OCE/IOM/in_out_manager.F90
+M       src/OCE/IOM/iom.F90
+M       src/OCE/IOM/iom_nf90.F90
+M       src/OCE/IOM/restart.F90
+M       src/OCE/LBC/lbclnk.F90
+A       src/OCE/LBC/lbc_lnk_generic.h90
+M       src/OCE/LBC/lbc_lnk_multi_generic.h90
+M       src/OCE/LBC/lbcnfd.F90
+M       src/OCE/LBC/lbc_nfd_nogather_generic.h90
+M       src/OCE/LBC/lib_mpp.F90
+A       src/OCE/LBC/mpp_bdy_generic.h90
+M       src/OCE/LBC/mppini.F90
+M       src/OCE/LBC/mpp_lnk_generic.h90
+M       src/OCE/LBC/mpp_loc_generic.h90
+M       src/OCE/LBC/mpp_nfd_generic.h90
+M       src/OCE/LDF/ldfdyn.F90
+M       src/OCE/LDF/ldftra.F90
+M       src/OCE/module_example
+M       src/OCE/nemogcm.F90
+M       src/OCE/OBS/diaobs.F90
+M       src/OCE/SBC/fldread.F90
+M       src/OCE/SBC/sbcapr.F90
+M       src/OCE/SBC/sbcblk.F90
+M       src/OCE/SBC/sbccpl.F90
+M       src/OCE/SBC/sbcflx.F90
+M       src/OCE/SBC/sbcice_cice.F90
+M       src/OCE/SBC/sbcice_if.F90
+M       src/OCE/SBC/sbcisf.F90
+M       src/OCE/SBC/sbcmod.F90
+M       src/OCE/SBC/sbc_oce.F90
+M       src/OCE/SBC/sbcrnf.F90
+M       src/OCE/SBC/sbcssr.F90
+M       src/OCE/SBC/sbcwave.F90
+M       src/OCE/SBC/tideini.F90
+M       src/OCE/SBC/updtide.F90
+M       src/OCE/step.F90
+M       src/OCE/STO/stopar.F90
+M       src/OCE/stpctl.F90
+M       src/OCE/timing.F90
+M       src/OCE/TRA/eosbn2.F90
+M       src/OCE/TRA/traadv.F90
+M       src/OCE/TRA/traadv_fct.F90
+M       src/OCE/TRA/trabbc.F90
+M       src/OCE/TRA/trabbl.F90
+M       src/OCE/TRA/tradmp.F90
+M       src/OCE/TRA/traldf_iso.F90
+M       src/OCE/TRA/tramle.F90
+M       src/OCE/TRA/traqsr.F90
+M       src/OCE/TRD/trdini.F90
+M       src/OCE/TRD/trdmxl.F90
+M       src/OCE/TRD/trdmxl_rst.F90
+M       src/OCE/TRD/trdvor.F90
+M       src/OCE/USR/usrdef_nam.F90
+M       src/OCE/ZDF/zdfdrg.F90
+M       src/OCE/ZDF/zdfgls.F90
+M       src/OCE/ZDF/zdfiwm.F90
+M       src/OCE/ZDF/zdfosm.F90
+M       src/OCE/ZDF/zdfphy.F90
+M       src/OCE/ZDF/zdfric.F90
+M       src/OCE/ZDF/zdftke.F90
+M       src/OFF/dtadyn.F90
+M       src/OFF/nemogcm.F90
+M       src/SAO/nemogcm.F90
+M       src/SAO/sao_data.F90
+M       src/SAS/diawri.F90
+M       src/SAS/nemogcm.F90
+M       src/SAS/sbcssm.F90
+M       src/SAS/step.F90
+M       src/TOP/AGE/trcnam_age.F90
+M       src/TOP/C14/trcnam_c14.F90
+M       src/TOP/CFC/trcnam_cfc.F90
+M       src/TOP/PISCES/P2Z/p2zbio.F90
+M       src/TOP/PISCES/P2Z/p2zopt.F90
+M       src/TOP/PISCES/P2Z/p2zsed.F90
+M       src/TOP/PISCES/P4Z/p4zfechem.F90
+M       src/TOP/PISCES/P4Z/p4zflx.F90
+M       src/TOP/PISCES/P4Z/p4zligand.F90
+M       src/TOP/PISCES/P4Z/p4zlim.F90
+M       src/TOP/PISCES/P4Z/p4zlys.F90
+M       src/TOP/PISCES/P4Z/p4zmeso.F90
+M       src/TOP/PISCES/P4Z/p4zmicro.F90
+M       src/TOP/PISCES/P4Z/p4zmort.F90
+M       src/TOP/PISCES/P4Z/p4zopt.F90
+M       src/TOP/PISCES/P4Z/p4zpoc.F90
+M       src/TOP/PISCES/P4Z/p4zprod.F90
+M       src/TOP/PISCES/P4Z/p4zrem.F90
+M       src/TOP/PISCES/P4Z/p4zsbc.F90
+M       src/TOP/PISCES/P4Z/p4zsed.F90
+M       src/TOP/PISCES/P4Z/p4zsms.F90
+M       src/TOP/PISCES/P4Z/p5zlim.F90
+M       src/TOP/PISCES/P4Z/p5zmeso.F90
+M       src/TOP/PISCES/P4Z/p5zmicro.F90
+M       src/TOP/PISCES/P4Z/p5zmort.F90
+M       src/TOP/PISCES/P4Z/p5zprod.F90
+M       src/TOP/PISCES/SED/sedini.F90
+M       src/TOP/PISCES/SED/sedrst.F90
+M       src/TOP/PISCES/sms_pisces.F90
+M       src/TOP/PISCES/trcice_pisces.F90
+M       src/TOP/PISCES/trcini_pisces.F90
+M       src/TOP/PISCES/trcnam_pisces.F90
+M       src/TOP/README.rst
+M       src/TOP/trcbc.F90
+M       src/TOP/trcbdy.F90
+M       src/TOP/trcdta.F90
+M       src/TOP/trcice.F90
+M       src/TOP/trcini.F90
+M       src/TOP/trcnam.F90
+M       src/TOP/trcrst.F90
+M       src/TOP/TRP/trcadv.F90
+M       src/TOP/TRP/trcdmp.F90
+M       src/TOP/TRP/trcldf.F90
+M       src/TOP/TRP/trcrad.F90
+M       src/TOP/TRP/trcsbc.F90
+M       src/TOP/TRP/trcsink.F90
+M       src/TOP/TRP/trdmxl_trc.F90
+M       tests/BENCH/EXPREF/best_jpni_jpnj_eorca025
+M       tests/BENCH/EXPREF/best_jpni_jpnj_eorca12
+M       tests/BENCH/EXPREF/namelist_cfg_orca025_like
+M       tests/BENCH/EXPREF/namelist_cfg_orca12_like
+M       tests/BENCH/EXPREF/namelist_cfg_orca1_like
+M       tests/BENCH/EXPREF/namelist_ice_cfg
+M       tests/BENCH/EXPREF/namelist_top_cfg
+M       tests/BENCH/EXPREF/sh_bench
+M       tests/BENCH/EXPREF/submit_bench
+A       tests/BENCH/MY_SRC/diawri.F90
+M       tests/BENCH/MY_SRC/usrdef_istate.F90
+M       tests/BENCH/MY_SRC/usrdef_nam.F90
+M       tests/BENCH/MY_SRC/usrdef_zgr.F90
+M       tests/BENCH/MY_SRC/zdfiwm.F90
+M       tests/CANAL/EXPREF/context_nemo.xml
+M       tests/CANAL/EXPREF/namelist_cfg
+M       tests/CANAL/MY_SRC/diawri.F90
+M       tests/CANAL/MY_SRC/domvvl.F90
+M       tests/CANAL/MY_SRC/usrdef_nam.F90
+M       tests/ICE_ADV1D/EXPREF/namelist_cfg
+M       tests/ICE_ADV1D/EXPREF/namelist_cfg_120pts
+M       tests/ICE_ADV1D/EXPREF/namelist_cfg_240pts
+M       tests/ICE_ADV1D/EXPREF/namelist_cfg_60pts
+M       tests/ICE_ADV1D/MY_SRC/usrdef_nam.F90
+M       tests/ICE_ADV2D/EXPREF/namelist_cfg
+M       tests/ICE_ADV2D/MY_SRC/usrdef_nam.F90
+M       tests/ICE_AGRIF/EXPREF/1_namelist_cfg
+M       tests/ICE_AGRIF/EXPREF/file_def_nemo-ice.xml
+M       tests/ICE_AGRIF/EXPREF/namelist_cfg
+M       tests/ICE_AGRIF/MY_SRC/usrdef_nam.F90
+M       tests/ISOMIP/EXPREF/context_nemo.xml
+M       tests/ISOMIP/EXPREF/namelist_cfg
+M       tests/ISOMIP/MY_SRC/usrdef_nam.F90
+M       tests/LOCK_EXCHANGE/EXPREF/context_nemo.xml
+M       tests/LOCK_EXCHANGE/EXPREF/namelist_FCT2_flux_ubs_cfg
+M       tests/LOCK_EXCHANGE/MY_SRC/usrdef_nam.F90
+M       tests/OVERFLOW/EXPREF/context_nemo.xml
+M       tests/OVERFLOW/EXPREF/namelist_sco_FCT2_flux_cen-ahm1000_cfg
+M       tests/OVERFLOW/EXPREF/namelist_sco_FCT2_flux_ubs_cfg
+M       tests/OVERFLOW/EXPREF/namelist_sco_FCT4_flux_ubs_cfg
+M       tests/OVERFLOW/EXPREF/namelist_zps_FCT2_flux_ubs_cfg
+M       tests/OVERFLOW/EXPREF/namelist_zps_FCT4_flux_ubs_cfg
+M       tests/OVERFLOW/EXPREF/namelist_zps_FCT4_vect_een_cfg
+M       tests/OVERFLOW/MY_SRC/usrdef_nam.F90
+M       tests/OVERFLOW/MY_SRC/usrdef_zgr.F90
+M       tests/README.rst
+M       tests/test_cases.bib
+M       tests/VORTEX/EXPREF/1_namelist_cfg
+M       tests/VORTEX/EXPREF/context_nemo.xml
+M       tests/VORTEX/EXPREF/namelist_cfg
+M       tests/VORTEX/MY_SRC/domvvl.F90
+M       tests/VORTEX/MY_SRC/usrdef_nam.F90
+M       tests/WAD/EXPREF/context_nemo.xml
+M       tests/WAD/EXPREF/namelist_cfg
+M       tests/WAD/MY_DOCS/references.bib
+A       tests/WAD/MY_SRC/bdyini.F90
+M       tests/WAD/MY_SRC/usrdef_nam.F90

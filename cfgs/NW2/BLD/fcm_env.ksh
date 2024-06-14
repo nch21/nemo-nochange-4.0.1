@@ -1,0 +1,1 @@
+/home/ning/work/nemo-nochange-4.0.1/cfgs/NW2/BLD/fcm_env.sh
