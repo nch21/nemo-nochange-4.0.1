@@ -49,7 +49,7 @@ MODULE sbcblk
    USE sbcblk_algo_ice_easy
    USE sbcblk_algo_ice_an05
    USE sbcblk_algo_ice_lu12
-   USE sbcblk_algo_ice_lg15
+   !USE sbcblk_algo_ice_lg15
 #endif
    USE sbcblk_algo_ncar     ! => turb_ncar     : NCAR - (formerly known as CORE, Large & Yeager, 2009)
    USE sbcblk_algo_coare3p0 ! => turb_coare3p0 : COAREv3.0 (Fairall et al. 2003)
@@ -227,7 +227,7 @@ CONTAINS
          &                 ln_crt_fbk, rn_stau_a, rn_stau_b,                          &   ! current feedback
          &                 ln_humi_sph, ln_humi_dpt, ln_humi_rlh, ln_tair_pot,        &
          &                 ln_Cx_ice_cst, ln_Cx_ice_EASY, rn_Cd_i, rn_Ce_i, rn_Ch_i,  &
-         &                 ln_Cx_ice_AN05, ln_Cx_ice_LU12, ln_Cx_ice_LG15,            &
+         &                 ln_Cx_ice_AN05, ln_Cx_ice_LU12,             &
          &                 cn_dir,                                                    &
          &                 sn_wndi, sn_wndj, sn_qsr, sn_qlw ,                         &   ! input fields
          &                 sn_tair, sn_humi, sn_prec, sn_snow, sn_slp,                &
@@ -326,9 +326,7 @@ CONTAINS
       IF( ln_Cx_ice_LU12 ) THEN
          nblk_ice =  np_ice_lu12    ;   ioptio = ioptio + 1
       ENDIF
-      IF( ln_Cx_ice_LG15 ) THEN
-         nblk_ice =  np_ice_lg15   ;   ioptio = ioptio + 1
-      ENDIF
+
       IF( ioptio /= 1 )   CALL ctl_stop( 'sbc_blk_init: Choose one and only one ice-atm bulk algorithm' )
 #endif
 
@@ -456,7 +454,7 @@ CONTAINS
             WRITE(numout,*) '      use ice-atm bulk coeff. Neutral+Stab / Brodeau      ln_Cx_ice_EASY = ', ln_Cx_ice_EASY
             WRITE(numout,*) '      use ice-atm bulk coeff. from Andreas et al., 2005   ln_Cx_ice_AN05 = ', ln_Cx_ice_AN05
             WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes et al., 2012    ln_Cx_ice_LU12 = ', ln_Cx_ice_LU12
-            WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes & Gryanik, 2015 ln_Cx_ice_LG15 = ', ln_Cx_ice_LG15
+            !WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes & Gryanik, 2015 ln_Cx_ice_LG15 = ', ln_Cx_ice_LG15
          ENDIF
          WRITE(numout,*)
          SELECT CASE( nblk_ice )              !* Print the choice of bulk algorithm
@@ -472,7 +470,7 @@ CONTAINS
                & CALL ctl_stop( 'Be realistic in your pick of Cd_N_ice, Ce_N_ice & Ch_N_ice ! (0 < Cx < 1.E-2)')
          CASE( np_ice_an05 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Andreas et al, 2005'
          CASE( np_ice_lu12 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes et al, 2012'
-         CASE( np_ice_lg15 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes & Gryanik, 2015'
+         !CASE( np_ice_lg15 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes & Gryanik, 2015'
          END SELECT
 #endif
          !#LB.
@@ -1076,9 +1074,9 @@ CONTAINS
          CALL turb_ice_lu12( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &
             &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
          !!
-      CASE( np_ice_lg15 )  ! calculate new drag from Lupkes(2015) equations
-         CALL turb_ice_lg15( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &
-            &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
+      !CASE( np_ice_lg15 )  ! calculate new drag from Lupkes(2015) equations
+      !   CALL turb_ice_lg15( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &
+      !      &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
          !!
       END SELECT
 
