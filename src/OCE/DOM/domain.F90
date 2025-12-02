@@ -672,6 +672,11 @@ CONTAINS
       !
       CALL iom_rstput( 0, 0, inum, 'ff_f' , ff_f , ktype = jp_r8 )   ! coriolis factor
       CALL iom_rstput( 0, 0, inum, 'ff_t' , ff_t , ktype = jp_r8 )
+      CALL iom_rstput( 0, 0, inum, 'fmask' , fmask , ktype = jp_r8 )
+      CALL iom_rstput( 0, 0, inum, 'umask' , umask , ktype = jp_r8 )
+      CALL iom_rstput( 0, 0, inum, 'vmask' , vmask , ktype = jp_r8 )
+      CALL iom_rstput( 0, 0, inum, 'tmask' , tmask , ktype = jp_r8 )
+
       !
       !                             !==  vertical mesh  ==!
       !                                                     

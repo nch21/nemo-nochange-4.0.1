@@ -337,7 +337,8 @@ CONTAINS
       INTEGER  ::   iku, ikv                         ! temporary integers
       REAL(wp) ::   zcoef0, zcoef1, zcoef2, zcoef3   ! temporary scalars
       REAL(wp), DIMENSION(jpi,jpj,jpk) ::  zhpi, zhpj
-      REAL(wp), DIMENSION(jpi,jpj) :: zgtsu, zgtsv, zgru, zgrv
+      REAL(wp), DIMENSION(jpi,jpj) ::  zgru, zgrv
+      REAL(wp), DIMENSION(jpi,jpj,jpts) :: zgtsu, zgtsv
       !!----------------------------------------------------------------------
       !
       IF( kt == nit000 ) THEN

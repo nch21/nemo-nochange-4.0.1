@@ -1,0 +1,514 @@
+23a24,26
+> 
+>    !! nch : forcing for NW2
+>    USE cubic_interp    ! interpolation of piecewise cubic polynomials
+27,28d29
+<    !! nch : forcing for NW2
+<    USE cubic_interp    ! interpolation of piecewise cubic polynomials
+29a31
+> 
+34,36d35
+<    PUBLIC   usrdef_sbc_oce1
+<    PUBLIC   usrdef_sbc_oce2
+<    PUBLIC   usrdef_sbc_oce3
+40,46d38
+<    REAL(wp), PUBLIC ::   ztimemax1_USRDEFSBC, ztimemin1_USRDEFSBC   ! 21th June, and 21th decem. if date0 = 1st january
+<    REAL(wp), PUBLIC ::   ztimemax2_USRDEFSBC, ztimemin2_USRDEFSBC   ! 21th June, and 21th decem. if date0 = 1st january
+<    REAL(wp), PUBLIC ::   zemp_s_USRDEFSBC, zemp_n_USRDEFSBC, zemp_sais_USRDEFSBC, ztstar_USRDEFSBC
+<    REAL(wp), PUBLIC ::   ztrp_USRDEFSBC, zconv_USRDEFSBC
+<    REAL(wp), PUBLIC ::   zsumemp_USRDEFSBC, zsurf_USRDEFSBC
+<    REAL(wp), PUBLIC ::   zyydd_USRDEFSBC    
+< 
+92,148d83
+< 	  CALL usrdef_sbc_oce1(kt, &
+<                            jpi, jpj, jpk, jpts, jpim1, &
+<                            tsb, gphit, &
+<                            qsr, qns, emp, &
+<                            ztimemax1, ztimemin1, ztimemax2, ztimemin2, zemp_s, & 
+<                            zemp_n, zemp_sais, ztstar, ztrp, zconv, zyydd)
+< 
+<       CALL usrdef_sbc_oce3(jpi, jpj, jpk, tmask, emp, zsumemp, zsurf)
+< 
+<       CALL usrdef_sbc_oce2(kt, &
+<                         jpi, jpj, jpk, jpim1, jpjm1, jpkm1, &
+<                         tmask, gphiu, gphiv, &
+<                         qns, emp, sfx, sst_m, utau, vtau, taum, wndm, &
+<                         ztimemax1, ztimemin1, ztimemax2, ztimemin2, zemp_s, zemp_n, &
+<                         zemp_sais, ztstar, ztrp, zconv, zsumemp, zsurf, zyydd)
+< 
+<       CALL lbc_lnk_multi( 'usrdef_sbc', taum(:,:), 'T', 1. , wndm(:,:), 'T', 1. )
+<       !
+<    END SUBROUTINE usrdef_sbc_oce
+< 
+< 
+<    SUBROUTINE usrdef_sbc_oce1(kt, &
+<                               jpi, jpj, jpk, jpts, jpim1, &
+<                               tsb, gphit, &
+<                               qsr, qns, emp, &
+<                               ztimemax1, ztimemin1, ztimemax2, ztimemin2, zemp_s, & 
+<                               zemp_n, zemp_sais, ztstar, ztrp, zconv, zyydd)
+< 
+<       !!self
+<       INTEGER, INTENT(in) ::   kt   ! ocean time step
+<       !!external
+<       !mod par_oce
+<       INTEGER, INTENT(in)  ::   jpi, jpj, jpk, jpts
+<       INTEGER, INTENT(in)  ::   jpim1
+<       !mod oce
+<       REAL(wp), DIMENSION(jpi,jpj,jpk, jpts) ::   tsb
+<       !mod dom_oce
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(in) ::   gphit
+<       !mod sbc_oce
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   qsr, qns
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   emp
+<       !!local transfer
+<       REAL(wp) ::   ztimemax1, ztimemin1   ! 21th June, and 21th decem. if date0 = 1st january
+<       REAL(wp) ::   ztimemax2, ztimemin2   ! 21th June, and 21th decem. if date0 = 1st january
+<       REAL(wp) ::   zemp_s, zemp_n, zemp_sais, ztstar
+<       REAL(wp) ::   ztrp, zconv
+<       REAL(wp) ::   zyydd                 ! number of days in one year
+<       !!local
+<       INTEGER  ::   ji, jj                 ! dummy loop indices
+<       INTEGER  ::   zyear0                 ! initial year 
+<       INTEGER  ::   zmonth0                ! initial month
+<       INTEGER  ::   zday0                  ! initial day
+<       INTEGER  ::   zday_year0             ! initial day since january 1st
+<       REAL(wp) ::   zcos_sais1, zcos_sais2, t_star
+<       REAL(wp) ::   ztime                  ! time in hour
+< 
+<        !!---------------------------------------------------------------------
+153c88,91
+<       integer, parameter :: sst_nsize =4, emp_nsize = 7 
+---
+>       integer, parameter :: wind_nsize = 8, sst_nsize =4, emp_nsize = 7 
+>       real(wp), dimension(wind_nsize) :: ytau,ytau_t   ! latitude of interpolation
+>       real(wp), dimension(wind_nsize) :: taud   ! wind intensity of interpolation
+>       real(wp), dimension(wind_nsize) :: taud_t   ! wind intensity of interpolation
+157a96,103
+>       
+>       !data ytau /-75.,-65.,-45.,-15.,0.,15.,45.,70./
+>       !data taud /-0.004,0.,.25,-0.1,-.02,-.1,.1,0./
+>       !data ysst /-140.,-68.,0.,140./
+>       !data sstd /-30.,-3.,28.3,-30./
+>       !data yemp /-75.,-55.,-20.,5.,30.,50.,80./
+>       ![0,-0.5,1,-1.2,1,-0.5,0]
+>       !data empd /0.,-0.5,1.1095246481,-1.2,1.,-0.5,0./
+159,160c105
+<      
+<       ysst = (/-140.,-68.,0.,140./) 
+---
+>       ysst = (/-140.,-68.,0.,140./)
+164c109,111
+< 
+---
+>       ytau = (/-75.,-65.,-45.,-15.,0.,15.,45.,70./)
+>       taud = (/-0.004,0.,.25,-0.1,-.02,-.1,.1,0./)
+>       
+166d112
+< 
+167a114
+> 
+171a119
+> 
+176c124
+<       
+---
+> 
+179,180c127,128
+<       &      - (nyear  - 1) * rjjhh * zyydd             !  minus years since beginning of experiment (in hours)
+<       
+---
+>          &      - (nyear  - 1) * rjjhh * zyydd             !  minus years since beginning of experiment (in hours)
+> 
+186c134
+<       
+---
+> 
+192c140
+<       
+---
+> 
+196c144
+<       
+---
+> 
+200c148
+<  ! nch : forcing for NW2
+---
+>       ! nch : forcing for NW2
+214,330c162,177
+<       DO ji = 1, jpi
+<       ! domain from 15 deg to 50 deg between 27 and 28  degC at 15N, -3
+<       ! and 13 degC at 50N 53.5 + or - 11 = 1/4 period :
+<       ! 64.5 in summer, 42.5 in winter
+<       t_star = zTstar * ( 1. + 1. / 50. * zcos_sais2 )                &
+<       &                    * COS( rpi * (gphit(ji,jj) - 5.)               &
+<       &                    / ( 53.5 * ( 1 + 11 / 53.5 * zcos_sais2 ) * 2.) )
+<       t_star = itau(ysst_t,sstd_t,gphit(ji,jj))
+<       ! 23.5 deg : tropics
+<       qsr (ji,jj) =  230 * COS( 3.1415 * ( gphit(ji,jj) - 23.5 * zcos_sais1 ) / ( 0.9 * 180 ) )
+<       qsr (ji,jj) = MAX( qsr(ji,jj), 0. )
+<       qns (ji,jj) = ztrp * ( tsb(ji,jj,1,jp_tem) - t_star ) - qsr(ji,jj)
+<       IF( gphit(ji,jj) >= 14.845 .AND. 37.2 >= gphit(ji,jj) ) THEN    ! zero at 37.8 deg, max at 24.6 deg
+<       emp  (ji,jj) =   zemp_S * zconv   &
+<         &         * SIN( rpi / 2 * (gphit(ji,jj) - 37.2) / (24.6 - 37.2) )  &
+<         &         * ( 1 - zemp_sais / zemp_S * zcos_sais1)
+<       ELSE
+<       emp (ji,jj) =  - zemp_N * zconv   &
+<         &         * SIN( rpi / 2 * (gphit(ji,jj) - 37.2) / (46.8 - 37.2) )  &
+<         &         * ( 1 - zemp_sais / zemp_N * zcos_sais1 )
+<       ENDIF
+<      emp (ji,jj) = itau(yemp,empd_t,gphit(ji,jj)) * zconv
+<       END DO
+<       END DO
+< 	
+< 
+<    END SUBROUTINE usrdef_sbc_oce1
+< 
+<    SUBROUTINE usrdef_sbc_oce3(jpi, jpj, jpk, tmask, emp, zsumemp, zsurf)
+< 
+<       !!external
+<       !mod par_oce
+<       INTEGER, INTENT(in)  ::   jpi, jpj, jpk
+<       !mod dom_oce
+<       REAL(wp), DIMENSION(jpi,jpj,jpk), INTENT(in) :: tmask
+<       !mod sbc_oce
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(in) ::   emp
+<       !!local transfer
+<       REAL(wp), INTENT(inout) ::   zsumemp, zsurf
+< 
+<        INTEGER :: ji, jj
+< 
+< 	REAL(wp) ::   sum
+< 
+<        sum = 0.0
+<       zsumemp = GLOB_SUM( 'usrdef_sbc', emp  (:,:)   )
+<      ! zsumemp = 0.
+<    write(numout,*), "nch zsumemp = ", zsumemp
+< 
+<       DO jj = 2, jpj-1
+<        DO ji = 2, jpi-1
+< 		sum = sum + emp(ji,jj)
+< 	ENDDO
+< 	ENDDO
+< 
+< 	
+< 
+<       zsurf   = GLOB_SUM( 'usrdef_sbc', tmask(:,:,1) )
+<       write(numout,*), "nch zsurf = ", zsurf
+< 
+< 
+<    END SUBROUTINE usrdef_sbc_oce3     
+< 
+<    SUBROUTINE usrdef_sbc_oce2(kt, &
+<                               jpi, jpj, jpk, jpim1, jpjm1, jpkm1, &
+<                               tmask, gphiu, gphiv, &
+<                               qns, emp, sfx, sst_m, utau, vtau, taum, wndm, &
+<                               ztimemax1, ztimemin1, ztimemax2, ztimemin2, zemp_s, zemp_n, &
+<                               zemp_sais, ztstar, ztrp, zconv, zsumemp, zsurf, zyydd)
+< 
+<       !!self
+<       INTEGER, INTENT(in) ::   kt   ! ocean time step
+<       !!external
+<       !mod par_oce
+<       INTEGER, INTENT(in)  ::   jpi, jpj, jpk
+<       INTEGER, INTENT(in)  ::   jpim1, jpjm1, jpkm1
+<       !mod dom_oce
+<       REAL(wp), DIMENSION(jpi,jpj,jpk), INTENT(in) :: tmask
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(in) ::   gphiu, gphiv
+<       !mod sbc_oce
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   qns
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   emp
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   sfx
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   sst_m
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   utau, vtau	
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   taum
+<       REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   wndm
+<       !!local transfer
+<       REAL(wp) ::   ztimemax1, ztimemin1   ! 21th June, and 21th decem. if date0 = 1st january
+<       REAL(wp) ::   ztimemax2, ztimemin2   ! 21th June, and 21th decem. if date0 = 1st january
+<       REAL(wp) ::   zemp_s, zemp_n, zemp_sais, ztstar
+<       REAL(wp) ::   ztrp, zconv
+<       REAL(wp) ::   zsumemp, zsurf
+<       REAL(wp) ::   zyydd                 ! number of days in one year
+<       !!local
+<       INTEGER  ::   ji, jj                 ! dummy loop indices
+<       INTEGER  ::   zyear0                 ! initial year 
+<       INTEGER  ::   zmonth0                ! initial month
+<       INTEGER  ::   zday0                  ! initial day
+<       INTEGER  ::   zday_year0             ! initial day since january 1st
+<       REAL(wp) ::   ztau     , ztau_sais   ! wind intensity and of the seasonal cycle
+<       REAL(wp) ::   ztime                  ! time in hour
+<       REAL(wp) ::   ztimemax , ztimemin    ! 21th June, and 21th decem. if date0 = 1st january
+<       REAL(wp) ::   ztaun                  ! intensity
+<       REAL(wp) ::   zrhoa  = 1.22         ! Air density kg/m3
+<       REAL(wp) ::   zcdrag = 1.5e-3       ! drag coefficient
+<       REAL(wp) ::   ztx, zty, zmod, zcoef ! temporary variables
+< !!---------------------------------------------------------------------
+<       REAL(wp) :: ztrel     !relativity time in a year
+<       REAL(wp) :: zyrel     !relativity y in domain
+<       integer, parameter :: wind_nsize = 8
+<       real(wp), dimension(wind_nsize) :: ytau,ytau_t   ! latitude of interpolation
+<       real(wp), dimension(wind_nsize) :: taud   ! wind intensity of interpolation
+<       real(wp), dimension(wind_nsize) :: taud_t   ! wind intensity of interpolation
+<       ytau = (/-75.,-65.,-45.,-15.,0.,15.,45.,70./)
+<       taud = (/-0.004,0.,.25,-0.1,-.02,-.1,.1,0./)
+< 
+---
+>          DO ji = 1, jpi
+>             t_star = itau(ysst_t,sstd_t,gphit(ji,jj))
+>             ! 23.5 deg : tropics
+>             qsr (ji,jj) =  230 * COS( 3.1415 * ( gphit(ji,jj) - 23.5 * zcos_sais1 ) / ( 0.9 * 180 ) )
+>             qsr (ji,jj) = MAX( qsr(ji,jj), 0. )
+>             qns (ji,jj) = ztrp * ( tsb(ji,jj,1,jp_tem) - t_star ) - qsr(ji,jj)
+>             
+>             ! jj是3的倍数
+>             ! if (ji==17 .and. mod(jj,5)==0) then
+>             !   write(numout,*)'                    nch debug jj,ji      = ',jj,ji
+>             !   write(numout,*)'                    nch debug gphit      = ',gphit(ji,jj)
+>             !   !write(numout,*)'                    nch debug qsr        = ',qsr(ji,jj)
+>             !   !write(numout,*)'                    nch debug qns        = ',qns(ji,jj)
+>             !   write(numout,*)'                    nch debug t_star     = ',t_star
+>             !   write(numout,*)'                    nch debug tsb        = ',tsb(ji,jj,1,jp_tem)
+>             !ENDIF
+332c179,189
+< zsumemp = zsumemp / zsurf         ! Default GYRE configuration
+---
+>             !IF( gphit(ji,jj) >= 14.845 .AND. 37.2 >= gphit(ji,jj) ) THEN    ! zero at 37.8 deg, max at 24.6 deg
+>              !  emp  (ji,jj) =   zemp_S * zconv   &
+>               !    &         * SIN( rpi / 2 * (gphit(ji,jj) - 37.2) / (24.6 - 37.2) )  &
+>                !   &         * ( 1 - zemp_sais / zemp_S * zcos_sais1)
+>             !ELSE
+>              !  emp (ji,jj) =  - zemp_N * zconv   &
+>               !    &         * SIN( rpi / 2 * (gphit(ji,jj) - 37.2) / (46.8 - 37.2) )  &
+>                !   &         * ( 1 - zemp_sais / zemp_N * zcos_sais1 )
+>             !ENDIF
+>             emp (ji,jj) = itau(yemp,empd_t,gphit(ji,jj)) * zconv
+>             
+334,346c191,193
+< !write(*,*) "rank = ",mpprank, " zsurf = ", zsurf
+< !write(*,*) "rank = ",mpprank, " zsumemp = ", zsumemp
+< !Do jj = 1,jpj
+< !Do ji = 1,jpi
+<     !write(*,*) "emp ji,jj =",ji,jj,emp(ji,jj)
+< !ENDDO
+< !ENDDO
+< ! freshwater (mass flux) and update of qns with heat content of emp
+< !IF(level_number == 0) THEN
+<     emp (:,:) = emp(:,:) - zsumemp * tmask(:,:,1)        ! freshwater flux (=0 in domain average)
+< !ENDIF
+< sfx (:,:) = 0.0_wp                                   ! no salt flux
+< qns (:,:) = qns(:,:) - emp(:,:) * sst_m(:,:) * rcp   ! evap and precip are at SST
+---
+>          END DO
+>       END DO
+>       ! end
+347a195,202
+>       zsumemp = GLOB_SUM( 'usrdef_sbc', emp  (:,:)   ) 
+>       zsurf   = GLOB_SUM( 'usrdef_sbc', tmask(:,:,1) ) 
+>       zsumemp = zsumemp / zsurf         ! Default GYRE configuration
+> 
+>       ! freshwater (mass flux) and update of qns with heat content of emp
+>       emp (:,:) = emp(:,:) - zsumemp * tmask(:,:,1)        ! freshwater flux (=0 in domain average)
+>       sfx (:,:) = 0.0_wp                                   ! no salt flux
+>       qns (:,:) = qns(:,:) - emp(:,:) * sst_m(:,:) * rcp   ! evap and precip are at SST
+350,380c205,236
+< ! ---------------------------- !
+< !       momentum fluxes        !
+< ! ---------------------------- !
+< ! same wind as in Wico
+< zyear0  =   ndate0 / 10000
+< zmonth0 = ( ndate0 - zyear0 * 10000 ) / 100
+< zday0   =   ndate0 - zyear0 * 10000 - zmonth0 * 100
+< !Calculates nday_year, day since january 1st
+< zday_year0 = (zmonth0-1)*30.+zday0
+< 
+< !accumulates days of previous months of this year
+< ! day (in hours) since january the 1st
+< ztime = FLOAT( kt ) * rdt / (rmmss * rhhmm)  &  ! incrementation in hour
+< &     - (nyear - 1) * rjjhh * zyydd          !  - nber of hours the precedent years
+< ztimemax = ((5.*30.)+21.)* 24.               ! 21th june     in hours
+< ztimemin = ztimemax + rjjhh * zyydd / 2      ! 21th december in hours
+< !                                            ! NB: rjjhh * zyydd / 4 = 1 seasonal cycle in hours
+< 
+< !!! mean intensity at 0.105 ; srqt(2) because projected with 45deg angle
+< !ztau = 0.105 / SQRT( 2. )
+< !! seasonal oscillation intensity
+< !ztau_sais = 0.015
+< !ztaun = ztau - ztau_sais * COS( (ztime - ztimemax) / (ztimemin - ztimemax) * rpi )
+< !DO jj = 1, jpj
+< !DO ji = 1, jpi
+< !! domain from 15deg to 50deg and 1/2 period along 14deg
+< !! so 5/4 of half period with seasonal cycle
+< !utau(ji,jj) = - ztaun * SIN( rpi * (gphiu(ji,jj) - 15.) / (29.-15.) )
+< !vtau(ji,jj) =   ztaun * SIN( rpi * (gphiv(ji,jj) - 15.) / (29.-15.) )
+< !END DO
+< !END DO
+---
+>       ! ---------------------------- !
+>       !       momentum fluxes        !
+>       ! ---------------------------- !
+>       ! same wind as in Wico
+>       !test date0 : ndate0 = 010203
+>       zyear0  =   ndate0 / 10000
+>       zmonth0 = ( ndate0 - zyear0 * 10000 ) / 100
+>       zday0   =   ndate0 - zyear0 * 10000 - zmonth0 * 100
+>       !Calculates nday_year, day since january 1st
+>       zday_year0 = (zmonth0-1)*30.+zday0
+> 
+>       !accumulates days of previous months of this year
+>       ! day (in hours) since january the 1st
+>       ztime = FLOAT( kt ) * rdt / (rmmss * rhhmm)  &  ! incrementation in hour
+>          &     - (nyear - 1) * rjjhh * zyydd          !  - nber of hours the precedent years
+>       ztimemax = ((5.*30.)+21.)* 24.               ! 21th june     in hours
+>       ztimemin = ztimemax + rjjhh * zyydd / 2      ! 21th december in hours
+>       !                                            ! NB: rjjhh * zyydd / 4 = 1 seasonal cycle in hours
+>       
+>       !!! mean intensity at 0.105 ; srqt(2) because projected with 45deg angle
+>       !ztau = 0.105 / SQRT( 2. )
+>       !! seasonal oscillation intensity
+>       !ztau_sais = 0.015
+>       !ztaun = ztau - ztau_sais * COS( (ztime - ztimemax) / (ztimemin - ztimemax) * rpi )
+>       !DO jj = 1, jpj
+>       !DO ji = 1, jpi
+>       !! domain from 15deg to 50deg and 1/2 period along 14deg
+>       !! so 5/4 of half period with seasonal cycle
+>       !utau(ji,jj) = - ztaun * SIN( rpi * (gphiu(ji,jj) - 15.) / (29.-15.) )
+>       !vtau(ji,jj) =   ztaun * SIN( rpi * (gphiv(ji,jj) - 15.) / (29.-15.) )
+>       !END DO
+>       !END DO
+382c238
+<  !! nch : forcing for NW2
+---
+>       !! nch : forcing for NW2
+391c247,248
+< END DO
+---
+> 
+>       END DO
+401a259,309
+>       !!!!!!!!!!!!!!!!!!!!!!!!!
+> 
+>       ! module of wind stress and wind speed at T-point
+>       zcoef = 1. / ( zrhoa * zcdrag ) 
+>       DO jj = 2, jpjm1
+>          DO ji = fs_2, fs_jpim1   ! vect. opt.
+>             ztx = utau(ji-1,jj  ) + utau(ji,jj) 
+>             zty = vtau(ji  ,jj-1) + vtau(ji,jj) 
+>             zmod = 0.5 * SQRT( ztx * ztx + zty * zty )
+>             taum(ji,jj) = zmod
+>             wndm(ji,jj) = SQRT( zmod * zcoef )
+>          END DO
+>       END DO
+>       CALL lbc_lnk_multi( 'usrdef_sbc', taum(:,:), 'T', 1. , wndm(:,:), 'T', 1. )
+> 
+>       ! ---------------------------------- !
+>       !  control print at first time-step  !
+>       ! ---------------------------------- !
+>       IF( kt == nit000 .AND. lwp ) THEN 
+>          WRITE(numout,*)
+>          WRITE(numout,*)'usrdef_sbc_oce : NW2 analytical surface fluxes for NW2 configuration'               
+>          WRITE(numout,*)'~~~~~~~~~~~ ' 
+>          WRITE(numout,*)'           nyear      = ', nyear
+>          WRITE(numout,*)'           nmonth     = ', nmonth
+>          WRITE(numout,*)'           nday       = ', nday
+>          WRITE(numout,*)'           nday_year  = ', nday_year
+>          WRITE(numout,*)'           ztime      = ', ztime
+>          WRITE(numout,*)'           ztimemax   = ', ztimemax
+>          WRITE(numout,*)'           ztimemin   = ', ztimemin
+>          WRITE(numout,*)'           ztimemax1  = ', ztimemax1
+>          WRITE(numout,*)'           ztimemin1  = ', ztimemin1
+>          WRITE(numout,*)'           ztimemax2  = ', ztimemax2
+>          WRITE(numout,*)'           ztimemin2  = ', ztimemin2
+>          WRITE(numout,*)'           zyear0     = ', zyear0
+>          WRITE(numout,*)'           zmonth0    = ', zmonth0
+>          WRITE(numout,*)'           zday0      = ', zday0
+>          WRITE(numout,*)'           zday_year0 = ', zday_year0
+>          WRITE(numout,*)'           zyydd      = ', zyydd
+>          WRITE(numout,*)'           zemp_S     = ', zemp_S
+>          WRITE(numout,*)'           zemp_N     = ', zemp_N
+>          WRITE(numout,*)'           zemp_sais  = ', zemp_sais
+>          WRITE(numout,*)'           zTstar     = ', zTstar
+>          WRITE(numout,*)'           zsumemp    = ', zsumemp
+>          WRITE(numout,*)'           zsurf      = ', zsurf
+>          WRITE(numout,*)'           ztrp       = ', ztrp
+>          WRITE(numout,*)'           zconv      = ', zconv
+>          WRITE(numout,*)'           ndastp     = ', ndastp
+>          WRITE(numout,*)'           adatrj     = ', adatrj
+>       ENDIF
+>       !
+>    END SUBROUTINE usrdef_sbc_oce
+403d310
+< !!!!!!!!!!!!!!!!!!!!!!!!!
+405,453d311
+< ! module of wind stress and wind speed at T-point
+< zcoef = 1. / ( zrhoa * zcdrag ) 
+< !write(*,*) "rank = ",mpprank, " zcoef = ", zcoef
+< !write(*,*) "rank = ",mpprank, " index= ", fs_2, fs_jpim1
+< DO jj = 2, jpjm1
+< DO ji = fs_2, fs_jpim1   ! vect. opt.
+< ztx = utau(ji-1,jj  ) + utau(ji,jj) 
+< zty = vtau(ji  ,jj-1) + vtau(ji,jj) 
+< zmod = 0.5 * SQRT( ztx * ztx + zty * zty )
+< taum(ji,jj) = zmod
+< wndm(ji,jj) = SQRT( zmod * zcoef )
+< END DO
+< END DO   
+< 
+< !
+< IF( kt == nit000 .AND. lwp ) THEN 
+< WRITE(numout,*)
+< WRITE(numout,*)'usrdef_sbc_oce : analytical surface fluxes for GYRE configuration'               
+< WRITE(numout,*)'~~~~~~~~~~~ ' 
+< WRITE(numout,*)'           nyear      = ', nyear
+< WRITE(numout,*)'           nmonth     = ', nmonth
+< WRITE(numout,*)'           nday       = ', nday
+< WRITE(numout,*)'           nday_year  = ', nday_year
+< WRITE(numout,*)'           ztime      = ', ztime
+< WRITE(numout,*)'           ztimemax   = ', ztimemax
+< WRITE(numout,*)'           ztimemin   = ', ztimemin
+< WRITE(numout,*)'           ztimemax1  = ', ztimemax1
+< WRITE(numout,*)'           ztimemin1  = ', ztimemin1
+< WRITE(numout,*)'           ztimemax2  = ', ztimemax2
+< WRITE(numout,*)'           ztimemin2  = ', ztimemin2
+< WRITE(numout,*)'           zyear0     = ', zyear0
+< WRITE(numout,*)'           zmonth0    = ', zmonth0
+< WRITE(numout,*)'           zday0      = ', zday0
+< WRITE(numout,*)'           zday_year0 = ', zday_year0
+< WRITE(numout,*)'           zyydd      = ', zyydd
+< WRITE(numout,*)'           zemp_S     = ', zemp_S
+< WRITE(numout,*)'           zemp_N     = ', zemp_N
+< WRITE(numout,*)'           zemp_sais  = ', zemp_sais
+< WRITE(numout,*)'           zTstar     = ', zTstar
+< WRITE(numout,*)'           zsumemp    = ', zsumemp
+< WRITE(numout,*)'           zsurf      = ', zsurf
+< WRITE(numout,*)'           ztrp       = ', ztrp
+< WRITE(numout,*)'           zconv      = ', zconv
+< WRITE(numout,*)'           ndastp     = ', ndastp
+< WRITE(numout,*)'           adatrj     = ', adatrj
+< ENDIF	  
+< !
+< END SUBROUTINE usrdef_sbc_oce2
+<    
+463a322,340
+>       !!-------------------------------------------------------------------
+>       !!                  ***  ROUTINE ice_sbc_flx  ***
+>       !!
+>       !! ** Purpose : provide surface boundary condition for sea ice (flux)
+>       !!
+>       !! ** Action  : It provides the following fields used in sea ice model:
+>       !!                emp_oce , emp_ice                        = E-P over ocean and sea ice                    [Kg/m2/s]
+>       !!                sprecip                                  = solid precipitation                           [Kg/m2/s]
+>       !!                evap_ice                                 = sublimation                                   [Kg/m2/s]
+>       !!                qsr_tot , qns_tot                        = solar & non solar heat flux (total)           [W/m2]
+>       !!                qsr_ice , qns_ice                        = solar & non solar heat flux over ice          [W/m2]
+>       !!                dqns_ice                                 = non solar  heat sensistivity                  [W/m2]
+>       !!                qemp_oce, qemp_ice, qprec_ice, qevap_ice = sensible heat (associated with evap & precip) [W/m2]
+>       !!            + some fields that are not used outside this module: 
+>       !!                qla_ice                                  = latent heat flux over ice                     [W/m2]
+>       !!                dqla_ice                                 = latent heat sensistivity                      [W/m2]
+>       !!                tprecip                                  = total  precipitation                          [Kg/m2/s]
+>       !!                alb_ice                                  = albedo above sea ice
+>       !!-------------------------------------------------------------------
+466a344
+> 

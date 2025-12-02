@@ -115,9 +115,12 @@ CONTAINS
          !
          IF( kt == nit000 ) THEN                      ! initialisation
             !                                         ! Read the corrective factor on precipitations (fwfold)
-            CALL ctl_opn( inum, 'EMPave_old.dat', 'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
-            READ ( inum, "(24X,I8,2ES24.16)" ) iyear, a_fwb_b, a_fwb
-            CLOSE( inum )
+            !CALL ctl_opn( inum, 'EMPave_old.dat', 'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
+            !READ ( inum, "(24X,I8,2ES24.16)" ) iyear, a_fwb_b, a_fwb
+            !CLOSE( inum ) nch change
+            a_fwb = 0.
+            a_fwb_b = 0.
+            iyear = 0
             fwfold = a_fwb                            ! current year freshwater budget correction
             !                                         ! estimate from the previous year budget
             IF(lwp)WRITE(numout,*)
@@ -126,12 +129,12 @@ CONTAINS
             IF(lwp)WRITE(numout,*)'          year = ',iyear-2, ' freshwater budget read       = ', a_fwb_b
          ENDIF   
          !                                         ! Update fwfold if new year start
-         ikty = 365 * 86400 / rdt                  !!bug  use of 365 days leap year or 360d year !!!!!!!
+         ikty = 360 * 86400 / rdt                  !!bug  use of 365 days leap year or 360d year !!!!!!!
          IF( MOD( kt, ikty ) == 0 ) THEN
             a_fwb_b = a_fwb                           ! mean sea level taking into account the ice+snow
                                                       ! sum over the global domain
             a_fwb   = glob_sum( 'sbcfwb', e1e2t(:,:) * ( sshn(:,:) + snwice_mass(:,:) * r1_rau0 ) )
-            a_fwb   = a_fwb * 1.e+3 / ( area * rday * 365. )     ! convert in Kg/m3/s = mm/s
+            a_fwb   = a_fwb * 1.e+3 / ( area * rday * 360. )     ! convert in Kg/m3/s = mm/s
 !!gm        !                                                      !!bug 365d year 
             fwfold =  a_fwb                           ! current year freshwater budget correction
             !                                         ! estimate from the previous year budget
