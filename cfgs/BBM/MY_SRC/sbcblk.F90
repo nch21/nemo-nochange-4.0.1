@@ -388,9 +388,9 @@ CONTAINS
          ELSE                                                  !-- used field  --!
             IF( sf(jfpr)%ln_tint )   ALLOCATE( sf(jfpr)%fdta(jpi,jpj,ipka,2) )   ! allocate array for temporal interpolation
             !
-            IF( sf(jfpr)%freqh > 0. .AND. MOD( NINT(3600. * sf(jfpr)%freqh), nn_fsbc * NINT(rn_Dt) ) /= 0 )   &
-         &  CALL ctl_warn( 'sbc_blk_init: sbcmod timestep rn_Dt*nn_fsbc is NOT a submultiple of atmospheric forcing frequency.',   &
-         &                 '               This is not ideal. You should consider changing either rn_Dt or nn_fsbc value...' )
+            IF( sf(jfpr)%freqh > 0. .AND. MOD( NINT(3600. * sf(jfpr)%freqh), nn_fsbc * NINT(rn_rdt) ) /= 0 )   &
+         &  CALL ctl_warn( 'sbc_blk_init: sbcmod timestep rn_rdt*nn_fsbc is NOT a submultiple of atmospheric forcing frequency.',   &
+         &                 '               This is not ideal. You should consider changing either rn_rdt or nn_fsbc value...' )
          ENDIF
       END DO
       !

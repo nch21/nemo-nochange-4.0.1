@@ -354,10 +354,10 @@ CONTAINS
          CALL ctl_stop( 'STOP', 'par_init: in coupled mode, nn_cats_cpl should be either 1 or jpl' )
       ENDIF
       !
-      rDt_ice   = REAL(nn_fsbc) * rn_Dt          !--- sea-ice timestep and its inverse
+      rDt_ice   = REAL(nn_fsbc) * rn_rdt          !--- sea-ice timestep and its inverse
       r1_rdtice = 1._wp / rDt_ice
       IF(lwp) WRITE(numout,*)
-      IF(lwp) WRITE(numout,*) '      ice timestep rDt_ice = nn_fsbc*rn_Dt = ', rDt_ice
+      IF(lwp) WRITE(numout,*) '      ice timestep rDt_ice = nn_fsbc*rn_rdt = ', rDt_ice
       !
       r1_nlay_i = 1._wp / REAL( nlay_i, wp )   !--- inverse of nlay_i and nlay_s
       r1_nlay_s = 1._wp / REAL( nlay_s, wp )

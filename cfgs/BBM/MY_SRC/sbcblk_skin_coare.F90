@@ -198,7 +198,7 @@ CONTAINS
 
          ! Okay test on updated absorbed flux:
          !#LB: remove??? has a strong influence !!!
-         IF( (.NOT. l_exit).AND.(Qnt_ac(ji,jj) + zQabs*rn_Dt <= 0._wp) ) THEN
+         IF( (.NOT. l_exit).AND.(Qnt_ac(ji,jj) + zQabs*rn_rdt <= 0._wp) ) THEN
             l_exit       = .TRUE.
             l_destroy_wl = .TRUE.
          ENDIF
@@ -210,14 +210,14 @@ CONTAINS
             ! 1/ A warm layer already exists (dT>0) but it is cooling down because Qabs<0
             ! 2/ Regardless of WL formed (dT==0 or dT>0), we are in the process to initiate one or warm further it !
 
-            ztac = Tau_ac(ji,jj) + MAX(.002_wp , pTau(ji,jj))*rn_Dt      ! updated momentum integral
+            ztac = Tau_ac(ji,jj) + MAX(.002_wp , pTau(ji,jj))*rn_rdt      ! updated momentum integral
             !PRINT *, '#LBD: updated value for Tac=',  REAL(ztac,4)
 
             !! We update the value of absorbtion and zQabs:
             !! some part is useless if Qsw=0 !!!
             DO jl = 1, 5
                zQabs = frac_solar_abs(zHwl)*pQsw(ji,jj) + pQnsol(ji,jj)
-               zqac  = Qnt_ac(ji,jj) + zQabs*rn_Dt ! updated heat absorbed
+               zqac  = Qnt_ac(ji,jj) + zQabs*rn_rdt ! updated heat absorbed
                IF( zqac <= 0._wp ) EXIT
                zHwl = MAX( MIN( Hwl_max , zcd1*ztac/SQRT(zqac)) , 0.1_wp ) ! Warm-layer depth
             END DO
