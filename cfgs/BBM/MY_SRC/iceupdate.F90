@@ -185,7 +185,7 @@ CONTAINS
          !                                               ! new mass per unit area
          snwice_mass  (ji,jj) = tmask(ji,jj,1) * ( rhos * vt_s(ji,jj) + rhoi * vt_i(ji,jj) + rhow * (vt_ip(ji,jj) + vt_il(ji,jj)) )
          !                                               ! time evolution of snow+ice mass
-         snwice_fmass (ji,jj) = ( snwice_mass(ji,jj) - snwice_mass_b(ji,jj) ) * r1_Dt_ice
+         snwice_fmass (ji,jj) = ( snwice_mass(ji,jj) - snwice_mass_b(ji,jj) ) * r1_rdtice
 
       END_2D
 
@@ -311,7 +311,7 @@ CONTAINS
       IF( iom_use('hfxcndtop'  ) )   CALL iom_put( 'hfxcndtop'  , SUM( qcn_ice_top * a_i_b, dim=3 ) )   ! Surface conduction flux
       IF( iom_use('hfxmelt'    ) )   CALL iom_put( 'hfxmelt'    , SUM( qml_ice     * a_i_b, dim=3 ) )   ! Surface melt flux
       IF( iom_use('hfxldmelt'  ) )   CALL iom_put( 'hfxldmelt'  ,      fhld        * at_i_b         )   ! Heat in lead for ice melting
-      IF( iom_use('hfxldgrow'  ) )   CALL iom_put( 'hfxldgrow'  ,      qlead       * r1_Dt_ice      )   ! Heat in lead for ice growth
+   IF( iom_use('hfxldgrow'  ) )   CALL iom_put( 'hfxldgrow'  ,      qlead       * r1_rdtice      )   ! Heat in lead for ice growth
 
       ! controls
       !---------

@@ -322,7 +322,7 @@ CONTAINS
          zmassU          = 0.5_wp * ( zm1 * e1e2t(ji,jj) + zm2 * e1e2t(ji+1,jj) ) * r1_e1e2u(ji,jj) * umask(ji,jj,1)
          
          ! Mass per unit area divided by time step
-         zmassU_t(ji,jj) = zmassU * r1_Dt_ice
+         zmassU_t(ji,jj) = zmassU * r1_rdtice
          
          ! Acceleration term contribution to RHS (depends on velocity at previous time step)            
          zmU_t(ji,jj)    = zmassU_t(ji,jj) * u_ice(ji,jj)
@@ -359,7 +359,7 @@ CONTAINS
          zmassV          = 0.5_wp * ( zm1 * e1e2t(ji,jj) + zm3 * e1e2t(ji,jj+1) ) * r1_e1e2v(ji,jj) * vmask(ji,jj,1)
          
          ! Mass per unit area divided by time step
-         zmassV_t(ji,jj) = zmassV * r1_Dt_ice
+         zmassV_t(ji,jj) = zmassV * r1_rdtice
          
          ! Acceleration term contribution to RHS (depends on velocity at previous time step)            
          zmV_t(ji,jj)    = zmassV_t(ji,jj) * v_ice(ji,jj)

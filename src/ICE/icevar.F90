@@ -664,10 +664,10 @@ CONTAINS
       WHERE( poa_i(1:npti,:)   < 0._wp .AND. poa_i(1:npti,:)   > -epsi10 )   poa_i(1:npti,:)   = 0._wp   ! oa_i must be >= 0
       WHERE( pe_i (1:npti,:,:) < 0._wp .AND. pe_i (1:npti,:,:) > -epsi06 )   pe_i (1:npti,:,:) = 0._wp   !  e_i must be >= 0
       WHERE( pe_s (1:npti,:,:) < 0._wp .AND. pe_s (1:npti,:,:) > -epsi06 )   pe_s (1:npti,:,:) = 0._wp   !  e_s must be >= 0
-      IF( ln_pnd_H12 ) THEN
-         WHERE( pa_ip(1:npti,:) < 0._wp .AND. pa_ip(1:npti,:) > -epsi10 )    pa_ip(1:npti,:)   = 0._wp   ! a_ip must be >= 0
-         WHERE( pv_ip(1:npti,:) < 0._wp .AND. pv_ip(1:npti,:) > -epsi10 )    pv_ip(1:npti,:)   = 0._wp   ! v_ip must be >= 0
-      ENDIF
+      !IF( ln_pnd_H12 ) THEN
+      !   WHERE( pa_ip(1:npti,:) < 0._wp .AND. pa_ip(1:npti,:) > -epsi10 )    pa_ip(1:npti,:)   = 0._wp   ! a_ip must be >= 0
+      !   WHERE( pv_ip(1:npti,:) < 0._wp .AND. pv_ip(1:npti,:) > -epsi10 )    pv_ip(1:npti,:)   = 0._wp   ! v_ip must be >= 0
+      !ENDIF
       !
    END SUBROUTINE ice_var_roundoff
    

@@ -118,9 +118,9 @@ CONTAINS
       ELSEIF( icount == 1 ) THEN
          !
          ! -- mass, salt and heat diags -- !
-         zdiag_mass = ( zchk3(1) - pdiag_v ) * r1_Dt_ice + ( zchk3(4) - pdiag_fv )
-         zdiag_salt = ( zchk3(2) - pdiag_s ) * r1_Dt_ice + ( zchk3(5) - pdiag_fs )
-         zdiag_heat = ( zchk3(3) - pdiag_t ) * r1_Dt_ice + ( zchk3(6) - pdiag_ft )
+         zdiag_mass = ( zchk3(1) - pdiag_v ) * r1_rdtice + ( zchk3(4) - pdiag_fv )
+         zdiag_salt = ( zchk3(2) - pdiag_s ) * r1_rdtice + ( zchk3(5) - pdiag_fs )
+         zdiag_heat = ( zchk3(3) - pdiag_t ) * r1_rdtice + ( zchk3(6) - pdiag_ft )
 
          ! -- max concentration diag -- !
          ztmp3(:,:,7) = SUM( a_i, dim=3 )
@@ -255,20 +255,20 @@ CONTAINS
       ELSEIF( icount == 1 ) THEN
 
          ! -- mass diag -- !
-         zdiag_mass =   ( SUM( v_i * rhoi + v_s * rhos + ( v_ip + v_il ) * rhow, dim=3 ) - pdiag_v ) * r1_Dt_ice    &
+         zdiag_mass =   ( SUM( v_i * rhoi + v_s * rhos + ( v_ip + v_il ) * rhow, dim=3 ) - pdiag_v ) * r1_rdtice    &
             &         + ( wfx_bog + wfx_bom + wfx_sum + wfx_sni + wfx_opw + wfx_res + wfx_dyn + wfx_lam + wfx_pnd + &
             &             wfx_snw_sni + wfx_snw_sum + wfx_snw_dyn + wfx_snw_sub + wfx_ice_sub + wfx_spr )           &
             &         - pdiag_fv
          IF( MAXVAL( ABS(zdiag_mass) ) > rchk_m * rn_icechk_cel )   ll_stop_m = .TRUE.
          !
          ! -- salt diag -- !
-         zdiag_salt =   ( SUM( sv_i * rhoi , dim=3 ) - pdiag_s ) * r1_Dt_ice                                                  &
+         zdiag_salt =   ( SUM( sv_i * rhoi , dim=3 ) - pdiag_s ) * r1_rdtice                                                  &
             &         + ( sfx_bri + sfx_bog + sfx_bom + sfx_sum + sfx_sni + sfx_opw + sfx_res + sfx_dyn + sfx_sub + sfx_lam ) &
             &         - pdiag_fs
          IF( MAXVAL( ABS(zdiag_salt) ) > rchk_s * rn_icechk_cel )   ll_stop_s = .TRUE.
          !
          ! -- heat diag -- !
-         zdiag_heat =   ( SUM( SUM( e_i, dim=4 ), dim=3 ) + SUM( SUM( e_s, dim=4 ), dim=3 ) - pdiag_t ) * r1_Dt_ice &
+         zdiag_heat =   ( SUM( SUM( e_i, dim=4 ), dim=3 ) + SUM( SUM( e_s, dim=4 ), dim=3 ) - pdiag_t ) * r1_rdtice &
             &         + (  hfx_sum + hfx_bom + hfx_bog + hfx_dif + hfx_opw + hfx_snw                                &
             &            - hfx_thd - hfx_dyn - hfx_res - hfx_sub - hfx_spr )                                        &
             &         - pdiag_ft
@@ -658,7 +658,7 @@ CONTAINS
                WRITE(numout,*) ' hfx_thd      : ', hfx_thd(ji,jj)
                WRITE(numout,*) ' hfx_res      : ', hfx_res(ji,jj)
                WRITE(numout,*) ' qsb_ice_bot  : ', qsb_ice_bot(ji,jj)
-               WRITE(numout,*) ' qlead        : ', qlead(ji,jj) * r1_Dt_ice
+               WRITE(numout,*) ' qlead        : ', qlead(ji,jj) * r1_rdtice
                WRITE(numout,*)
                WRITE(numout,*) ' - Salt fluxes at bottom interface ***'
                WRITE(numout,*) ' emp       : ', emp    (ji,jj)

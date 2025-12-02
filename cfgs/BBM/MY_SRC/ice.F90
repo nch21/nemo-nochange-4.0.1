@@ -285,7 +285,7 @@ MODULE ice
    !                                     !!** some other parameters
    INTEGER , PUBLIC ::   kt_ice           !: iteration number
    REAL(wp), PUBLIC ::   rDt_ice          !: ice time step
-   REAL(wp), PUBLIC ::   r1_Dt_ice        !: = 1. / rDt_ice
+   REAL(wp), PUBLIC ::   r1_rdtice        !: = 1. / rDt_ice
    REAL(wp), PUBLIC ::   r1_nlay_i        !: 1 / nlay_i
    REAL(wp), PUBLIC ::   r1_nlay_s        !: 1 / nlay_s
    REAL(wp), PUBLIC ::   rswitch          !: switch for the presence of ice (1) or not (0)

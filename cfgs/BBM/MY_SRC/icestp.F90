@@ -355,7 +355,7 @@ CONTAINS
       ENDIF
       !
       rDt_ice   = REAL(nn_fsbc) * rn_Dt          !--- sea-ice timestep and its inverse
-      r1_Dt_ice = 1._wp / rDt_ice
+      r1_rdtice = 1._wp / rDt_ice
       IF(lwp) WRITE(numout,*)
       IF(lwp) WRITE(numout,*) '      ice timestep rDt_ice = nn_fsbc*rn_Dt = ', rDt_ice
       !
@@ -488,16 +488,16 @@ CONTAINS
       IF( ln_icediachk .OR. iom_use('hfxdhc') ) THEN
          !
          diag_heat(:,:) = diag_heat(:,:) &
-            &             - SUM(SUM( e_i (:,:,1:nlay_i,:) - e_i_b (:,:,1:nlay_i,:), dim=4 ), dim=3 ) * r1_Dt_ice &
-            &             - SUM(SUM( e_s (:,:,1:nlay_s,:) - e_s_b (:,:,1:nlay_s,:), dim=4 ), dim=3 ) * r1_Dt_ice
+            &             - SUM(SUM( e_i (:,:,1:nlay_i,:) - e_i_b (:,:,1:nlay_i,:), dim=4 ), dim=3 ) * r1_rdtice &
+            &             - SUM(SUM( e_s (:,:,1:nlay_s,:) - e_s_b (:,:,1:nlay_s,:), dim=4 ), dim=3 ) * r1_rdtice
          diag_sice(:,:) = diag_sice(:,:) &
-            &             + SUM(     sv_i(:,:,:)          - sv_i_b(:,:,:)                  , dim=3 ) * r1_Dt_ice * rhoi
+            &             + SUM(     sv_i(:,:,:)          - sv_i_b(:,:,:)                  , dim=3 ) * r1_rdtice * rhoi
          diag_vice(:,:) = diag_vice(:,:) &
-            &             + SUM(     v_i (:,:,:)          - v_i_b (:,:,:)                  , dim=3 ) * r1_Dt_ice * rhoi
+            &             + SUM(     v_i (:,:,:)          - v_i_b (:,:,:)                  , dim=3 ) * r1_rdtice * rhoi
          diag_vsnw(:,:) = diag_vsnw(:,:) &
-            &             + SUM(     v_s (:,:,:)          - v_s_b (:,:,:)                  , dim=3 ) * r1_Dt_ice * rhos
+            &             + SUM(     v_s (:,:,:)          - v_s_b (:,:,:)                  , dim=3 ) * r1_rdtice * rhos
          diag_vpnd(:,:) = diag_vpnd(:,:) &
-            &             + SUM(     v_ip + v_il          - v_ip_b - v_il_b                , dim=3 ) * r1_Dt_ice * rhow
+            &             + SUM(     v_ip + v_il          - v_ip_b - v_il_b                , dim=3 ) * r1_rdtice * rhow
          !
          IF( kn == 2 )    CALL iom_put ( 'hfxdhc' , diag_heat )   ! output of heat trend
          !
@@ -506,10 +506,10 @@ CONTAINS
       ! --- trends of concentration (used for simip outputs)
       IF( iom_use('afxdyn') .OR. iom_use('afxthd') .OR. iom_use('afxtot') ) THEN
          !
-         diag_aice(:,:) = diag_aice(:,:) + SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_Dt_ice
+         diag_aice(:,:) = diag_aice(:,:) + SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_rdtice
          !
          IF( kn == 1 )   CALL iom_put( 'afxdyn' , diag_aice )                                           ! dyn trend
-         IF( kn == 2 )   CALL iom_put( 'afxthd' , SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_Dt_ice ) ! thermo trend
+         IF( kn == 2 )   CALL iom_put( 'afxthd' , SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_rdtice ) ! thermo trend
          IF( kn == 2 )   CALL iom_put( 'afxtot' , diag_aice )                                           ! total trend
          !
       ENDIF

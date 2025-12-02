@@ -320,7 +320,7 @@ CONTAINS
          !                              the freezing point, so that we do not have SST < T_freeze
          !                              This implies: qsb_ice_bot(ji,jj) * at_i(ji,jj) * rtdice <= - zqfr_neg
          !                              The following formulation is ok for both normal conditions and supercooling
-         qsb_ice_bot(ji,jj) = rswitch * MIN( qsb_ice_bot(ji,jj), - zqfr_neg * r1_Dt_ice / MAX( at_i(ji,jj), epsi10 ) )
+         qsb_ice_bot(ji,jj) = rswitch * MIN( qsb_ice_bot(ji,jj), - zqfr_neg * r1_rdtice / MAX( at_i(ji,jj), epsi10 ) )
 
          ! If conditions are always supercooled (such as at the mouth of ice-shelves), then ice grows continuously
          ! ==> stop ice formation by artificially setting up the turbulent fluxes to 0 when volume > 20m (arbitrary)
@@ -347,7 +347,7 @@ CONTAINS
             !                        but we have to make sure that this heat will not make the sst drop below the freezing point
             !                        so the max heat that can be pulled out of the ocean is zqld - zqfr_pos
             !                        The following formulation is ok for both normal conditions and supercooling
-            fhld (ji,jj) = rswitch * MAX( 0._wp, ( zqld - zqfr_pos ) * r1_Dt_ice / MAX( at_i(ji,jj), epsi10 ) )  ! divided by at_i since this is (re)multiplied by a_i in icethd_dh.F90
+            fhld (ji,jj) = rswitch * MAX( 0._wp, ( zqld - zqfr_pos ) * r1_rdtice / MAX( at_i(ji,jj), epsi10 ) )  ! divided by at_i since this is (re)multiplied by a_i in icethd_dh.F90
             qlead(ji,jj) = 0._wp
          ENDIF
          !
