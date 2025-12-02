@@ -180,9 +180,9 @@ MODULE lib_mpp
    INTEGER, PUBLIC, DIMENSION(:), ALLOCATABLE, SAVE ::   nrank_north   !: dimension ndim_rank_north
 
    ! Communications summary report
-   CHARACTER(len=lca), DIMENSION(:), ALLOCATABLE ::   crname_lbc                   !: names of lbc_lnk calling routines
-   CHARACTER(len=lca), DIMENSION(:), ALLOCATABLE ::   crname_glb                   !: names of global comm calling routines
-   CHARACTER(len=lca), DIMENSION(:), ALLOCATABLE ::   crname_dlg                   !: names of delayed global comm calling routines
+   CHARACTER(len=128), DIMENSION(:), ALLOCATABLE ::   crname_lbc                   !: names of lbc_lnk calling routines
+   CHARACTER(len=128), DIMENSION(:), ALLOCATABLE ::   crname_glb                   !: names of global comm calling routines
+   CHARACTER(len=128), DIMENSION(:), ALLOCATABLE ::   crname_dlg                   !: names of delayed global comm calling routines
    INTEGER, PUBLIC                               ::   ncom_stp = 0                 !: copy of time step # istp
    INTEGER, PUBLIC                               ::   ncom_fsbc = 1                !: copy of sbc time step # nn_fsbc
    INTEGER, PUBLIC                               ::   ncom_freq                    !: frequency of comm diagnostic
@@ -1182,7 +1182,7 @@ CONTAINS
       ! Look for how many procs on the northern boundary
       ndim_rank_north = 0
       DO jjproc = 1, jpni
-         IF( nfproc(jjproc) /= -1 )   ndim_rank_north = ndim_rank_north + 1
+         IF( nfipproc(jjproc, jpnj) /= -1 )   ndim_rank_north = ndim_rank_north + 1
       END DO
       !
       ! Allocate the right size to nrank_north
@@ -1193,9 +1193,9 @@ CONTAINS
       ! Note : the rank start at 0 in MPI
       ii = 0
       DO ji = 1, jpni
-         IF ( nfproc(ji) /= -1   ) THEN
+         IF ( nfipproc(ji, jpnj) /= -1   ) THEN
             ii=ii+1
-            nrank_north(ii)=nfproc(ji)
+            nrank_north(ii)=nfipproc(ji, jpnj)
          END IF
       END DO
       !
