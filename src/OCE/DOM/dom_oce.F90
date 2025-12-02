@@ -290,11 +290,18 @@ CONTAINS
          !
       ALLOCATE( wmask(jpi,jpj,jpk) , wumask(jpi,jpj,jpk), wvmask(jpi,jpj,jpk) , STAT=ierr(12) )
       !
-   ! set inner-domain (tiling) indices for DO_2D/DO_3D macros compatibility
-   ntsi = 1 + nn_hls
-   ntsj = 1 + nn_hls
-   ntei = jpi - nn_hls
-   ntej = jpj - nn_hls
+      ! set inner-domain (tiling) indices for DO_2D/DO_3D macros compatibility
+      ntsi = 1 + nn_hls
+      ntsj = 1 + nn_hls
+      ntei = jpi - nn_hls
+      ntej = jpj - nn_hls
+      !
+      Nis0 =   1+nn_hls   ;   
+      Njs0 =   1+nn_hls   ;  
+      !                                                 
+      Nie0 = jpi-nn_hls   ;   
+      Nje0 = jpj-nn_hls   ;  
+      !
 
    dom_oce_alloc = MAXVAL(ierr)
       !

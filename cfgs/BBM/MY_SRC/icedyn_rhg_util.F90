@@ -608,7 +608,7 @@ CONTAINS
       END_2D
 
       IF( l_b_lnk ) THEN
-         CALL lbc_lnk( 'strain_rate@icedyn_adv', pdudx,cgt,1., pdvdy,cgt,1., pshr,cgt,1. )
+         CALL lbc_lnk_multi( 'strain_rate@icedyn_adv', pdudx,cgt,1., pdvdy,cgt,1., pshr,cgt,1. )
          !! Could be optimized (gathered) for configuration often used! #fixme!
          IF(l_rtrn_dudy ) CALL lbc_lnk( 'strain_rate@icedyn_adv', pdudy,cgt,1. )
          IF(l_rtrn_dvdx ) CALL lbc_lnk( 'strain_rate@icedyn_adv', pdvdx,cgt,1. )

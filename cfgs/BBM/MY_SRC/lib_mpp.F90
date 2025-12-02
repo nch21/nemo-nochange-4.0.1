@@ -211,11 +211,11 @@ MODULE lib_mpp
    INTEGER, PUBLIC ::   nn_comm                     !: namelist control of comms
    LOGICAL, PUBLIC ::   l_north_nogather = .FALSE.  !: internal control of northfold comms
 
-   INTEGER, PUBLIC, PARAMETER ::   jpfillnothing = 1
-   INTEGER, PUBLIC, PARAMETER ::   jpfillcst     = 2
-   INTEGER, PUBLIC, PARAMETER ::   jpfillcopy    = 3
-   INTEGER, PUBLIC, PARAMETER ::   jpfillperio   = 4
-   INTEGER, PUBLIC, PARAMETER ::   jpfillmpi     = 5
+   !INTEGER, PUBLIC, PARAMETER ::   jpfillnothing = 1
+   !INTEGER, PUBLIC, PARAMETER ::   jpfillcst     = 2
+   !INTEGER, PUBLIC, PARAMETER ::   jpfillcopy    = 3
+   !INTEGER, PUBLIC, PARAMETER ::   jpfillperio   = 4
+   !INTEGER, PUBLIC, PARAMETER ::   jpfillmpi     = 5
 
    !! * Substitutions
 #  include "do_loop_substitute.h90"

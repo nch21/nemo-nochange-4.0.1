@@ -63,6 +63,10 @@ MODULE par_oce
    ! macros (which expand to loops over ntsi:ntei and ntsj:ntej) compile
    ! correctly when backporting code that expects par_oce-like symbols.
    INTEGER, PUBLIC :: ntsi, ntei, ntsj, ntej
+   INTEGER, PUBLIC ::   Nis0             !: start I-index without halo
+   INTEGER, PUBLIC ::   Nie0             !: end   I-index without halo
+   INTEGER, PUBLIC ::   Njs0             !: start J-index without halo
+   INTEGER, PUBLIC ::   Nje0             !: end   J-index without halo
 
    !!---------------------------------------------------------------------
    !! Active tracer parameters
