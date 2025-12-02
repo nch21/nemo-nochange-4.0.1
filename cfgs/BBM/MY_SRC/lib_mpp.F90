@@ -87,26 +87,21 @@ MODULE lib_mpp
    !! for the compilation on AIX system as well as NEC and SGI. Ok on COMPACQ
    INTERFACE mpp_min
       MODULE PROCEDURE mppmin_a_int, mppmin_int
-      MODULE PROCEDURE mppmin_a_real_sp, mppmin_real_sp
       MODULE PROCEDURE mppmin_a_real_dp, mppmin_real_dp
    END INTERFACE
    INTERFACE mpp_max
       MODULE PROCEDURE mppmax_a_int, mppmax_int
-      MODULE PROCEDURE mppmax_a_real_sp, mppmax_real_sp
       MODULE PROCEDURE mppmax_a_real_dp, mppmax_real_dp
    END INTERFACE
    INTERFACE mpp_sum
       MODULE PROCEDURE mppsum_a_int, mppsum_int
       MODULE PROCEDURE mppsum_realdd, mppsum_a_realdd
-      MODULE PROCEDURE mppsum_a_real_sp, mppsum_real_sp
       MODULE PROCEDURE mppsum_a_real_dp, mppsum_real_dp
    END INTERFACE
    INTERFACE mpp_minloc
-      MODULE PROCEDURE mpp_minloc2d_sp ,mpp_minloc3d_sp
       MODULE PROCEDURE mpp_minloc2d_dp ,mpp_minloc3d_dp
    END INTERFACE
    INTERFACE mpp_maxloc
-      MODULE PROCEDURE mpp_maxloc2d_sp ,mpp_maxloc3d_sp
       MODULE PROCEDURE mpp_maxloc2d_dp ,mpp_maxloc3d_dp
    END INTERFACE
 
