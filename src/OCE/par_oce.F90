@@ -57,6 +57,13 @@ MODULE par_oce
    INTEGER, PUBLIC ::   jpimax! = ( jpiglo-2*nn_hls + (jpni-1) ) / jpni + 2*nn_hls !: maximum jpi
    INTEGER, PUBLIC ::   jpjmax! = ( jpjglo-2*nn_hls + (jpnj-1) ) / jpnj + 2*nn_hls !: maximum jpj
 
+   !
+   ! Tiling / inner-domain indices (introduced in later NEMO versions)
+   ! Provide compatibility aliases so preprocessed sources using DO_2D/DO_3D
+   ! macros (which expand to loops over ntsi:ntei and ntsj:ntej) compile
+   ! correctly when backporting code that expects par_oce-like symbols.
+   INTEGER, PUBLIC :: ntsi, ntei, ntsj, ntej
+
    !!---------------------------------------------------------------------
    !! Active tracer parameters
    !!---------------------------------------------------------------------

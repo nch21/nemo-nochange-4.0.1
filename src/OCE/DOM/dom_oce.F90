@@ -105,12 +105,7 @@ MODULE dom_oce
    INTEGER, PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   nleit , nlejt    !: first, last indoor index for each j-domain
    INTEGER, PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) :: nfiimpp, nfipproc, nfilcit
 
-   !
-   ! Tiling / inner-domain indices (introduced in later NEMO versions)
-   ! Provide compatibility aliases so preprocessed sources using DO_2D/DO_3D
-   ! macros (which expand to loops over ntsi:ntei and ntsj:ntej) compile
-   ! correctly when backporting code that expects par_oce-like symbols.
-   INTEGER, PUBLIC :: ntsi, ntei, ntsj, ntej
+
 
    !!----------------------------------------------------------------------
    !! horizontal curvilinear coordinate and scale factors

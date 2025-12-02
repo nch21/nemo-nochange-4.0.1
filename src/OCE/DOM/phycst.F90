@@ -51,6 +51,7 @@ MODULE phycst
    REAL(wp), PUBLIC ::   soce     =   34.7_wp        !: salinity of sea (for pisces and isf)  [psu]
    REAL(wp), PUBLIC ::   rLevap   =    2.5e+6_wp     !: latent heat of evaporation (water)
    REAL(wp), PUBLIC ::   vkarmn   =    0.4_wp        !: von Karman constant
+   REAL(wp), PUBLIC ::   vkarmn2   =    0.4_wp*0.4_wp        !: von Karman constant
    REAL(wp), PUBLIC ::   stefan   =    5.67e-8_wp    !: Stefan-Boltzmann constant 
 
    REAL(wp), PUBLIC ::   rhos     =  330._wp         !: volumic mass of snow                                  [kg/m3]
