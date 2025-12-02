@@ -48,7 +48,7 @@ MODULE sbcblk
    USE icevar         ! for CALL ice_var_snwblow
    USE sbcblk_algo_ice_easy
    USE sbcblk_algo_ice_an05
-   USE sbcblk_algo_ice_lu12
+   !USE sbcblk_algo_ice_lu12
    !USE sbcblk_algo_ice_lg15
 #endif
    USE sbcblk_algo_ncar     ! => turb_ncar     : NCAR - (formerly known as CORE, Large & Yeager, 2009)
@@ -227,7 +227,7 @@ CONTAINS
          &                 ln_crt_fbk, rn_stau_a, rn_stau_b,                          &   ! current feedback
          &                 ln_humi_sph, ln_humi_dpt, ln_humi_rlh, ln_tair_pot,        &
          &                 ln_Cx_ice_cst, ln_Cx_ice_EASY, rn_Cd_i, rn_Ce_i, rn_Ch_i,  &
-         &                 ln_Cx_ice_AN05, ln_Cx_ice_LU12,             &
+         &                 ln_Cx_ice_AN05,            &
          &                 cn_dir,                                                    &
          &                 sn_wndi, sn_wndj, sn_qsr, sn_qlw ,                         &   ! input fields
          &                 sn_tair, sn_humi, sn_prec, sn_snow, sn_slp,                &
@@ -322,9 +322,6 @@ CONTAINS
       ENDIF
       IF( ln_Cx_ice_AN05 ) THEN
          nblk_ice =  np_ice_an05   ;   ioptio = ioptio + 1
-      ENDIF
-      IF( ln_Cx_ice_LU12 ) THEN
-         nblk_ice =  np_ice_lu12    ;   ioptio = ioptio + 1
       ENDIF
 
       IF( ioptio /= 1 )   CALL ctl_stop( 'sbc_blk_init: Choose one and only one ice-atm bulk algorithm' )
@@ -453,7 +450,7 @@ CONTAINS
             WRITE(numout,*) '      use constant ice-atm bulk transfer coeff.           ln_Cx_ice_cst  = ', ln_Cx_ice_cst
             WRITE(numout,*) '      use ice-atm bulk coeff. Neutral+Stab / Brodeau      ln_Cx_ice_EASY = ', ln_Cx_ice_EASY
             WRITE(numout,*) '      use ice-atm bulk coeff. from Andreas et al., 2005   ln_Cx_ice_AN05 = ', ln_Cx_ice_AN05
-            WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes et al., 2012    ln_Cx_ice_LU12 = ', ln_Cx_ice_LU12
+            !WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes et al., 2012    ln_Cx_ice_LU12 = ', ln_Cx_ice_LU12
             !WRITE(numout,*) '      use ice-atm bulk coeff. from Lupkes & Gryanik, 2015 ln_Cx_ice_LG15 = ', ln_Cx_ice_LG15
          ENDIF
          WRITE(numout,*)
@@ -469,7 +466,7 @@ CONTAINS
             IF( (rn_Cd_i<0._wp).OR.(rn_Cd_i>1.E-2_wp).OR.(rn_Ce_i<0._wp).OR.(rn_Ce_i>1.E-2_wp).OR.(rn_Ch_i<0._wp).OR.(rn_Ch_i>1.E-2_wp) ) &
                & CALL ctl_stop( 'Be realistic in your pick of Cd_N_ice, Ce_N_ice & Ch_N_ice ! (0 < Cx < 1.E-2)')
          CASE( np_ice_an05 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Andreas et al, 2005'
-         CASE( np_ice_lu12 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes et al, 2012'
+         !CASE( np_ice_lu12 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes et al, 2012'
          !CASE( np_ice_lg15 )   ;   WRITE(numout,*) '   ==>>> bulk algo over ice: Lupkes & Gryanik, 2015'
          END SELECT
 #endif
@@ -1070,9 +1067,9 @@ CONTAINS
          CALL turb_ice_an05( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice,       &
             &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
          !!
-      CASE( np_ice_lu12 )
-         CALL turb_ice_lu12( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &
-            &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
+      !CASE( np_ice_lu12 )
+      !   CALL turb_ice_lu12( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &
+      !      &                      Cd_ice, Ch_ice, Ce_ice, theta_zu_i, q_zu_i )
          !!
       !CASE( np_ice_lg15 )  ! calculate new drag from Lupkes(2015) equations
       !   CALL turb_ice_lg15( rn_zqt, rn_zu, ptsui, ptair, ztmpr, pqair, wndm_ice, fr_i, &

@@ -209,6 +209,7 @@ MODULE lib_mpp
 
    LOGICAL, PUBLIC ::   ln_nnogather                !: namelist control of northfold comms
    INTEGER, PUBLIC ::   nn_comm                     !: namelist control of comms
+   LOGICAL, PUBLIC ::   l_north_nogather = .FALSE.  !: internal control of northfold comms
 
    INTEGER, PUBLIC, PARAMETER ::   jpfillnothing = 1
    INTEGER, PUBLIC, PARAMETER ::   jpfillcst     = 2
