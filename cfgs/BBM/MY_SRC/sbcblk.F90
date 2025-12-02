@@ -47,15 +47,15 @@ MODULE sbcblk
    USE ice     , ONLY :   u_ice, v_ice, jpl, a_i_b, at_i_b, t_su, rn_cnd_s, hfx_err_dif, nn_qtrice
    USE icevar         ! for CALL ice_var_snwblow
    USE sbcblk_algo_ice_easy
-   USE sbcblk_algo_ice_an05
+   !USE sbcblk_algo_ice_an05
    !USE sbcblk_algo_ice_lu12
    !USE sbcblk_algo_ice_lg15
 #endif
    USE sbcblk_algo_ncar     ! => turb_ncar     : NCAR - (formerly known as CORE, Large & Yeager, 2009)
-   USE sbcblk_algo_coare3p0 ! => turb_coare3p0 : COAREv3.0 (Fairall et al. 2003)
-   USE sbcblk_algo_coare3p6 ! => turb_coare3p6 : COAREv3.6 (Fairall et al. 2018 + Edson et al. 2013)
+   !USE sbcblk_algo_coare3p0 ! => turb_coare3p0 : COAREv3.0 (Fairall et al. 2003)
+   !USE sbcblk_algo_coare3p6 ! => turb_coare3p6 : COAREv3.6 (Fairall et al. 2018 + Edson et al. 2013)
    USE sbcblk_algo_ecmwf    ! => turb_ecmwf    : ECMWF (IFS cycle 45r1)
-   USE sbcblk_algo_andreas  ! => turb_andreas  : Andreas et al. 2015
+   !USE sbcblk_algo_andreas  ! => turb_andreas  : Andreas et al. 2015
    !
    USE iom            ! I/O manager library
    USE in_out_manager ! I/O manager

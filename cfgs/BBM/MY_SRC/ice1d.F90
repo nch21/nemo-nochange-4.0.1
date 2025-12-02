@@ -125,6 +125,7 @@ MODULE ice1D
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   a_ip_1d       !: ice ponds
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   v_ip_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   h_ip_1d       !:
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   a_ip_frac_1d  !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   v_il_1d       !: Ice pond lid
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   h_il_1d       !:
 

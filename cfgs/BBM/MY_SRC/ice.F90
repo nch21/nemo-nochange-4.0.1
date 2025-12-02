@@ -268,6 +268,7 @@ MODULE ice
    REAL(wp), PUBLIC ::   rn_apnd_max      !: Maximum fraction of melt water contributing to ponds
    REAL(wp), PUBLIC ::   rn_pnd_flush     !: Pond flushing efficiency (tuning parameter)
    LOGICAL , PUBLIC ::   ln_pnd_CST       !: Melt ponds scheme with constant fraction and depth
+   LOGICAL , PUBLIC ::   ln_pnd_H12       !: Evolutive pond scheme (Holland et al. 2012) (restored for icethd_pnd)
    REAL(wp), PUBLIC ::   rn_apnd          !: prescribed pond fraction (0<rn_apnd<1)
    REAL(wp), PUBLIC ::   rn_hpnd          !: prescribed pond depth    (0<rn_hpnd<1)
    LOGICAL,  PUBLIC ::   ln_pnd_lids      !: Allow ponds to have frozen lids
