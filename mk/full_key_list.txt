@@ -7,13 +7,17 @@ key_cyclone
 key_diahth
 key_diainstant
 key_iomput
+key_isf
+key_linssh
 key_mpi2
+key_mpi_off
 key_mpp_mpi
 key_nemocice_decomp
 key_netcdf4
 key_nosignedzero
 key_oa3mct_v1v2
 key_oasis3
+key_qco
 key_sed_off
 key_si3
 key_top
