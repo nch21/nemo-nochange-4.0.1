@@ -389,7 +389,7 @@ CONTAINS
       !!-------------------------------------------------------------------
       INTEGER ::   ios, ioptio   ! Local integer
       !!
-      NAMELIST/namsbc/ rn_cio, nn_snwfra, rn_snwblow, nn_flxdist, ln_cndflx, ln_cndemulate, nn_qtrice
+      NAMELIST/namsbc/ rn_cio, nn_snwfra, rn_blow_s, nn_flxdist, ln_cndflx, ln_cndemulate, nn_qtrice
       !!-------------------------------------------------------------------
       !
       READ  ( numnam_ice_ref, namsbc, IOSTAT = ios, ERR = 901)
@@ -405,7 +405,7 @@ CONTAINS
          WRITE(numout,*) '   Namelist namsbc:'
          WRITE(numout,*) '      drag coefficient for oceanic stress                       rn_cio        = ', rn_cio
          WRITE(numout,*) '      fraction of ice covered by snow (options 0,1,2)           nn_snwfra     = ', nn_snwfra
-         WRITE(numout,*) '      coefficient for ice-lead partition of snowfall            rn_snwblow    = ', rn_snwblow
+         WRITE(numout,*) '      coefficient for ice-lead partition of snowfall            rn_snwblow    = ', rn_blow_s
          WRITE(numout,*) '      Multicategory heat flux formulation                       nn_flxdist    = ', nn_flxdist
          WRITE(numout,*) '      Use conduction flux as surface condition                  ln_cndflx     = ', ln_cndflx
          WRITE(numout,*) '         emulate conduction flux                                ln_cndemulate = ', ln_cndemulate

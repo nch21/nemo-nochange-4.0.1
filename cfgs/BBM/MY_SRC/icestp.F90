@@ -380,6 +380,7 @@ CONTAINS
       v_ip_b(:,:,:)   = v_ip(:,:,:)     ! pond volume
       v_il_b(:,:,:)   = v_il(:,:,:)     ! pond lid volume
       sv_i_b(:,:,:)   = sv_i(:,:,:)     ! salt content
+      oa_i_b(:,:,:)   = oa_i(:,:,:)     ! areal age content
       e_s_b (:,:,:,:) = e_s (:,:,:,:)   ! snow thermal energy
       e_i_b (:,:,:,:) = e_i (:,:,:,:)   ! ice thermal energy
       WHERE( a_i_b(:,:,:) >= epsi20 )

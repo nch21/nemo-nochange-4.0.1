@@ -1413,11 +1413,11 @@ CONTAINS
             id5 = iom_varid( numrir, 'aniso_12'  , ldstop = .FALSE. )
             !
             IF( MIN( id1, id2, id3, id4, id5 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'stress1_i' , stress1_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'stress2_i' , stress2_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'stress12_i', stress12_i, cd_type = 'F' )
-               CALL iom_get( numrir, jpdom_auto, 'aniso_11'  , aniso_11  , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'aniso_12'  , aniso_12  , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress1_i' , stress1_i , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress2_i' , stress2_i , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress12_i', stress12_i, cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'aniso_11'  , aniso_11  , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'aniso_12'  , aniso_12  , cd_type = 'T' )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without rheology, set stresses to 0'

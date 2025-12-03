@@ -203,7 +203,7 @@ MODULE ice
    !
    !                                     !!** ice-surface boundary conditions namelist (namsbc) **
                                           ! -- icethd_dh -- !
-   REAL(wp), PUBLIC ::   rn_snwblow       !: coef. for partitioning of snowfall between leads and sea ice
+   REAL(wp), PUBLIC ::   rn_blow_s       !: coef. for partitioning of snowfall between leads and sea ice
                                           ! -- icethd_zdf and icealb -- !
    INTEGER , PUBLIC ::   nn_snwfra        !: calculate the fraction of ice covered by snow
    !                                      !   = 0  fraction = 1 (if snow) or 0 (if no snow)
@@ -442,7 +442,7 @@ MODULE ice
    !!----------------------------------------------------------------------
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:)   ::   v_s_b, v_i_b, h_s_b, h_i_b !: snow and ice volumes/thickness
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:)   ::   v_ip_b, v_il_b             !: ponds and lids volumes
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:)   ::   a_i_b, sv_i_b              !:
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:)   ::   a_i_b, sv_i_b, oa_i_b              !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:,:) ::   e_s_b                      !: snow heat content
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:,:,:) ::   e_i_b                      !: ice temperatures
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   u_ice_b, v_ice_b           !: ice velocity
@@ -567,7 +567,7 @@ CONTAINS
       ALLOCATE( v_s_b (jpi,jpj,jpl) , v_i_b (jpi,jpj,jpl) , h_s_b(jpi,jpj,jpl)        , h_i_b(jpi,jpj,jpl),         &
          &      v_ip_b(jpi,jpj,jpl) , v_il_b(jpi,jpj,jpl) ,                                                         &
          &      a_i_b (jpi,jpj,jpl) , sv_i_b(jpi,jpj,jpl) , e_i_b(jpi,jpj,nlay_i,jpl) , e_s_b(jpi,jpj,nlay_s,jpl) , &
-         &      STAT=ierr(ii) )
+         &       oa_i_b(jpi,jpj,jpl)  , STAT=ierr(ii) )
 
       ii = ii + 1
       ALLOCATE( u_ice_b(jpi,jpj) , v_ice_b(jpi,jpj) , at_i_b(jpi,jpj) , STAT=ierr(ii) )

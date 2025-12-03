@@ -985,77 +985,77 @@ CONTAINS
          IF( id1 > 0 ) THEN                     !**  Read the restart file  **!
             !
             !                                                        ! ice thickness
-            CALL iom_get( numrir, jpdom_auto, 'sxice' , sxice , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'syice' , syice , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sxxice', sxxice )
-            CALL iom_get( numrir, jpdom_auto, 'syyice', syyice )
-            CALL iom_get( numrir, jpdom_auto, 'sxyice', sxyice )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxice' , sxice , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'syice' , syice , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxxice', sxxice )
+            CALL iom_get( numrir, jpdom_autoglo, 'syyice', syyice )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxyice', sxyice )
             !                                                        ! snow thickness
-            CALL iom_get( numrir, jpdom_auto, 'sxsn'  , sxsn  , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sysn'  , sysn  , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sxxsn' , sxxsn  )
-            CALL iom_get( numrir, jpdom_auto, 'syysn' , syysn  )
-            CALL iom_get( numrir, jpdom_auto, 'sxysn' , sxysn  )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxsn'  , sxsn  , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sysn'  , sysn  , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxxsn' , sxxsn  )
+            CALL iom_get( numrir, jpdom_autoglo, 'syysn' , syysn  )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxysn' , sxysn  )
             !                                                        ! ice concentration
-            CALL iom_get( numrir, jpdom_auto, 'sxa'   , sxa   , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sya'   , sya   , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sxxa'  , sxxa   )
-            CALL iom_get( numrir, jpdom_auto, 'syya'  , syya   )
-            CALL iom_get( numrir, jpdom_auto, 'sxya'  , sxya   )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxa'   , sxa   , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sya'   , sya   , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxxa'  , sxxa   )
+            CALL iom_get( numrir, jpdom_autoglo, 'syya'  , syya   )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxya'  , sxya   )
             !                                                        ! ice salinity
-            CALL iom_get( numrir, jpdom_auto, 'sxsal' , sxsal , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sysal' , sysal , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sxxsal', sxxsal )
-            CALL iom_get( numrir, jpdom_auto, 'syysal', syysal )
-            CALL iom_get( numrir, jpdom_auto, 'sxysal', sxysal )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxsal' , sxsal , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sysal' , sysal , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxxsal', sxxsal )
+            CALL iom_get( numrir, jpdom_autoglo, 'syysal', syysal )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxysal', sxysal )
             !                                                        ! ice age
-            CALL iom_get( numrir, jpdom_auto, 'sxage' , sxage , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'syage' , syage , psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_auto, 'sxxage', sxxage )
-            CALL iom_get( numrir, jpdom_auto, 'syyage', syyage )
-            CALL iom_get( numrir, jpdom_auto, 'sxyage', sxyage )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxage' , sxage , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'syage' , syage , psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxxage', sxxage )
+            CALL iom_get( numrir, jpdom_autoglo, 'syyage', syyage )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxyage', sxyage )
             !                                                        ! snow layers heat content
             DO jk = 1, nlay_s
                WRITE(zchar1,'(I2.2)') jk
                znam = 'sxc0'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d, psgn = -1._wp )   ;   sxc0 (:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d, psgn = -1._wp )   ;   sxc0 (:,:,jk,:) = z3d(:,:,:)
                znam = 'syc0'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d, psgn = -1._wp )   ;   syc0 (:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d, psgn = -1._wp )   ;   syc0 (:,:,jk,:) = z3d(:,:,:)
                znam = 'sxxc0'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   sxxc0(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   sxxc0(:,:,jk,:) = z3d(:,:,:)
                znam = 'syyc0'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   syyc0(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   syyc0(:,:,jk,:) = z3d(:,:,:)
                znam = 'sxyc0'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   sxyc0(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   sxyc0(:,:,jk,:) = z3d(:,:,:)
             END DO
             !                                                        ! ice layers heat content
             DO jk = 1, nlay_i
                WRITE(zchar1,'(I2.2)') jk
                znam = 'sxe'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d, psgn = -1._wp )   ;   sxe (:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d, psgn = -1._wp )   ;   sxe (:,:,jk,:) = z3d(:,:,:)
                znam = 'sye'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d, psgn = -1._wp )   ;   sye (:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d, psgn = -1._wp )   ;   sye (:,:,jk,:) = z3d(:,:,:)
                znam = 'sxxe'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   sxxe(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   sxxe(:,:,jk,:) = z3d(:,:,:)
                znam = 'syye'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   syye(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   syye(:,:,jk,:) = z3d(:,:,:)
                znam = 'sxye'//'_l'//zchar1
-               CALL iom_get( numrir, jpdom_auto, znam , z3d )   ;   sxye(:,:,jk,:) = z3d(:,:,:)
+               CALL iom_get( numrir, jpdom_autoglo, znam , z3d )   ;   sxye(:,:,jk,:) = z3d(:,:,:)
             END DO
             !
             IF( ln_pnd_LEV .OR. ln_pnd_TOPO ) THEN                                    ! melt pond fraction
                IF( iom_varid( numrir, 'sxap', ldstop = .FALSE. ) > 0 ) THEN
-                  CALL iom_get( numrir, jpdom_auto, 'sxap' , sxap , psgn = -1._wp )
-                  CALL iom_get( numrir, jpdom_auto, 'syap' , syap , psgn = -1._wp )
-                  CALL iom_get( numrir, jpdom_auto, 'sxxap', sxxap )
-                  CALL iom_get( numrir, jpdom_auto, 'syyap', syyap )
-                  CALL iom_get( numrir, jpdom_auto, 'sxyap', sxyap )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxap' , sxap , psgn = -1._wp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'syap' , syap , psgn = -1._wp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxxap', sxxap )
+                  CALL iom_get( numrir, jpdom_autoglo, 'syyap', syyap )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxyap', sxyap )
                   !                                                     ! melt pond volume
-                  CALL iom_get( numrir, jpdom_auto, 'sxvp' , sxvp , psgn = -1._wp )
-                  CALL iom_get( numrir, jpdom_auto, 'syvp' , syvp , psgn = -1._wp )
-                  CALL iom_get( numrir, jpdom_auto, 'sxxvp', sxxvp )
-                  CALL iom_get( numrir, jpdom_auto, 'syyvp', syyvp )
-                  CALL iom_get( numrir, jpdom_auto, 'sxyvp', sxyvp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxvp' , sxvp , psgn = -1._wp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'syvp' , syvp , psgn = -1._wp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxxvp', sxxvp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'syyvp', syyvp )
+                  CALL iom_get( numrir, jpdom_autoglo, 'sxyvp', sxyvp )
                ELSE
                   sxap = 0._wp ;   syap = 0._wp    ;   sxxap = 0._wp    ;   syyap = 0._wp    ;   sxyap = 0._wp   ! melt pond fraction
                   sxvp = 0._wp ;   syvp = 0._wp    ;   sxxvp = 0._wp    ;   syyvp = 0._wp    ;   sxyvp = 0._wp   ! melt pond volume
@@ -1063,11 +1063,11 @@ CONTAINS
                   !
                IF ( ln_pnd_lids ) THEN                               ! melt pond lid volume
                   IF( iom_varid( numrir, 'sxvl', ldstop = .FALSE. ) > 0 ) THEN
-                     CALL iom_get( numrir, jpdom_auto, 'sxvl' , sxvl , psgn = -1._wp )
-                     CALL iom_get( numrir, jpdom_auto, 'syvl' , syvl , psgn = -1._wp )
-                     CALL iom_get( numrir, jpdom_auto, 'sxxvl', sxxvl )
-                     CALL iom_get( numrir, jpdom_auto, 'syyvl', syyvl )
-                     CALL iom_get( numrir, jpdom_auto, 'sxyvl', sxyvl )
+                     CALL iom_get( numrir, jpdom_autoglo, 'sxvl' , sxvl , psgn = -1._wp )
+                     CALL iom_get( numrir, jpdom_autoglo, 'syvl' , syvl , psgn = -1._wp )
+                     CALL iom_get( numrir, jpdom_autoglo, 'sxxvl', sxxvl )
+                     CALL iom_get( numrir, jpdom_autoglo, 'syyvl', syyvl )
+                     CALL iom_get( numrir, jpdom_autoglo, 'sxyvl', sxyvl )
                   ELSE
                      sxvl = 0._wp; syvl = 0._wp    ;   sxxvl = 0._wp    ;   syyvl = 0._wp    ;   sxyvl = 0._wp   ! melt pond lid volume
                   ENDIF

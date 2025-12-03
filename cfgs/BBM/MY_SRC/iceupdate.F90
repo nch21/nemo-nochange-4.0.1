@@ -461,8 +461,8 @@ CONTAINS
             id1 = iom_varid( numrir, 'snwice_mass' , ldstop = .FALSE. )
             !
             IF( id1 > 0 ) THEN                       ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'snwice_mass'  , snwice_mass   )
-               CALL iom_get( numrir, jpdom_auto, 'snwice_mass_b', snwice_mass_b )
+               CALL iom_get( numrir, jpdom_autoglo, 'snwice_mass'  , snwice_mass   )
+               CALL iom_get( numrir, jpdom_autoglo, 'snwice_mass_b', snwice_mass_b )
             ELSE                                     ! start from rest
                IF(lwp) WRITE(numout,*) '   ==>>   previous run without snow-ice mass output then set it'
                snwice_mass  (:,:) = tmask(:,:,1) * ( rhos * vt_s(:,:) + rhoi * vt_i(:,:) &

@@ -915,8 +915,8 @@ CONTAINS
             id14 = iom_varid( numrir, 'Vu_sub' , ldstop = .FALSE. )
 
             IF( MIN( id01, id02 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'dmgt' , dmgt , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'dmgf' , dmgf , cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'dmgt' , dmgt , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'dmgf' , dmgf , cd_type = 'F' )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without rheology, set damage @T and @F to 0'
@@ -925,12 +925,12 @@ CONTAINS
             ENDIF
 
             IF( MIN( id1, id2, id3, id4, id5, id6 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'sgm11t', sgm11t, cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'sgm22t', sgm22t, cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_auto, 'sgm12f', sgm12f, cd_type = 'F' )
-               CALL iom_get( numrir, jpdom_auto, 'sgm11f', sgm11f, cd_type = 'F' )
-               CALL iom_get( numrir, jpdom_auto, 'sgm22f', sgm22f, cd_type = 'F' )
-               CALL iom_get( numrir, jpdom_auto, 'sgm12t', sgm12t, cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm11t', sgm11t, cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm22t', sgm22t, cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm12f', sgm12f, cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm11f', sgm11f, cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm22f', sgm22f, cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'sgm12t', sgm12t, cd_type = 'T' )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>> did not find components of stress tensors in restart file => set to 0'
@@ -943,8 +943,8 @@ CONTAINS
             ENDIF
 
             IF( MIN( id7, id8 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'uVice' , uVice , cd_type = 'V', psgn = -1._wp )
-               CALL iom_get( numrir, jpdom_auto, 'vUice' , vUice , cd_type = 'U', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'uVice' , uVice , cd_type = 'V', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'vUice' , vUice , cd_type = 'U', psgn = -1._wp )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without BBM rheology, interpolate F-centric velocities'
@@ -954,10 +954,10 @@ CONTAINS
             ENDIF
 
             IF( MIN( id11, id12, id13, id14 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_auto, 'Uu_sub' , Uu_sub , cd_type = 'U', psgn = -1._wp )
-               CALL iom_get( numrir, jpdom_auto, 'Uv_sub' , Uv_sub , cd_type = 'V', psgn = -1._wp )
-               CALL iom_get( numrir, jpdom_auto, 'Vv_sub' , Vv_sub , cd_type = 'V', psgn = -1._wp )
-               CALL iom_get( numrir, jpdom_auto, 'Vu_sub' , Vu_sub , cd_type = 'U', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'Uu_sub' , Uu_sub , cd_type = 'U', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'Uv_sub' , Uv_sub , cd_type = 'V', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'Vv_sub' , Vv_sub , cd_type = 'V', psgn = -1._wp )
+               CALL iom_get( numrir, jpdom_autoglo, 'Vu_sub' , Vu_sub , cd_type = 'U', psgn = -1._wp )
             ELSE
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without BBM rheology, fill sub-ts velocities'
