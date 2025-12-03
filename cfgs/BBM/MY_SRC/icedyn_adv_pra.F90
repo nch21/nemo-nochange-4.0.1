@@ -347,7 +347,7 @@ CONTAINS
          ! --- Ensure non-negative fields --- !
          !     Remove negative values (conservation is ensured)
          !     (because advected fields are not perfectly bounded and tiny negative values can occur, e.g. -1.e-20)
-         CALL ice_var_zapneg( zdt, pato_i, pv_i, pv_s, psv_i, poa_i, pa_i, pa_ip, pv_ip, pv_il, pe_s, pe_i )
+         CALL ice_var_zapneg( zdt, pato_i, pv_i, pv_s, psv_i, poa_i, pa_i, pa_ip, pv_ip, pe_s, pe_i )
          !
          ! --- Make sure ice thickness is not too big --- !
          !     (because ice thickness can be too large where ice concentration is very small)

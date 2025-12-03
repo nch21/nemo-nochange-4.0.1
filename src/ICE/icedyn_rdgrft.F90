@@ -56,8 +56,8 @@ MODULE icedyn_rdgrft
    REAL(wp), PARAMETER ::   hi_hrft     = 0.5_wp    ! rafting multipliyer: (hi/hraft)
    !
    ! ** namelist (namdyn_rdgrft) **
-   LOGICAL  ::   ln_str_H79       ! ice strength parameterization (Hibler79)
-   REAL(wp) ::   rn_pstar         ! determines ice strength, Hibler JPO79
+   LOGICAL, PUBLIC  ::   ln_str_H79       ! ice strength parameterization (Hibler79)
+   REAL(wp), PUBLIC ::   rn_pstar         ! determines ice strength, Hibler JPO79
    REAL(wp) ::   rn_csrdg         ! fraction of shearing energy contributing to ridging            
    LOGICAL  ::   ln_partf_lin     ! participation function linear (Thorndike et al. (1975))
    REAL(wp) ::   rn_gstar         !    fractional area of young ice contributing to ridging

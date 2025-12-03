@@ -149,9 +149,9 @@ MODULE ice
    REAL(wp), PUBLIC ::   rn_lf_tensile    !:    isotropic tensile strength
    !
    !                                     !!** ice-ridging/rafting namelist (namdyn_rdgrft) **
-   LOGICAL,  PUBLIC ::   ln_str_H79       !: ice strength parameterization (Hibler79) (may be used in rheology)
+   !LOGICAL,  PUBLIC ::   ln_str_H79       !: ice strength parameterization (Hibler79) (may be used in rheology)
    REAL(wp), PUBLIC ::   rn_crhg          !: determines changes in ice strength (also used for landfast param)
-   REAL(wp), PUBLIC ::   rn_pstar         !: determines ice strength, Hibler JPO79 (may be used in rheology)
+   !REAL(wp), PUBLIC ::   rn_pstar         !: determines ice strength, Hibler JPO79 (may be used in rheology)
    !
    !                                     !!** ice-rheology namelist (namdyn_rhg) **
    ! -- evp

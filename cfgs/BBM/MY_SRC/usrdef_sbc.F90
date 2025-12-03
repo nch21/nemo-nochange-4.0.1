@@ -168,7 +168,7 @@ CONTAINS
             ! 23.5 deg : tropics
             qsr (ji,jj) =  230. * COS( 3.1415 * ( gphit(ji,jj) - 23.5 * zcos_sais1 ) / ( 0.9 * 180. ) )
             qsr (ji,jj) = MAX( qsr(ji,jj), 0. )
-            qns (ji,jj) = ztrp * ( ts(ji,jj,1,jp_tem,1) - t_star ) - qsr(ji,jj)
+            qns (ji,jj) = ztrp * ( tsb(ji,jj,1,jp_tem) - t_star ) - qsr(ji,jj)
             
             ! jj是3的倍数
             ! if (ji==5 .and. mod(jj,5)==0) then
@@ -376,7 +376,7 @@ cldf_ice=0.81
             DO jk = 1,size( qsr_ice, 3)
             !qns_ice (ji,jj,jk) = qns(ji,jj) -2.5 exp04
             zfr2 = EXP(  - (hm_i(ji,jj)/0.5) ) 
-            zfr1 = - 40.e0  * ( ts(ji,jj,1,jp_tem,1) + 1.9 ) - qsr(ji,jj)
+            zfr1 = - 40.e0  * ( tsb(ji,jj,1,jp_tem) + 1.9 ) - qsr(ji,jj)
             qns_star  = zfr2*(qns(ji,jj)-zfr1)+zfr1
             qns_ice (ji,jj,jk) = qns_star 
             if (qns(ji,jj)>zfr1) qns_ice (ji,jj,jk) = qns(ji,jj) !qns高温
