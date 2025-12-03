@@ -458,7 +458,7 @@ CONTAINS
             zet(ji,jj)     = zzt(ji,jj)     * z1_ecc2 
                           
          END_2D
-         CALL lbc_lnk( 'icedyn_rhg_vp', zdelta, 'T', 1.0_wp, zvisc_t, 'T', 1.0_wp, zzt, 'T', 1.0_wp, zet, 'T', 1.0_wp )
+         CALL lbc_lnk_multi( 'icedyn_rhg_vp', zdelta, 'T', 1.0_wp, zvisc_t, 'T', 1.0_wp, zzt, 'T', 1.0_wp, zet, 'T', 1.0_wp )
          
          ! Store bulk viscosity at last outer iteration for yield curve diagnostic
          IF ( i_out == nn_vp_nout .AND. ( iom_use('sig1_pnorm') .OR. iom_use('sig2_pnorm') ) ) THEN
@@ -938,7 +938,7 @@ CONTAINS
                                     
                ENDIF !   ll_v_iterate
 
-               CALL lbc_lnk( 'icedyn_rhg_vp', u_ice, 'U', -1._wp, v_ice, 'V', -1._wp )
+               CALL _multi( 'icedyn_rhg_vp', u_ice, 'U', -1._wp, v_ice, 'V', -1._wp )
 
                ! I suspect the communication should go into the zebra loop if we want reproducibility
                               
@@ -1094,7 +1094,7 @@ CONTAINS
            
       END_2D
 
-      CALL lbc_lnk( 'icedyn_rhg_vp', pshear_i, 'T', 1._wp, pdivu_i, 'T', 1._wp, pdelta_i, 'T', 1._wp, &
+      CALL lbc_lnk_multi( 'icedyn_rhg_vp', pshear_i, 'T', 1._wp, pdivu_i, 'T', 1._wp, pdelta_i, 'T', 1._wp, &
               &                      zdelta  , 'T', 1._wp, zten_i , 'T', 1._wp, zshear  , 'T', 1._wp )
 
       ! --- Sea ice stresses at T-points --- !
@@ -1169,7 +1169,7 @@ CONTAINS
          END_2D
          
          !
-         CALL lbc_lnk( 'icedyn_rhg_vp', ztaux_oi, 'U', -1., ztauy_oi, 'V', -1., ztaux_ai, 'U', -1., ztauy_ai, 'V', -1. ) !, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_vp', ztaux_oi, 'U', -1., ztauy_oi, 'V', -1., ztaux_ai, 'U', -1., ztauy_ai, 'V', -1. ) !, &
 !            &                          ztaux_bi, 'U', -1., ztauy_bi, 'V', -1. )
          !
          CALL iom_put( 'utau_oi' , ztaux_oi * zmsk00 )
@@ -1265,7 +1265,7 @@ CONTAINS
                            &             + zmf(ji,jj+1) * ( e2u(ji,jj+1) * u_ice(ji,jj+1) + e2u(ji-1,jj+1) * u_ice(ji-1,jj+1) ) )
          END_2D
          !
-         CALL lbc_lnk( 'icedyn_rhg_vp', zspgU, 'U', -1., zspgV, 'V', -1., &
+         CALL lbc_lnk_multi( 'icedyn_rhg_vp', zspgU, 'U', -1., zspgV, 'V', -1., &
             &                           zCorU, 'U', -1., zCorV, 'V', -1. )
          !
          CALL iom_put( 'dssh_dx' , zspgU * zmsk00 )   ! Sea-surface tilt term in force balance (x)
@@ -1296,7 +1296,7 @@ CONTAINS
 
          END_2D
             
-         CALL lbc_lnk( 'icedyn_rhg_vp', zfU, 'U', -1., zfV, 'V', -1. )
+         CALL lbc_lnk_multi( 'icedyn_rhg_vp', zfU, 'U', -1., zfV, 'V', -1. )
          
          CALL iom_put( 'intstrx' , zfU   * zmsk00 )   ! Internal force term in force balance (x)
          CALL iom_put( 'intstry' , zfV   * zmsk00 )   ! Internal force term in force balance (y)
@@ -1326,7 +1326,7 @@ CONTAINS
 
          END_2D
          
-         CALL lbc_lnk( 'icedyn_rhg_vp', zdiag_xmtrp_ice, 'U', -1., zdiag_ymtrp_ice, 'V', -1., &
+         CALL lbc_lnk_multi( 'icedyn_rhg_vp', zdiag_xmtrp_ice, 'U', -1., zdiag_ymtrp_ice, 'V', -1., &
             &                           zdiag_xmtrp_snw, 'U', -1., zdiag_ymtrp_snw, 'V', -1., &
             &                           zdiag_xatrp    , 'U', -1., zdiag_yatrp    , 'V', -1. )
 
@@ -1612,7 +1612,7 @@ CONTAINS
 
          END_2D
          
-         IF( nn_hls == 1 )   CALL lbc_lnk( 'icedyn_rhg_cvg_vp', zu_res,  'U',  1., zv_res , 'V',  1. )
+         IF( nn_hls == 1 )   CALL lbc_lnk_multi( 'icedyn_rhg_cvg_vp', zu_res,  'U',  1., zv_res , 'V',  1. )
 
          DO_2D( 0, 0, 0, 0 ) !clem check bounds
         

@@ -329,7 +329,7 @@ CONTAINS
          ELSE                                                   ;   zmsk01y(ji,jj) = 1._wp   ;   ENDIF
 
       END_2D
-      CALL lbc_lnk( 'icedyn_rhg_eap', zmf, 'T', 1.0_wp, zdt_m, 'T', 1.0_wp )
+      CALL lbc_lnk_multi( 'icedyn_rhg_eap', zmf, 'T', 1.0_wp, zdt_m, 'T', 1.0_wp )
       !
       !                                  !== Landfast ice parameterization ==!
       !
@@ -339,13 +339,13 @@ CONTAINS
             zvU = 0.5_wp * ( vt_i(ji,jj) * e1e2t(ji,jj) + vt_i(ji+1,jj) * e1e2t(ji+1,jj) ) * r1_e1e2u(ji,jj) * umask(ji,jj,1)
             zvV = 0.5_wp * ( vt_i(ji,jj) * e1e2t(ji,jj) + vt_i(ji,jj+1) * e1e2t(ji,jj+1) ) * r1_e1e2v(ji,jj) * vmask(ji,jj,1)
             ! ice-bottom stress at U points
-            zvCr = zaU(ji,jj) * rn_lf_depfra * hu(ji,jj,Kmm) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
+            zvCr = zaU(ji,jj) * rn_lf_depfra * hu_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
             ztaux_base(ji,jj) = - rn_lf_bfr * MAX( 0._wp, zvU - zvCr ) * EXP( -rn_crhg * ( 1._wp - zaU(ji,jj) ) )
             ! ice-bottom stress at V points
-            zvCr = zaV(ji,jj) * rn_lf_depfra * hv(ji,jj,Kmm) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
+            zvCr = zaV(ji,jj) * rn_lf_depfra * hv_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
             ztauy_base(ji,jj) = - rn_lf_bfr * MAX( 0._wp, zvV - zvCr ) * EXP( -rn_crhg * ( 1._wp - zaV(ji,jj) ) )
             ! ice_bottom stress at T points
-            zvCr = at_i(ji,jj) * rn_lf_depfra * ht(ji,jj) * ( 1._wp - icb_mask(ji,jj) )    ! if grounded icebergs are read: ocean depth = 0
+            zvCr = at_i(ji,jj) * rn_lf_depfra * ht_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) )    ! if grounded icebergs are read: ocean depth = 0
             tau_icebfr(ji,jj) = - rn_lf_bfr * MAX( 0._wp, vt_i(ji,jj) - zvCr ) * EXP( -rn_crhg * ( 1._wp - at_i(ji,jj) ) )
          END_2D
          CALL lbc_lnk( 'icedyn_rhg_eap', tau_icebfr(:,:), 'T', 1.0_wp )
@@ -474,7 +474,7 @@ CONTAINS
             zs1(ji,jj) = ( zs1(ji,jj) * zalph1 + zstressptmp ) * z1_alph1
             zs2(ji,jj) = ( zs2(ji,jj) * zalph1 + zstressmtmp ) * z1_alph1
          END_2D
-         CALL lbc_lnk( 'icedyn_rhg_eap', zstress12tmp, 'T', 1.0_wp , paniso_11, 'T', 1.0_wp , paniso_12, 'T', 1.0_wp)
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', zstress12tmp, 'T', 1.0_wp , paniso_11, 'T', 1.0_wp , paniso_12, 'T', 1.0_wp)
 
         ! Save beta at T-points for further computations
          IF( ln_aEVP ) THEN
@@ -502,7 +502,7 @@ CONTAINS
             zs12(ji,jj) = ( zs12(ji,jj) * zalph1 + zstress12tmpF ) * z1_alph1
 
          END_2D
-         CALL lbc_lnk( 'icedyn_rhg_eap', zs1, 'T', 1.0_wp, zs2, 'T', 1.0_wp, zs12, 'F', 1.0_wp )
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', zs1, 'T', 1.0_wp, zs2, 'T', 1.0_wp, zs12, 'F', 1.0_wp )
 !write(*,*) 'eap before istress'
          ! --- Ice internal stresses (Appendix C of Hunke and Dukowicz, 2002) --- !
          DO_2D( 0, 0, 0, 0 )
@@ -796,7 +796,7 @@ CONTAINS
          pdelta_i(ji,jj) = zfac + rn_creepl * rswitch ! delta+creepl
 
       END_2D
-      CALL lbc_lnk( 'icedyn_rhg_eap', pshear_i, 'T', 1.0_wp, pdivu_i, 'T', 1.0_wp, pdelta_i, 'T', 1.0_wp, &
+      CALL lbc_lnk_multi( 'icedyn_rhg_eap', pshear_i, 'T', 1.0_wp, pdivu_i, 'T', 1.0_wp, pdelta_i, 'T', 1.0_wp, &
          &                              zten_i, 'T', 1.0_wp, zs1    , 'T', 1.0_wp, zs2     , 'T', 1.0_wp, &
          &                                zs12, 'F', 1.0_wp )
 
@@ -813,7 +813,7 @@ CONTAINS
       IF(  iom_use('utau_oi') .OR. iom_use('vtau_oi') .OR. iom_use('utau_ai') .OR. iom_use('vtau_ai') .OR. &
          & iom_use('utau_bi') .OR. iom_use('vtau_bi') ) THEN
          !
-         CALL lbc_lnk( 'icedyn_rhg_eap', ztaux_oi, 'U', -1.0_wp, ztauy_oi, 'V', -1.0_wp, ztaux_ai, 'U', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', ztaux_oi, 'U', -1.0_wp, ztauy_oi, 'V', -1.0_wp, ztaux_ai, 'U', -1.0_wp, &
             &                            ztauy_ai, 'V', -1.0_wp, ztaux_bi, 'U', -1.0_wp, ztauy_bi, 'V', -1.0_wp )
          !
          CALL iom_put( 'utau_oi' , ztaux_oi * zmsk00 )
@@ -898,7 +898,7 @@ CONTAINS
       ! --- yieldcurve --- !
       IF( iom_use('yield11') .OR. iom_use('yield12') .OR. iom_use('yield22')) THEN
 
-         CALL lbc_lnk( 'icedyn_rhg_eap', zyield11, 'T', 1.0_wp, zyield22, 'T', 1.0_wp, zyield12, 'T', 1.0_wp )
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', zyield11, 'T', 1.0_wp, zyield22, 'T', 1.0_wp, zyield12, 'T', 1.0_wp )
 
          CALL iom_put( 'yield11', zyield11 * zmsk00 )
          CALL iom_put( 'yield22', zyield22 * zmsk00 )
@@ -915,7 +915,7 @@ CONTAINS
       IF(  iom_use('dssh_dx') .OR. iom_use('dssh_dy') .OR. &
          & iom_use('corstrx') .OR. iom_use('corstry') .OR. iom_use('intstrx') .OR. iom_use('intstry') ) THEN
          !
-         CALL lbc_lnk( 'icedyn_rhg_eap', zspgU, 'U', -1.0_wp, zspgV, 'V', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', zspgU, 'U', -1.0_wp, zspgV, 'V', -1.0_wp, &
             &                            zCorU, 'U', -1.0_wp, zCorV, 'V', -1.0_wp, &
             &                              zfU, 'U', -1.0_wp,   zfV, 'V', -1.0_wp )
 
@@ -949,7 +949,7 @@ CONTAINS
 
          END_2D
 
-         CALL lbc_lnk( 'icedyn_rhg_eap', zdiag_xmtrp_ice, 'U', -1.0_wp, zdiag_ymtrp_ice, 'V', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_eap', zdiag_xmtrp_ice, 'U', -1.0_wp, zdiag_ymtrp_ice, 'V', -1.0_wp, &
             &                            zdiag_xmtrp_snw, 'U', -1.0_wp, zdiag_ymtrp_snw, 'V', -1.0_wp, &
             &                            zdiag_xatrp    , 'U', -1.0_wp, zdiag_yatrp    , 'V', -1.0_wp )
 
@@ -1413,11 +1413,11 @@ CONTAINS
             id5 = iom_varid( numrir, 'aniso_12'  , ldstop = .FALSE. )
             !
             IF( MIN( id1, id2, id3, id4, id5 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_autoglo, 'stress1_i' , stress1_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_autoglo, 'stress2_i' , stress2_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_autoglo, 'stress12_i', stress12_i, cd_type = 'F' )
-               CALL iom_get( numrir, jpdom_autoglo, 'aniso_11'  , aniso_11  , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_autoglo, 'aniso_12'  , aniso_12  , cd_type = 'T' )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress1_i' , stress1_i  )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress2_i' , stress2_i  )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress12_i', stress12_i )
+               CALL iom_get( numrir, jpdom_autoglo, 'aniso_11'  , aniso_11   )
+               CALL iom_get( numrir, jpdom_autoglo, 'aniso_12'  , aniso_12   )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without rheology, set stresses to 0'

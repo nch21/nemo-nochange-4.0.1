@@ -319,13 +319,13 @@ CONTAINS
             zvU = 0.5_wp * ( vt_i(ji,jj) * e1e2t(ji,jj) + vt_i(ji+1,jj) * e1e2t(ji+1,jj) ) * r1_e1e2u(ji,jj) * umask(ji,jj,1)
             zvV = 0.5_wp * ( vt_i(ji,jj) * e1e2t(ji,jj) + vt_i(ji,jj+1) * e1e2t(ji,jj+1) ) * r1_e1e2v(ji,jj) * vmask(ji,jj,1)
             ! ice-bottom stress at U points
-            zvCr = zaU(ji,jj) * rn_lf_depfra * hu(ji,jj,Kmm) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
+            zvCr = zaU(ji,jj) * rn_lf_depfra * hu_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
             ztaux_base(ji,jj) = - rn_lf_bfr * MAX( 0._wp, zvU - zvCr ) * EXP( -rn_crhg * ( 1._wp - zaU(ji,jj) ) )
             ! ice-bottom stress at V points
-            zvCr = zaV(ji,jj) * rn_lf_depfra * hv(ji,jj,Kmm) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
+            zvCr = zaV(ji,jj) * rn_lf_depfra * hv_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) ) ! if grounded icebergs are read: ocean depth = 0
             ztauy_base(ji,jj) = - rn_lf_bfr * MAX( 0._wp, zvV - zvCr ) * EXP( -rn_crhg * ( 1._wp - zaV(ji,jj) ) )
             ! ice_bottom stress at T points
-            zvCr = at_i(ji,jj) * rn_lf_depfra * ht(ji,jj) * ( 1._wp - icb_mask(ji,jj) )    ! if grounded icebergs are read: ocean depth = 0
+            zvCr = at_i(ji,jj) * rn_lf_depfra * ht_n(ji,jj) * ( 1._wp - icb_mask(ji,jj) )    ! if grounded icebergs are read: ocean depth = 0
             tau_icebfr(ji,jj) = - rn_lf_bfr * MAX( 0._wp, vt_i(ji,jj) - zvCr ) * EXP( -rn_crhg * ( 1._wp - at_i(ji,jj) ) )
          END_2D
          CALL lbc_lnk( 'icedyn_rhg_evp', tau_icebfr(:,:), 'T', 1.0_wp )
@@ -390,7 +390,7 @@ CONTAINS
             zp_delt(ji,jj) = strength(ji,jj) / ( zdelta(ji,jj) + rn_creepl ) * zmsk(ji,jj) ! zmsk is for reducing cpu
 
          END_2D
-         CALL lbc_lnk( 'icedyn_rhg_evp', zdelta, 'T', 1.0_wp, zp_delt, 'T', 1.0_wp )
+         CALL lbc_lnk_multi( 'icedyn_rhg_evp', zdelta, 'T', 1.0_wp, zp_delt, 'T', 1.0_wp )
 
          !
          DO_2D( nn_hls-1, nn_hls, nn_hls-1, nn_hls )   ! loop ends at jpi,jpj so that no lbc_lnk are needed for zs1 and zs2
@@ -578,7 +578,7 @@ CONTAINS
                ENDIF
             END_2D
             IF( nn_hls == 1 ) THEN   ;   CALL lbc_lnk( 'icedyn_rhg_evp', u_ice, 'U', -1.0_wp )
-            ELSE                     ;   CALL lbc_lnk( 'icedyn_rhg_evp', u_ice, 'U', -1.0_wp, v_ice, 'V', -1.0_wp )
+            ELSE                     ;   CALL lbc_lnk_multi( 'icedyn_rhg_evp', u_ice, 'U', -1.0_wp, v_ice, 'V', -1.0_wp )
             ENDIF
             !
          ELSE ! odd iterations
@@ -674,7 +674,7 @@ CONTAINS
                ENDIF
             END_2D
             IF( nn_hls == 1 ) THEN   ;   CALL lbc_lnk( 'icedyn_rhg_evp', v_ice, 'V', -1.0_wp )
-            ELSE                     ;   CALL lbc_lnk( 'icedyn_rhg_evp', u_ice, 'U', -1.0_wp, v_ice, 'V', -1.0_wp )
+            ELSE                     ;   CALL lbc_lnk_multi( 'icedyn_rhg_evp', u_ice, 'U', -1.0_wp, v_ice, 'V', -1.0_wp )
             ENDIF
             !
          ENDIF
@@ -701,7 +701,7 @@ CONTAINS
                za_i_ups(:,:,:) = a_i(:,:,:)
                zv_i_ups(:,:,:) = v_i(:,:,:)
             ELSE
-               CALL lbc_lnk( 'icedyn_rhg_evp', za_i_ups, 'T', 1.0_wp, zv_i_ups, 'T', 1.0_wp )
+               CALL lbc_lnk_multi( 'icedyn_rhg_evp', za_i_ups, 'T', 1.0_wp, zv_i_ups, 'T', 1.0_wp )
             ENDIF
             !
             CALL rhg_upstream( jter, zdt_ups, u_ice, v_ice, za_i_ups )   ! upstream advection: a_i
@@ -776,7 +776,7 @@ CONTAINS
 
       END_2D
 
-      CALL lbc_lnk( 'icedyn_rhg_evp', pshear_i, 'T', 1._wp, pdivu_i, 'T', 1._wp, pdelta_i, 'T', 1._wp, zten_i, 'T', 1._wp, &
+      CALL lbc_lnk_multi( 'icedyn_rhg_evp', pshear_i, 'T', 1._wp, pdivu_i, 'T', 1._wp, pdelta_i, 'T', 1._wp, zten_i, 'T', 1._wp, &
          &                            zshear  , 'T', 1._wp, zdelta , 'T', 1._wp, zs1     , 'T', 1._wp, zs2   , 'T', 1._wp, zs12, 'F', 1._wp )
 
       IF( iom_use('iceshrf')    ) CALL iom_put( 'iceshrf' , zds )
@@ -796,7 +796,7 @@ CONTAINS
       IF(  iom_use('utau_oi') .OR. iom_use('vtau_oi') .OR. iom_use('utau_ai') .OR. iom_use('vtau_ai') .OR. &
          & iom_use('utau_bi') .OR. iom_use('vtau_bi') ) THEN
          !
-         CALL lbc_lnk( 'icedyn_rhg_evp', ztaux_oi, 'U', -1.0_wp, ztauy_oi, 'V', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_evp', ztaux_oi, 'U', -1.0_wp, ztauy_oi, 'V', -1.0_wp, &
             &                            ztaux_ai, 'U', -1.0_wp, ztauy_ai, 'V', -1.0_wp, &
             &                            ztaux_bi, 'U', -1.0_wp, ztauy_bi, 'V', -1.0_wp )
          !
@@ -882,7 +882,7 @@ CONTAINS
       IF(  iom_use('dssh_dx') .OR. iom_use('dssh_dy') .OR. &
          & iom_use('corstrx') .OR. iom_use('corstry') .OR. iom_use('intstrx') .OR. iom_use('intstry') ) THEN
          !
-         CALL lbc_lnk( 'icedyn_rhg_evp', zspgU, 'U', -1.0_wp, zspgV, 'V', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_evp', zspgU, 'U', -1.0_wp, zspgV, 'V', -1.0_wp, &
             &                            zCorU, 'U', -1.0_wp, zCorV, 'V', -1.0_wp, zfU, 'U', -1.0_wp, zfV, 'V', -1.0_wp )
 
          CALL iom_put( 'dssh_dx' , zspgU * zmsk00 )   ! Sea-surface tilt term in force balance (x)
@@ -915,7 +915,7 @@ CONTAINS
 
          END_2D
 
-         CALL lbc_lnk( 'icedyn_rhg_evp', zdiag_xmtrp_ice, 'U', -1.0_wp, zdiag_ymtrp_ice, 'V', -1.0_wp, &
+         CALL lbc_lnk_multi( 'icedyn_rhg_evp', zdiag_xmtrp_ice, 'U', -1.0_wp, zdiag_ymtrp_ice, 'V', -1.0_wp, &
             &                            zdiag_xmtrp_snw, 'U', -1.0_wp, zdiag_ymtrp_snw, 'V', -1.0_wp, &
             &                            zdiag_xatrp    , 'U', -1.0_wp, zdiag_yatrp    , 'V', -1.0_wp )
 
@@ -1014,7 +1014,8 @@ CONTAINS
                   &                 ABS( pv(ji,jj) - pvb(ji,jj) ) * vmask(ji,jj,1) ) * pmsk15(ji,jj)
                zres(ji,jj,2) = pmsk15(ji,jj)
             END_2D
-            ztmp(:) = glob_sum_vec( 'icedyn_rhg_evp', zres )
+            ztmp(1) = glob_sum( 'icedyn_rhg_evp', zres(:,:,1) )
+            ztmp(2) = glob_sum( 'icedyn_rhg_evp', zres(:,:,2) )
             IF( ztmp(2) /= 0._wp )   zresm = ztmp(1) / ztmp(2)
          ENDIF
       ENDIF
@@ -1053,9 +1054,9 @@ CONTAINS
             id3 = iom_varid( numrir, 'stress12_i', ldstop = .FALSE. )
             !
             IF( MIN( id1, id2, id3 ) > 0 ) THEN      ! fields exist
-               CALL iom_get( numrir, jpdom_autoglo, 'stress1_i' , stress1_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_autoglo, 'stress2_i' , stress2_i , cd_type = 'T' )
-               CALL iom_get( numrir, jpdom_autoglo, 'stress12_i', stress12_i, cd_type = 'F' )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress1_i' , stress1_i  )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress2_i' , stress2_i  )
+               CALL iom_get( numrir, jpdom_autoglo, 'stress12_i', stress12_i )
             ELSE                                     ! start rheology from rest
                IF(lwp) WRITE(numout,*)
                IF(lwp) WRITE(numout,*) '   ==>>>   previous run without rheology, set stresses to 0'
