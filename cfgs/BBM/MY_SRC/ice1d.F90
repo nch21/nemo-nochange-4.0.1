@@ -50,6 +50,7 @@ MODULE ice1D
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   hfx_opw_1d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   hfx_snw_1d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   hfx_dyn_1d
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   hfx_err_rem_1d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   hfx_err_dif_1d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   qt_oce_ai_1d
 
@@ -122,12 +123,10 @@ MODULE ice1D
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   sv_i_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   oa_i_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   o_i_1d        !:
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   a_ip_1d       !: ice ponds
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   a_ip_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   v_ip_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   h_ip_1d       !:
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   a_ip_frac_1d  !:
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   v_il_1d       !: Ice pond lid
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   h_il_1d       !:
 
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   t_s_1d      !: corresponding to the 2D var  t_s
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   t_i_1d      !: corresponding to the 2D var  t_i
@@ -145,11 +144,7 @@ MODULE ice1D
    ! surface fields from the ocean
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   sst_1d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   sss_1d
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   frq_m_1d
 
-   ! convergence check
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   tice_cvgerr_1d   !: convergence of ice/snow temp (dT)          [K]
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:) ::   tice_cvgstp_1d   !: convergence of ice/snow temp (subtimestep) [-]
    ! 
    !!----------------------
    !! * 2D Module variables
@@ -161,7 +156,6 @@ MODULE ice1D
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   sv_i_2d 
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   a_ip_2d
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   v_ip_2d 
-   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   v_il_2d 
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   t_su_2d 
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   h_i_2d
 
@@ -170,7 +164,7 @@ MODULE ice1D
    
    !!----------------------------------------------------------------------
    !! NEMO/ICE 4.0 , NEMO Consortium (2018)
-   !! $Id: ice1d.F90 13643 2020-10-19 23:41:14Z clem $
+   !! $Id: ice1d.F90 10786 2019-03-20 18:59:24Z clem $
    !! Software governed by the CeCILL license (see ./LICENSE)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -180,7 +174,7 @@ CONTAINS
       !!                ***  ROUTINE ice1D_alloc ***
       !!---------------------------------------------------------------------!
       INTEGER ::   ice1D_alloc   ! return value
-      INTEGER ::   ierr(8), ii
+      INTEGER ::   ierr(7), ii
       !!---------------------------------------------------------------------!
       ierr(:) = 0
 
@@ -194,7 +188,7 @@ CONTAINS
          &      rn_amax_1d(jpij) ,                                             &
          &      hfx_thd_1d(jpij) , hfx_spr_1d    (jpij) ,                      &
          &      hfx_snw_1d(jpij) , hfx_sub_1d    (jpij) ,                      &
-         &      hfx_res_1d(jpij) , hfx_err_dif_1d(jpij) , qt_oce_ai_1d(jpij), STAT=ierr(ii) )
+         &      hfx_res_1d(jpij) , hfx_err_rem_1d(jpij) , hfx_err_dif_1d(jpij) , qt_oce_ai_1d(jpij), STAT=ierr(ii) )
       !
       ii = ii + 1
       ALLOCATE( sprecip_1d    (jpij) , at_i_1d       (jpij) , ato_i_1d      (jpij) ,                         &
@@ -213,8 +207,8 @@ CONTAINS
          &      h_i_1d  (jpij) , h_ib_1d (jpij) , h_s_1d    (jpij) ,                                    &    
          &      dh_s_tot(jpij) , dh_i_sum(jpij) , dh_i_itm  (jpij) , dh_i_bom(jpij) , dh_i_bog(jpij) ,  &    
          &      dh_i_sub(jpij) , dh_s_mlt(jpij) , dh_snowice(jpij) , s_i_1d  (jpij) , s_i_new (jpij) ,  &
-         &      a_ip_1d (jpij) , v_ip_1d (jpij) , v_i_1d    (jpij) , v_s_1d  (jpij) , v_il_1d (jpij) ,  &
-         &      h_il_1d (jpij) , h_ip_1d (jpij) ,                                                       &
+         &      a_ip_1d (jpij) , v_ip_1d (jpij) , v_i_1d    (jpij) , v_s_1d  (jpij) ,                   &
+         &      h_ip_1d (jpij) , a_ip_frac_1d(jpij) ,                                                   &
          &      sv_i_1d (jpij) , oa_i_1d (jpij) , o_i_1d    (jpij) , STAT=ierr(ii) )
       !
       ii = ii + 1
@@ -226,15 +220,12 @@ CONTAINS
       ALLOCATE( qcn_ice_bot_1d(jpij) , qcn_ice_top_1d(jpij) , STAT=ierr(ii) )
       !
       ii = ii + 1
-      ALLOCATE( sst_1d(jpij) , sss_1d(jpij) , frq_m_1d(jpij) , STAT=ierr(ii) )
-      !
-      ii = ii + 1
-      ALLOCATE( tice_cvgerr_1d(jpij) , tice_cvgstp_1d(jpij) , STAT=ierr(ii) )
+      ALLOCATE( sst_1d(jpij) , sss_1d(jpij) , STAT=ierr(ii) )
       !
       ii = ii + 1
       ALLOCATE( a_i_2d (jpij,jpl) , a_ib_2d(jpij,jpl) , h_i_2d (jpij,jpl) , h_ib_2d(jpij,jpl) ,  &
          &      v_i_2d (jpij,jpl) , v_s_2d (jpij,jpl) , oa_i_2d(jpij,jpl) , sv_i_2d(jpij,jpl) ,  &
-         &      a_ip_2d(jpij,jpl) , v_ip_2d(jpij,jpl) , t_su_2d(jpij,jpl) , v_il_2d(jpij,jpl) ,  &
+         &      a_ip_2d(jpij,jpl) , v_ip_2d(jpij,jpl) , t_su_2d(jpij,jpl) ,                      &
          &      STAT=ierr(ii) )
 
       ice1D_alloc = MAXVAL( ierr(:) )
