@@ -35,7 +35,7 @@ MODULE usrdef_istate
    !!----------------------------------------------------------------------
 CONTAINS
   
-   SUBROUTINE usr_def_istate( pdept, ptmask, pts, pu, pv )
+   SUBROUTINE usr_def_istate( pdept, ptmask, pts, pu, pv, pssh)
       !!----------------------------------------------------------------------
       !!                   ***  ROUTINE usr_def_istate  ***
       !! 

@@ -109,7 +109,7 @@ CONTAINS
          !                             !-----------------------!
          IF(lwp) WRITE(numout,'("  *** advects GENERIC fields @T with UMX, order = ",i1," kt=",i6.6)') nn_UMx, kt
          CALL ice_dyn_adv_umx( nn_UMx, kt, u_ice, v_ice, h_i, h_s, h_ip, &
-            &                          ato_i, v_i, v_s, sv_i, oa_i, a_i, a_ip, v_ip, v_il, e_s, e_i )
+            &                          ato_i, v_i, v_s, sv_i, oa_i, a_i, a_ip, v_ip,  e_s, e_i )
          !                             !-----------------------!
       CASE( np_advPRA )                ! PRATHER scheme        !
          !                             !-----------------------!

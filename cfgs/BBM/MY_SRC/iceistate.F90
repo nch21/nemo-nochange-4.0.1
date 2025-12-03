@@ -442,8 +442,8 @@ CONTAINS
       !
       IF( ln_ice_embd ) THEN            ! embedded sea-ice: deplete the initial ssh below sea-ice area
          !                              ! ----------------
-         ssh(:,:,Kmm) = ssh(:,:,Kmm) - snwice_mass(:,:) * r1_rau0
-         ssh(:,:,Kbb) = ssh(:,:,Kbb) - snwice_mass(:,:) * r1_rau0
+         sshn(:,:) = sshn(:,:) - snwice_mass(:,:) * r1_rau0
+         sshb(:,:) = sshb(:,:) - snwice_mass(:,:) * r1_rau0
          !
       ELSE                              ! levitating sea-ice: deplete the initial ssh over the whole domain
          !                              ! ------------------
@@ -462,8 +462,8 @@ CONTAINS
          IF(lwp) WRITE(numout,*) ' the initial snow+ice mass'
          !
          WHERE( ssmask(:,:) == 1._wp )
-            ssh(:,:,Kmm) = ssh(:,:,Kmm) - zsshadj
-            ssh(:,:,Kbb) = ssh(:,:,Kbb) - zsshadj
+            sshn(:,:) = sshn(:,:) - zsshadj
+            sshb(:,:) = sshb(:,:) - zsshadj
          ENDWHERE
          !
       ENDIF
@@ -477,8 +477,8 @@ CONTAINS
          DO jk = 1, jpk
             DO_2D( nn_hls, nn_hls, nn_hls, nn_hls)
 !               IF( snwice_mass(ji,jj) /= 0._wp ) THEN
-                  e3t(ji,jj,jk,Kmm) = e3t_0(ji,jj,jk) * ( 1._wp + ssh(ji,jj,Kmm) * r1_ht_0(ji,jj) * tmask(ji,jj,jk) )
-                  e3t(ji,jj,jk,Kbb) = e3t_0(ji,jj,jk) * ( 1._wp + ssh(ji,jj,Kbb) * r1_ht_0(ji,jj) * tmask(ji,jj,jk) )
+!                  e3t(ji,jj,jk,Kmm) = e3t_0(ji,jj,jk) * ( 1._wp + sshn(ji,jj) * r1_ht_0(ji,jj) * tmask(ji,jj,jk) )
+!                  e3t(ji,jj,jk,Kbb) = e3t_0(ji,jj,jk) * ( 1._wp + sshb(ji,jj) * r1_ht_0(ji,jj) * tmask(ji,jj,jk) )
 !               ENDIF
             END_2D
          END DO
