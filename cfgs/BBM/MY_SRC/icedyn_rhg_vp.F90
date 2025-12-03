@@ -938,7 +938,7 @@ CONTAINS
                                     
                ENDIF !   ll_v_iterate
 
-               CALL _multi( 'icedyn_rhg_vp', u_ice, 'U', -1._wp, v_ice, 'V', -1._wp )
+               CALL lbc_lnk_multi( 'icedyn_rhg_vp', u_ice, 'U', -1._wp, v_ice, 'V', -1._wp )
 
                ! I suspect the communication should go into the zebra loop if we want reproducibility
                               
