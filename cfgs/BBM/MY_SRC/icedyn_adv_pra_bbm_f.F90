@@ -666,26 +666,26 @@ CONTAINS
          IF( id1 > 0 ) THEN                     !**  Read the restart file  **!
             !
             !                                                        ! ice damage !#bbm
-            CALL iom_get( numrir, jpdom_autoglo, 'sx1md'//cg , sx1md,  psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_autoglo, 'sy1md'//cg , sy1md,  psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sx1md'//cg , sx1md )
+            CALL iom_get( numrir, jpdom_autoglo, 'sy1md'//cg , sy1md )
             CALL iom_get( numrir, jpdom_autoglo, 'sxx1md'//cg, sxx1md )
             CALL iom_get( numrir, jpdom_autoglo, 'syy1md'//cg, syy1md )
             CALL iom_get( numrir, jpdom_autoglo, 'sxy1md'//cg, sxy1md )
             !
-            CALL iom_get( numrir, jpdom_autoglo, 'sxdd1'//cg , sxdd1,  psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_autoglo, 'sydd1'//cg , sydd1,  psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxdd1'//cg , sxdd1 )
+            CALL iom_get( numrir, jpdom_autoglo, 'sydd1'//cg , sydd1 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxxdd1'//cg, sxxdd1 )
             CALL iom_get( numrir, jpdom_autoglo, 'syydd1'//cg, syydd1 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxydd1'//cg, sxydd1 )
             !
-            CALL iom_get( numrir, jpdom_autoglo, 'sxdd2'//cg , sxdd2,  psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_autoglo, 'sydd2'//cg , sydd2,  psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxdd2'//cg , sxdd2 )
+            CALL iom_get( numrir, jpdom_autoglo, 'sydd2'//cg , sydd2 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxxdd2'//cg, sxxdd2 )
             CALL iom_get( numrir, jpdom_autoglo, 'syydd2'//cg, syydd2 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxydd2'//cg, sxydd2 )
             !
-            CALL iom_get( numrir, jpdom_autoglo, 'sxdd3'//cg , sxdd3,  psgn = -1._wp )
-            CALL iom_get( numrir, jpdom_autoglo, 'sydd3'//cg , sydd3,  psgn = -1._wp )
+            CALL iom_get( numrir, jpdom_autoglo, 'sxdd3'//cg , sxdd3 )
+            CALL iom_get( numrir, jpdom_autoglo, 'sydd3'//cg , sydd3 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxxdd3'//cg, sxxdd3 )
             CALL iom_get( numrir, jpdom_autoglo, 'syydd3'//cg, syydd3 )
             CALL iom_get( numrir, jpdom_autoglo, 'sxydd3'//cg, sxydd3 )
