@@ -19,6 +19,7 @@ MODULE icewri
    USE sbc_ice        ! Surface boundary condition: ice fields
    USE ice            ! sea-ice: variables
    USE icevar         ! sea-ice: operations
+   !USE icedyn_rhg, ONLY : ln_rhg_BBM !#bbm
    !
    USE ioipsl         !
    USE in_out_manager ! I/O manager
@@ -104,6 +105,12 @@ CONTAINS
       IF( iom_use('snwthic' ) )   CALL iom_put( 'snwthic', hm_s        * zmsk00 )                                           ! snw thickness
       IF( iom_use('icebrv'  ) )   CALL iom_put( 'icebrv' , bvm_i* 100. * zmsk00 )                                           ! brine volume
       IF( iom_use('iceage'  ) )   CALL iom_put( 'iceage' , om_i / rday * zmsk15 + zmiss_val * ( 1._wp - zmsk15 ) )          ! ice age
+      IF( ln_rhg_BBM ) THEN
+         IF( iom_use('iceconcf') ) CALL iom_put( 'iceconcf', af_i(:,:)         )          ! ice concentration @F #dmg
+         !IF( iom_use('icethicf') ) CALL iom_put( 'icethicf', h_f(:,:)         )          ! ice thickness     @F #dmg
+         IF( iom_use('icedmgt' ) ) CALL iom_put( 'icedmgt', dmgt*xmsk_ice_t   )          ! ice damage @T !#dmg
+         IF( iom_use('icedmgf' ) ) CALL iom_put( 'icedmgf', dmgf*xmsk_ice_f   )          ! ice damage @T !#dmg
+      END IF
       IF( iom_use('icehnew' ) )   CALL iom_put( 'icehnew', ht_i_new             )                                           ! new ice thickness formed in the leads
       IF( iom_use('snwvolu' ) )   CALL iom_put( 'snwvolu', vt_s        * zmsksn )                                           ! snow volume
       IF( iom_use('icefrb'  ) ) THEN                                                                                        ! Ice freeboard
@@ -130,6 +137,11 @@ CONTAINS
       IF( iom_use('uice'    ) )   CALL iom_put( 'uice'   , u_ice    )                                                       ! ice velocity u
       IF( iom_use('vice'    ) )   CALL iom_put( 'vice'   , v_ice    )                                                       ! ice velocity v
       !
+      IF( ln_rhg_BBM ) THEN
+         IF( iom_use('uice_v'  ) )   CALL iom_put( 'uice_v' , uVice   )                 ! ice velocity u   #bbm #E-grid
+         IF( iom_use('vice_u'  ) )   CALL iom_put( 'vice_u' , vUice   )
+     ENDIF
+      !
       IF( iom_use('icevel') .OR. iom_use('fasticepres') ) THEN                                                              ! module of ice velocity
          DO jj = 2 , jpjm1
             DO ji = 2 , jpim1
@@ -146,7 +158,17 @@ CONTAINS
          END WHERE
          CALL iom_put( 'fasticepres', zfast )
       ENDIF
-
+      IF( ln_rhg_BBM ) THEN
+         IF( iom_use('icevelf') ) THEN                                                              ! module of ice velocity @ F points
+            DO_2D( 0, 0, 0, 0 )
+               z2da  = uVice(ji+1,jj) + uVice(ji,jj)
+               z2db  = vUice(ji,jj+1) + vUice(ji,jj)
+               z2d(ji,jj) = 0.5_wp * SQRT( z2da * z2da + z2db * z2db )
+            END_2D
+            CALL lbc_lnk( 'icewri',  z2d, 'F', 1.0_wp )
+            CALL iom_put( 'icevelf', z2d*xmsk_ice_f )
+         ENDIF
+      ENDIF
       ! --- category-dependent fields --- !
       IF( iom_use('icemask_cat' ) )   CALL iom_put( 'icemask_cat' ,                  zmsk00l                                   ) ! ice mask 0%
       IF( iom_use('iceconc_cat' ) )   CALL iom_put( 'iceconc_cat' , a_i            * zmsk00l                                   ) ! area for categories
