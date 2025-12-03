@@ -80,6 +80,8 @@ MODULE ice
    !! s_i         ! s_i_1d      |    Sea ice bulk salinity        ! pss   |
    !! sz_i        ! sz_i_1d     |    Sea ice salinity profile     ! pss   |
    !! o_i         !      -      |    Sea ice Age                  ! s     |
+   !! dmgt        !      -      |    Sea ice Damage @T            !       !
+   !! dmgf        !      -      |    Sea ice Damage @F            !       !
    !! t_i         ! t_i_1d      |    Sea ice temperature          ! K     |
    !! t_s         ! t_s_1d      |    Snow temperature             ! K     |
    !! t_su        ! t_su_1d     |    Sea ice surface temperature  ! K     |
@@ -129,6 +131,8 @@ MODULE ice
    CHARACTER(len=256), PUBLIC ::   cn_icerst_out    !: suffix of ice restart name (output)
    CHARACTER(len=256), PUBLIC ::   cn_icerst_indir  !: ice restart input directory
    CHARACTER(len=256), PUBLIC ::   cn_icerst_outdir !: ice restart output directory
+   LOGICAL           , PUBLIC ::   ln_damage        !: existence of the "ice damage" tracer in the code? => (T) if `ln_rhg_BBM==.true.` #bbm
+
 
    !                                     !!** ice-itd namelist (namitd) **
    REAL(wp), PUBLIC ::   rn_himin         !: minimum ice thickness
@@ -146,11 +150,38 @@ MODULE ice
    !
    !                                     !!** ice-rheology namelist (namdyn_rhg) **
    LOGICAL , PUBLIC ::   ln_aEVP          !: using adaptive EVP (T or F) 
+   LOGICAL , PUBLIC ::   ln_rhg_BBM       ! BBM rheology #bbm
    REAL(wp), PUBLIC ::   rn_creepl        !: creep limit : has to be under 1.0e-9
    REAL(wp), PUBLIC ::   rn_ecc           !: eccentricity of the elliptical yield curve
    INTEGER , PUBLIC ::   nn_nevp          !: number of iterations for subcycling
    REAL(wp), PUBLIC ::   rn_relast        !: ratio => telast/rdt_ice (1/3 or 1/9 depending on nb of subcycling nevp) 
    !
+   ! #bbm:
+   !LOGICAL,  PUBLIC ::   ln_MEB           !: use the MEB rheology (Dansereau et al., 2016) rather than strictly BBM
+   LOGICAL,  PUBLIC ::   ln_idealized     !: if set to true: Coriolis and SSH tilt terms will be disregarded in the momentum eq.
+   INTEGER , PUBLIC ::   nn_nbbm          !: number of iterations for subcycling !#bbm
+   REAL(wp), PUBLIC ::   rn_Nref          !: Maximum compressive stress at the reference scale [Pa] / neXtSIM => `compr_strength`
+   REAL(wp), PUBLIC ::   rn_P0            !: Compression factor "P" at play in P_max, in Eq.8 of [Olason al.2022], useless when `ln_MEB=.true.`
+   REAL(wp), PUBLIC ::   rn_E0            !: Elasticity of undamaged ice [Pa]
+   REAL(wp), PUBLIC ::   rn_eta0          !: Viscosity of Undamaged ice [Pa.s]
+   REAL(wp), PUBLIC ::   rn_kth           !: healing constant [Eq.30 of Olason et al.,2022]
+   INTEGER , PUBLIC ::   nn_d_adv         !: advection of damage and stress tensor @T and @F
+   !
+   REAL(wp), PUBLIC ::   rn_crndg                !: cross-nudging coefficient ... #bbm
+   LOGICAL,  PUBLIC ::   ln_boost_CN_coast       !: If true, boosts the CN at the coastline
+   REAL(wp), PUBLIC ::   rn_max_CN_coast         !: Maximum value the CN coefficient should reach at the coast
+   LOGICAL,  PUBLIC ::   ln_boost_CN_high_dmg    !: If true, boosts the CN where damage is high
+   REAL(wp), PUBLIC ::   rn_max_CN_dmg           !: maximum value the CN coefficient should reach when boost is needed
+   !
+   REAL(wp), PUBLIC ::   rn_dmg_max       !: max value possible for capping damage (~1-eps)
+   REAL(wp), PUBLIC ::   rn_C0            !: compaction parameter "C" (Hibler's exponential)                                         =  -20.
+   REAL(wp), PUBLIC ::   rn_alrlx         !: `alpha` inherent to viscosity, Eq.10 of [Olason al.2022], used by Dansereau             =   5.
+   REAL(wp), PUBLIC ::   rn_btrlx         !: `beta`: sort of an `alpha` to go in the exp[] of `lambda`, used by Olason   Boutin      =   5.
+   REAL(wp), PUBLIC ::   rn_c_ref         !: Cohesion value at the lab scale                                                         = 2.E6
+   REAL(wp), PUBLIC ::   rn_l_ref         !: scaling paramater for cohesion, `l_ref` in [Eq.30 of Olason et al.,2022]
+   LOGICAL,  PUBLIC ::   ln_damaged_E     !: Use damaged elasticity in MC test (propagation speed of elastic waves)
+   LOGICAL,  PUBLIC ::   ln_tame_ini_ws   !: Gently increase the wind stress from zero to expected value when cold-starting an experiment
+   REAL(wp), PUBLIC ::   rn_half_tame     !: delay, in hours, at which half of the above taming is completed
    !                                     !!** ice-advection namelist (namdyn_adv) **
    LOGICAL , PUBLIC ::   ln_adv_Pra       !: Prather        advection scheme
    LOGICAL , PUBLIC ::   ln_adv_UMx       !: Ultimate-Macho advection scheme
@@ -306,6 +337,16 @@ MODULE ice
 
    !! Variables summed over all categories, or associated to all the ice in a single grid cell
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   u_ice, v_ice !: components of the ice velocity                          (m/s)
+   !#bbm:
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   xmskt, xmskf  !: ! effective land-sea masks at T- and F-poins
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   xmsk_ice_t, xmsk_ice_f !: mask for presence of ice
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   uVice, vUice  !: components of the ice velocity in F-centric formalism   (m/s)
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   utauVice, vtauUice !: atmos-ice stress. comp. in F-centric formalism     (N/m2)
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   dmgt, dmgf    !: ice damage / #bbm
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   sgm11t, sgm22t, sgm12t !: components of internal stress tensor at T-points / #bbm
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   sgm11f, sgm22f, sgm12f !: components of internal stress tensor at F-points / #bbm
+   REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:)     ::   af_i          !: ice total fractional area @F (interpolated)             #bbm   
+   !#bbm.
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   vt_i , vt_s  !: ice and snow total volume per unit area                 (m)
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   st_i         !: Total ice salinity content                              (pss.m)
    REAL(wp), PUBLIC, ALLOCATABLE, SAVE, DIMENSION(:,:) ::   at_i         !: ice total fractional area (ice concentration)
@@ -399,7 +440,7 @@ CONTAINS
       !!-----------------------------------------------------------------
       INTEGER :: ice_alloc
       !
-      INTEGER :: ierr(16), ii
+      INTEGER :: ierr(32), ii  !#bbm
       !!-----------------------------------------------------------------
       ierr(:) = 0
 
@@ -479,6 +520,19 @@ CONTAINS
       ! * SIMIP diagnostics
       ii = ii + 1
       ALLOCATE( t_si(jpi,jpj,jpl) , tm_si(jpi,jpj) , qcn_ice_bot(jpi,jpj,jpl) , qcn_ice_top(jpi,jpj,jpl) , STAT = ierr(ii) )
+
+      !#BBM:
+      ! * damage tracers, and components of internal stress tensor at both T- and F-points:
+      IF( ln_damage ) THEN
+         ii = ii + 1
+         ALLOCATE(  xmskt(jpi,jpj) , xmskf(jpi,jpj) ,   &
+            &      xmsk_ice_t(jpi,jpj) , xmsk_ice_f(jpi,jpj) ,   &
+            &        dmgt(jpi,jpj) ,  dmgf(jpi,jpj) ,   &
+            &      sgm11t(jpi,jpj) , sgm22t(jpi,jpj) , sgm12t(jpi,jpj) , &
+            &      sgm11f(jpi,jpj) , sgm22f(jpi,jpj) , sgm12f(jpi,jpj) , &
+            &      STAT = ierr(ii) )
+      END IF
+      !#BBM.
 
       ice_alloc = MAXVAL( ierr(:) )
       IF( ice_alloc /= 0 )   CALL ctl_stop( 'STOP', 'ice_alloc: failed to allocate arrays.' )
