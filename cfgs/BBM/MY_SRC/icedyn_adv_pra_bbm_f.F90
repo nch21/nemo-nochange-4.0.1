@@ -161,16 +161,16 @@ CONTAINS
          ! --- Lateral boundary conditions --- !
          !     caution: for gradients (sx and sy) the sign changes
          IF(l_advect_sigma) THEN
-            CALL lbc_lnk( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
+            CALL lbc_lnk_multi( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
                &                , sxx1md, cgrt, 1._wp, syy1md, cgrt,  1._wp, sxy1md, cgrt,  1._wp  &
-               &                ,   z0d1, cgrt, 1._wp, sxdd1 , cgrt, -1._wp, sydd1 , cgrt, -1._wp  &
-               &                , sxxdd1, cgrt, 1._wp, syydd1, cgrt,  1._wp, sxydd1, cgrt,  1._wp  &
+               &                ,   z0d1, cgrt, 1._wp, sxdd1 , cgrt, -1._wp, sydd1 , cgrt, -1._wp  )
+            CALL lbc_lnk_multi( crtnnm,  sxxdd1, cgrt, 1._wp, syydd1, cgrt,  1._wp, sxydd1, cgrt,  1._wp  &
                &                ,   z0d2, cgrt, 1._wp, sxdd2 , cgrt, -1._wp, sydd2 , cgrt, -1._wp  &
-               &                , sxxdd2, cgrt, 1._wp, syydd2, cgrt,  1._wp, sxydd2, cgrt,  1._wp  &
-               &                ,   z0d3, cgrt, 1._wp, sxdd3 , cgrt, -1._wp, sydd3 , cgrt, -1._wp  &
+               &                , sxxdd2, cgrt, 1._wp, syydd2, cgrt,  1._wp, sxydd2, cgrt,  1._wp  )
+            CALL lbc_lnk_multi( crtnnm,   z0d3, cgrt, 1._wp, sxdd3 , cgrt, -1._wp, sydd3 , cgrt, -1._wp  &
                &                , sxxdd3, cgrt, 1._wp, syydd3, cgrt,  1._wp, sxydd3, cgrt,  1._wp  )
          ELSE
-            CALL lbc_lnk( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
+            CALL lbc_lnk_multi( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
                &                , sxx1md, cgrt, 1._wp, syy1md, cgrt,  1._wp, sxy1md, cgrt,  1._wp  )            
          ENDIF
          
@@ -295,11 +295,11 @@ CONTAINS
       ! ji+ ji- jj+ jj-
 
       !LB: because of the F-centric world, need to link here => to fill the i+1
-      CALL lbc_lnk( 'adv_x', zfm,'F', 1._wp,  zf0,'F',1._wp, zfxy,'F',1._wp, &
+      CALL lbc_lnk_multi( 'adv_x', zfm,'F', 1._wp,  zf0,'F',1._wp, zfxy,'F',1._wp, &
          &                   zfx,'F',-1._wp, zfxx,'F',1._wp, zbet,'F',1._wp, &
          &                   zfy,'F',-1._wp, zfyy,'F',1._wp,                 &
-         &                   psm,'F', 1._wp,  ps0,'F',1._wp, psxy,'F',1._wp, &
-         &                   psx,'F',-1._wp, psxx,'F',1._wp,                 &
+         &                   psm,'F', 1._wp,  ps0,'F',1._wp, psxy,'F',1._wp )
+      CALL lbc_lnk_multi( 'adv_x',   psx,'F',-1._wp, psxx,'F',1._wp,                 &
          &                   psy,'F',-1._wp, psyy,'F',1._wp  )
       !! Fix due to the use of lbc_lnk, to avoid division by 0 later on...
       IF( ANY(psm<0._wp) ) CALL ctl_stop('STOP', 'adv_x() [icedyn_adv_pra_bbm_f.F90] : `psm<0` somewhere')
@@ -503,10 +503,10 @@ CONTAINS
       END_2D
       ! ji+ ji- jj+ jj-
       !LB: because of the F-centric world, need to link here => to fill the j+1
-      CALL lbc_lnk( 'adv_x', zfm,'F', 1._wp,  zf0,'F',1._wp, zfxy,'F',1._wp, &
+      CALL lbc_lnk_multi( 'adv_x', zfm,'F', 1._wp,  zf0,'F',1._wp, zfxy,'F',1._wp, &
          &                   zfx,'F',-1._wp, zfxx,'F',1._wp, zbet,'F',1._wp, &
-         &                   zfy,'F',-1._wp, zfyy,'F',1._wp,                 &
-         &                   psm,'F', 1._wp,  ps0,'F',1._wp, psxy,'F',1._wp, &
+         &                   zfy,'F',-1._wp, zfyy,'F',1._wp )
+      CALL lbc_lnk_multi( 'adv_x',  psm,'F', 1._wp,  ps0,'F',1._wp, psxy,'F',1._wp, &
          &                   psx,'F',-1._wp, psxx,'F',1._wp,                 &
          &                   psy,'F',-1._wp, psyy,'F',1._wp  )
       !! Fix due to the use of lbc_lnk, to avoid division by 0 later on...

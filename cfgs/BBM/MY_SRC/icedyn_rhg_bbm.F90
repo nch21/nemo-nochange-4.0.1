@@ -108,7 +108,7 @@ CONTAINS
       IF(ln_idealized) ridlzd = 0._wp
       IF( lwp ) WRITE(numout,*) '  * Disregarding Coriolis and SSH terms in momentum eq.:',ln_idealized,'=> ridlzd =',INT(ridlzd,1)
       
-      zrhoco   = rho0 * rn_cio
+      zrhoco   = rau0 * rn_cio
       zdtbbm   = rdt_ice / REAL( nn_nbbm, wp )
       z1_dtbbm = 1._wp / zdtbbm
 

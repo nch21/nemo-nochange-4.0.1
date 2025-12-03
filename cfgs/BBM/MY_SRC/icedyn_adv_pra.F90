@@ -118,7 +118,7 @@ CONTAINS
       CALL icemax3D( ph_s , zhs_max )
       CALL icemax3D( ph_ip, zhip_max)
       CALL icemax3D( zs_i , zsi_max )
-      CALL lbc_lnk( crtnm, zhi_max, cgrt, 1._wp, zhs_max, cgrt, 1._wp, zhip_max, cgrt, 1._wp, zsi_max, cgrt, 1._wp )
+      CALL lbc_lnk_multi( crtnm, zhi_max, cgrt, 1._wp, zhs_max, cgrt, 1._wp, zhip_max, cgrt, 1._wp, zsi_max, cgrt, 1._wp )
       !
       ! enthalpies
       DO jk = 1, nlay_i
@@ -274,33 +274,33 @@ CONTAINS
 
          ! --- Lateral boundary conditions --- !
          !     caution: for gradients (sx and sy) the sign changes
-         CALL lbc_lnk( crtnm, z0ice , cgrt, 1._wp, sxice , cgrt, -1._wp, syice , cgrt, -1._wp  & ! ice volume
+         CALL lbc_lnk_multi( crtnm, z0ice , cgrt, 1._wp, sxice , cgrt, -1._wp, syice , cgrt, -1._wp  & ! ice volume
             &                          , sxxice, cgrt, 1._wp, syyice, cgrt,  1._wp, sxyice, cgrt,  1._wp  &
-            &                          , z0snw , cgrt, 1._wp, sxsn  , cgrt, -1._wp, sysn  , cgrt, -1._wp  & ! snw volume
-            &                          , sxxsn , cgrt, 1._wp, syysn , cgrt,  1._wp, sxysn , cgrt,  1._wp  &
+            &                          , z0snw , cgrt, 1._wp, sxsn  , cgrt, -1._wp, sysn  , cgrt, -1._wp ) ! snw volume
+         CALL lbc_lnk_multi( crtnm,   sxxsn , cgrt, 1._wp, syysn , cgrt,  1._wp, sxysn , cgrt,  1._wp  &
             &                          , z0smi , cgrt, 1._wp, sxsal , cgrt, -1._wp, sysal , cgrt, -1._wp  & ! ice salinity
-            &                          , sxxsal, cgrt, 1._wp, syysal, cgrt,  1._wp, sxysal, cgrt,  1._wp  &
-            &                          , z0ai  , cgrt, 1._wp, sxa   , cgrt, -1._wp, sya   , cgrt, -1._wp  & ! ice concentration
+            &                          , sxxsal, cgrt, 1._wp, syysal, cgrt,  1._wp, sxysal, cgrt,  1._wp  )
+         CALL lbc_lnk_multi( crtnm,    z0ai  , cgrt, 1._wp, sxa   , cgrt, -1._wp, sya   , cgrt, -1._wp  & ! ice concentration
             &                          , sxxa  , cgrt, 1._wp, syya  , cgrt,  1._wp, sxya  , cgrt,  1._wp  &
-            &                          , z0oi  , cgrt, 1._wp, sxage , cgrt, -1._wp, syage , cgrt, -1._wp  & ! ice age
-            &                          , sxxage, cgrt, 1._wp, syyage, cgrt,  1._wp, sxyage, cgrt,  1._wp  )
-         CALL lbc_lnk( crtnm, z0es  , cgrt, 1._wp, sxc0  , cgrt, -1._wp, syc0  , cgrt, -1._wp  & ! snw enthalpy
+            &                          , z0oi  , cgrt, 1._wp, sxage , cgrt, -1._wp, syage , cgrt, -1._wp  ) ! ice age
+         CALL lbc_lnk_multi( crtnm,  sxxage, cgrt, 1._wp, syyage, cgrt,  1._wp, sxyage, cgrt,  1._wp  )
+         CALL lbc_lnk_multi( crtnm, z0es  , cgrt, 1._wp, sxc0  , cgrt, -1._wp, syc0  , cgrt, -1._wp  & ! snw enthalpy
             &                          , sxxc0 , cgrt, 1._wp, syyc0 , cgrt,  1._wp, sxyc0 , cgrt,  1._wp  )
-         CALL lbc_lnk( crtnm, z0ei  , cgrt, 1._wp, sxe   , cgrt, -1._wp, sye   , cgrt, -1._wp  & ! ice enthalpy
+         CALL lbc_lnk_multi( crtnm, z0ei  , cgrt, 1._wp, sxe   , cgrt, -1._wp, sye   , cgrt, -1._wp  & ! ice enthalpy
             &                          , sxxe  , cgrt, 1._wp, syye  , cgrt,  1._wp, sxye  , cgrt,  1._wp  )
          IF ( ln_pnd_LEV .OR. ln_pnd_TOPO ) THEN
             IF( ln_pnd_lids ) THEN
-               CALL lbc_lnk( crtnm, z0ap , cgrt, 1._wp, sxap , cgrt, -1._wp, syap , cgrt, -1._wp  & ! melt pond fraction
+               CALL lbc_lnk_multi( crtnm, z0ap , cgrt, 1._wp, sxap , cgrt, -1._wp, syap , cgrt, -1._wp  & ! melt pond fraction
                   &                          , sxxap, cgrt, 1._wp, syyap, cgrt,  1._wp, sxyap, cgrt,  1._wp  &
-                  &                          , z0vp , cgrt, 1._wp, sxvp , cgrt, -1._wp, syvp , cgrt, -1._wp  & ! melt pond volume
-                  &                          , sxxvp, cgrt, 1._wp, syyvp, cgrt,  1._wp, sxyvp, cgrt,  1._wp  &
+                  &                          , z0vp , cgrt, 1._wp, sxvp , cgrt, -1._wp, syvp , cgrt, -1._wp  ) ! melt pond volume
+               CALL lbc_lnk_multi( crtnm,   sxxvp, cgrt, 1._wp, syyvp, cgrt,  1._wp, sxyvp, cgrt,  1._wp  &
                   &                          , z0vl , cgrt, 1._wp, sxvl , cgrt, -1._wp, syvl , cgrt, -1._wp  & ! melt pond lid volume
                   &                          , sxxvl, cgrt, 1._wp, syyvl, cgrt,  1._wp, sxyvl, cgrt,  1._wp  )
             ELSE
-               CALL lbc_lnk( crtnm, z0ap , cgrt, 1._wp, sxap , cgrt, -1._wp, syap , cgrt, -1._wp  & ! melt pond fraction
+               CALL lbc_lnk_multi( crtnm, z0ap , cgrt, 1._wp, sxap , cgrt, -1._wp, syap , cgrt, -1._wp  & ! melt pond fraction
                   &                          , sxxap, cgrt, 1._wp, syyap, cgrt,  1._wp, sxyap, cgrt,  1._wp  &
-                  &                          , z0vp , cgrt, 1._wp, sxvp , cgrt, -1._wp, syvp , cgrt, -1._wp  & ! melt pond volume
-                  &                          , sxxvp, cgrt, 1._wp, syyvp, cgrt,  1._wp, sxyvp, cgrt,  1._wp  )
+                  &                          , z0vp , cgrt, 1._wp, sxvp , cgrt, -1._wp, syvp , cgrt, -1._wp  )! melt pond volume
+               CALL lbc_lnk_multi( crtnm,   sxxvp, cgrt, 1._wp, syyvp, cgrt,  1._wp, sxyvp, cgrt,  1._wp  )
             ENDIF
          ENDIF
 
@@ -896,7 +896,7 @@ CONTAINS
          DO_2D( nn_hls, nn_hls, nn_hls, nn_hls )
             IF ( pv_i(ji,jj,jl) > 0._wp ) THEN
                !
-               zvs_excess = MAX( 0._wp, pv_s(ji,jj,jl) - pv_i(ji,jj,jl) * (rho0-rhoi) * r1_rhos )
+               zvs_excess = MAX( 0._wp, pv_s(ji,jj,jl) - pv_i(ji,jj,jl) * (rau0-rhoi) * r1_rhos )
                !
                IF( zvs_excess > 0._wp ) THEN   ! snow-ice interface deplets below the ocean surface
                   ! put snow excess in the ocean

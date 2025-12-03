@@ -286,7 +286,7 @@ CONTAINS
          END_2D
       ELSE      !  if no ice dynamics => transfer directly the atmospheric stress to the ocean
          DO_2D( 0, 0, 0, 0 )
-            zfric(ji,jj) = r1_rho0 * SQRT( 0.5_wp *  &
+            zfric(ji,jj) = r1_rau0 * SQRT( 0.5_wp *  &
                &                         (  utau(ji,jj) * utau(ji,jj) + utau(ji-1,jj) * utau(ji-1,jj)   &
                &                          + vtau(ji,jj) * vtau(ji,jj) + vtau(ji,jj-1) * vtau(ji,jj-1) ) ) * tmask(ji,jj,1)
             zvel(ji,jj) = 0._wp
@@ -307,14 +307,14 @@ CONTAINS
 
          ! --- Energy needed to bring ocean surface layer until its freezing, zqfr is defined everywhere (J.m-2) --- !
          !     (mostly<0 but >0 if supercooling)
-         zqfr     = rho0 * rcp * e3t_m(ji,jj) * ( t_bo(ji,jj) - ( sst_m(ji,jj) + rt0 ) ) * tmask(ji,jj,1)  ! both < 0 (t_bo < sst) and > 0 (t_bo > sst)
+         zqfr     = rau0 * rcp * e3t_m(ji,jj) * ( t_bo(ji,jj) - ( sst_m(ji,jj) + rt0 ) ) * tmask(ji,jj,1)  ! both < 0 (t_bo < sst) and > 0 (t_bo > sst)
          zqfr_neg = MIN( zqfr , 0._wp )                                                                    ! only < 0
          zqfr_pos = MAX( zqfr , 0._wp )                                                                    ! only > 0
 
          ! --- Sensible ocean-to-ice heat flux (W/m2) --- !
          !     (mostly>0 but <0 if supercooling)
          zfric_u            = MAX( SQRT( zfric(ji,jj) ), zfric_umin )
-         qsb_ice_bot(ji,jj) = rswitch * rho0 * rcp * zch * zfric_u * ( ( sst_m(ji,jj) + rt0 ) - t_bo(ji,jj) )
+         qsb_ice_bot(ji,jj) = rswitch * rau0 * rcp * zch * zfric_u * ( ( sst_m(ji,jj) + rt0 ) - t_bo(ji,jj) )
 
          ! upper bound for qsb_ice_bot: the heat retrieved from the ocean must be smaller than the heat necessary to reach
          !                              the freezing point, so that we do not have SST < T_freeze

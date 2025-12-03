@@ -159,16 +159,16 @@ CONTAINS
          ! --- Lateral boundary conditions --- !
          !     caution: for gradients (sx and sy) the sign changes
          IF(l_advect_sigma) THEN
-            CALL lbc_lnk( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
+            CALL lbc_lnk_multi( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
                &                , sxx1md, cgrt, 1._wp, syy1md, cgrt,  1._wp, sxy1md, cgrt,  1._wp  &
-               &                ,   z0d1, cgrt, 1._wp, sxdd1 , cgrt, -1._wp, sydd1 , cgrt, -1._wp  &
-               &                , sxxdd1, cgrt, 1._wp, syydd1, cgrt,  1._wp, sxydd1, cgrt,  1._wp  &
+               &                ,   z0d1, cgrt, 1._wp, sxdd1 , cgrt, -1._wp, sydd1 , cgrt, -1._wp  )
+            CALL lbc_lnk_multi( crtnnm,  sxxdd1, cgrt, 1._wp, syydd1, cgrt,  1._wp, sxydd1, cgrt,  1._wp  &
                &                ,   z0d2, cgrt, 1._wp, sxdd2 , cgrt, -1._wp, sydd2 , cgrt, -1._wp  &
-               &                , sxxdd2, cgrt, 1._wp, syydd2, cgrt,  1._wp, sxydd2, cgrt,  1._wp  &
-               &                ,   z0d3, cgrt, 1._wp, sxdd3 , cgrt, -1._wp, sydd3 , cgrt, -1._wp  &
+               &                , sxxdd2, cgrt, 1._wp, syydd2, cgrt,  1._wp, sxydd2, cgrt,  1._wp  )
+            CALL lbc_lnk_multi( crtnnm,   z0d3, cgrt, 1._wp, sxdd3 , cgrt, -1._wp, sydd3 , cgrt, -1._wp  &
                &                , sxxdd3, cgrt, 1._wp, syydd3, cgrt,  1._wp, sxydd3, cgrt,  1._wp  )
          ELSE
-            CALL lbc_lnk( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
+            CALL lbc_lnk_multi( crtnnm,   z0di, cgrt, 1._wp, sx1md , cgrt, -1._wp, sy1md , cgrt, -1._wp  &
                &                , sxx1md, cgrt, 1._wp, syy1md, cgrt,  1._wp, sxy1md, cgrt,  1._wp  )            
          ENDIF
          

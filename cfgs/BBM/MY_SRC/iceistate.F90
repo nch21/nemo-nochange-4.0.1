@@ -442,13 +442,13 @@ CONTAINS
       !
       IF( ln_ice_embd ) THEN            ! embedded sea-ice: deplete the initial ssh below sea-ice area
          !                              ! ----------------
-         ssh(:,:,Kmm) = ssh(:,:,Kmm) - snwice_mass(:,:) * r1_rho0
-         ssh(:,:,Kbb) = ssh(:,:,Kbb) - snwice_mass(:,:) * r1_rho0
+         ssh(:,:,Kmm) = ssh(:,:,Kmm) - snwice_mass(:,:) * r1_rau0
+         ssh(:,:,Kbb) = ssh(:,:,Kbb) - snwice_mass(:,:) * r1_rau0
          !
       ELSE                              ! levitating sea-ice: deplete the initial ssh over the whole domain
          !                              ! ------------------
          area    = glob_sum( 'iceistate', e1e2t(:,:) * ssmask(:,:) )
-         zsshadj = glob_sum( 'iceistate', snwice_mass(:,:) * r1_rho0 * e1e2t(:,:) ) / area
+         zsshadj = glob_sum( 'iceistate', snwice_mass(:,:) * r1_rau0 * e1e2t(:,:) ) / area
 #if defined key_agrif
          ! Override ssh adjustment in nested domains by the root-domain ssh adjustment;
          ! store the adjustment value in a global module variable to make it retrievable in nested domains

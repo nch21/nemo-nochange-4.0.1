@@ -366,7 +366,7 @@ CONTAINS
          WRITE(numout,*)'~~~~~~~~~~~~~~'
       ENDIF
 
-      zrhoco = rho0 * rn_cio
+      zrhoco = rau0 * rn_cio
       !
       IF( MOD( kt-1, nn_fsbc ) == 0 ) THEN     !==  Ice time-step only  ==!   (i.e. surface module time-step)
          DO_2D( 0, 0, 0, 0 )                          !* update the modulus of stress at ocean surface (T-point)
@@ -389,7 +389,7 @@ CONTAINS
       !                                      !==  every ocean time-step  ==!
       IF ( ln_drgice_imp ) THEN
          ! Save drag with right sign to update top drag in the ocean implicit friction
-         rCdU_ice(:,:) = -r1_rho0 * tmod_io(:,:) * at_i(:,:) * tmask(:,:,1)
+         rCdU_ice(:,:) = -r1_rau0 * tmod_io(:,:) * at_i(:,:) * tmask(:,:,1)
          zflagi = 0._wp
       ELSE
          zflagi = 1._wp

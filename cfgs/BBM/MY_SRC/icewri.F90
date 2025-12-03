@@ -89,7 +89,7 @@ CONTAINS
       !-----------------
       ! Standard outputs
       !-----------------
-      zrho1 = ( rho0 - rhoi ) * r1_rho0 ; zrho2 = rhos * r1_rho0
+      zrho1 = ( rau0 - rhoi ) * r1_rau0 ; zrho2 = rhos * r1_rau0
       ! masks
       CALL iom_put( 'icemask'  , zmsk00 )   ! ice mask 0%
       CALL iom_put( 'icemask05', zmsk05 )   ! ice mask 5%

@@ -222,7 +222,7 @@ CONTAINS
       !------------------------------------------------------------------------------!
       ! 1) define some variables and initialize arrays
       !------------------------------------------------------------------------------!
-      zrhoco = rho0 * rn_cio
+      zrhoco = rau0 * rn_cio
 
       ! ecc2: square of yield ellipse eccenticrity
       ecc2    = rn_ecc * rn_ecc
