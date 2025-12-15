@@ -34,7 +34,8 @@ MODULE icewri
 
    PUBLIC ice_wri        ! called by ice_stp
    PUBLIC ice_wri_state  ! called by dia_wri_state 
-
+!! * Substitutions
+#  include "do_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/ICE 4.0 , NEMO Consortium (2018)
    !! $Id: icewri.F90 11575 2019-09-19 10:51:37Z clem $
