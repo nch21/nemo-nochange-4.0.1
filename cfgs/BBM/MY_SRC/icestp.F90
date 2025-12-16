@@ -151,7 +151,11 @@ CONTAINS
          ! It provides the following fields used in sea ice model:
          !    utau_ice, vtau_ice = surface ice stress [N/m2]
          !------------------------------------------------!
-                                        CALL ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice )          
+         !IF( ln_rhg_BBM ) THEN
+         !                               CALL ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice, utauVice=utauVice, vtauUice=vtauUice )
+         !ELSE
+                                        CALL ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice )
+         !END IF         
          !-------------------------------------!
          ! --- ice dynamics and advection  --- !
          !-------------------------------------!
@@ -297,7 +301,7 @@ CONTAINS
       INTEGER  ::   ios                 ! Local integer
       !!
       NAMELIST/nampar/ jpl, nlay_i, nlay_s, ln_virtual_itd, ln_icedyn, ln_icethd, rn_amax_n, rn_amax_s,  &
-         &             cn_icerst_in, cn_icerst_indir, cn_icerst_out, cn_icerst_outdir
+         &             cn_icerst_in, cn_icerst_indir, cn_icerst_out, cn_icerst_outdir, ln_damage
       !!-------------------------------------------------------------------
       !
       REWIND( numnam_ice_ref )      ! Namelist nampar in reference namelist : Parameters for ice
@@ -321,6 +325,7 @@ CONTAINS
          WRITE(numout,*) '         Ice thermodynamics (T) or not (F)                   ln_icethd = ', ln_icethd
          WRITE(numout,*) '         maximum ice concentration for NH                              = ', rn_amax_n 
          WRITE(numout,*) '         maximum ice concentration for SH                              = ', rn_amax_s
+         WRITE(numout,*) '         use of "ice damage" tracer (for brittle rheologies) ln_damage = ', ln_damage
       ENDIF
       !                                        !--- change max ice concentration for roundoff errors
       rn_amax_n = MIN( rn_amax_n, 1._wp - epsi10 )
