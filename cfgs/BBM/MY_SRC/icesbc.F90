@@ -44,7 +44,7 @@ MODULE icesbc
    !!----------------------------------------------------------------------
 CONTAINS
 
-   SUBROUTINE ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice,  utauVice, vtauUice )
+   SUBROUTINE ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice )
       !!-------------------------------------------------------------------
       !!                  ***  ROUTINE ice_sbc_tau  ***
       !!
@@ -56,14 +56,11 @@ CONTAINS
       INTEGER                     , INTENT(in   ) ::   kt                   ! ocean time step
       INTEGER                     , INTENT(in   ) ::   ksbc                 ! type of sbc flux
       REAL(wp), DIMENSION(jpi,jpj), INTENT(  out) ::   utau_ice, vtau_ice   ! air-ice stress   [N/m2]
-      REAL(wp), DIMENSION(jpi,jpj), INTENT(  out), OPTIONAL :: utauVice, vtauUice   ! air-ice stress   [N/m2] !#bbm
       !!
       INTEGER  ::   ji, jj                 ! dummy loop index
       REAL(wp), DIMENSION(jpi,jpj) ::   zutau_ice, zvtau_ice
-      LOGICAL :: lbbm
       !!-------------------------------------------------------------------
       !
-      lbbm = ( PRESENT(utauVice) .AND. PRESENT(vtauUice) )
       IF( ln_timing )   CALL timing_start('icesbc')
       !
       IF( kt == nit000 .AND. lwp ) THEN
@@ -75,19 +72,10 @@ CONTAINS
       SELECT CASE( ksbc )
          CASE( jp_usr     )   ;    CALL usrdef_sbc_ice_tau( kt )                 ! user defined formulation
       CASE( jp_blk     )
-         !#bbm:
-         IF( lbbm ) THEN
-         CALL blk_ice_1( sf(jp_wndi)%fnow(:,:,1), sf(jp_wndj)%fnow(:,:,1),   &
-            &                                      theta_air_zt(:,:), q_air_zt(:,:),   &   ! #LB: known from "sbc_oce" module...
-            &                                      sf(jp_slp )%fnow(:,:,1), u_ice, v_ice, tm_su    ,   &   ! inputs
-            &                                      putaui = utau_ice, pvtaui = vtau_ice, putaui_v = utauVice, pvtaui_u = vtauUice ) ! outputs
-         ELSE
          CALL blk_ice_1( sf(jp_wndi)%fnow(:,:,1), sf(jp_wndj)%fnow(:,:,1),   &
             &                                      theta_air_zt(:,:), q_air_zt(:,:),   &   ! #LB: known from "sbc_oce" module...
             &                                      sf(jp_slp )%fnow(:,:,1), u_ice, v_ice, tm_su    ,   &   ! inputs
             &                                      putaui = utau_ice, pvtaui = vtau_ice            )       ! outputs
-         END IF
-         !#bbm.
  !        CASE( jp_abl     )    utau_ice & vtau_ice are computed in ablmod
          CASE( jp_purecpl )   ;    CALL sbc_cpl_ice_tau( utau_ice , vtau_ice )   ! Coupled      formulation
       END SELECT
@@ -286,7 +274,7 @@ CONTAINS
          END_2D
       ELSE      !  if no ice dynamics => transfer directly the atmospheric stress to the ocean
          DO_2D( 0, 0, 0, 0 )
-            zfric(ji,jj) = r1_rau0 * SQRT( 0.5_wp *  &
+            zfric(ji,jj) = r1_rho0 * SQRT( 0.5_wp *  &
                &                         (  utau(ji,jj) * utau(ji,jj) + utau(ji-1,jj) * utau(ji-1,jj)   &
                &                          + vtau(ji,jj) * vtau(ji,jj) + vtau(ji,jj-1) * vtau(ji,jj-1) ) ) * tmask(ji,jj,1)
             zvel(ji,jj) = 0._wp
@@ -307,20 +295,20 @@ CONTAINS
 
          ! --- Energy needed to bring ocean surface layer until its freezing, zqfr is defined everywhere (J.m-2) --- !
          !     (mostly<0 but >0 if supercooling)
-         zqfr     = rau0 * rcp * e3t_m(ji,jj) * ( t_bo(ji,jj) - ( sst_m(ji,jj) + rt0 ) ) * tmask(ji,jj,1)  ! both < 0 (t_bo < sst) and > 0 (t_bo > sst)
+         zqfr     = rho0 * rcp * e3t_m(ji,jj) * ( t_bo(ji,jj) - ( sst_m(ji,jj) + rt0 ) ) * tmask(ji,jj,1)  ! both < 0 (t_bo < sst) and > 0 (t_bo > sst)
          zqfr_neg = MIN( zqfr , 0._wp )                                                                    ! only < 0
          zqfr_pos = MAX( zqfr , 0._wp )                                                                    ! only > 0
 
          ! --- Sensible ocean-to-ice heat flux (W/m2) --- !
          !     (mostly>0 but <0 if supercooling)
          zfric_u            = MAX( SQRT( zfric(ji,jj) ), zfric_umin )
-         qsb_ice_bot(ji,jj) = rswitch * rau0 * rcp * zch * zfric_u * ( ( sst_m(ji,jj) + rt0 ) - t_bo(ji,jj) )
+         qsb_ice_bot(ji,jj) = rswitch * rho0 * rcp * zch * zfric_u * ( ( sst_m(ji,jj) + rt0 ) - t_bo(ji,jj) )
 
          ! upper bound for qsb_ice_bot: the heat retrieved from the ocean must be smaller than the heat necessary to reach
          !                              the freezing point, so that we do not have SST < T_freeze
          !                              This implies: qsb_ice_bot(ji,jj) * at_i(ji,jj) * rtdice <= - zqfr_neg
          !                              The following formulation is ok for both normal conditions and supercooling
-         qsb_ice_bot(ji,jj) = rswitch * MIN( qsb_ice_bot(ji,jj), - zqfr_neg * r1_rdtice / MAX( at_i(ji,jj), epsi10 ) )
+         qsb_ice_bot(ji,jj) = rswitch * MIN( qsb_ice_bot(ji,jj), - zqfr_neg * r1_Dt_ice / MAX( at_i(ji,jj), epsi10 ) )
 
          ! If conditions are always supercooled (such as at the mouth of ice-shelves), then ice grows continuously
          ! ==> stop ice formation by artificially setting up the turbulent fluxes to 0 when volume > 20m (arbitrary)
@@ -334,21 +322,23 @@ CONTAINS
          !     qlead is the energy received from the atm. in the leads.
          !     If warming (zqld >= 0), then the energy in the leads is used to melt ice (bottom melting) => fhld  (W/m2)
          !     If cooling (zqld <  0), then the energy in the leads is used to grow ice in open water    => qlead (J.m-2)
-         IF( ( zqld - zqfr ) < 0._wp .OR. at_i(ji,jj) < epsi10 ) THEN
+         IF( zqld >= 0._wp .AND. at_i(ji,jj) > 0._wp ) THEN
+            ! upper bound for fhld: fhld should be equal to zqld
+            !                        but we have to make sure that this heat will not make the sst drop below the freezing point
+            !                        so the max heat that can be pulled out of the ocean is zqld - qsb - zqfr_pos
+            !                        The following formulation is ok for both normal conditions and supercooling
+            fhld (ji,jj) = rswitch * MAX( 0._wp, ( zqld - zqfr_pos ) * r1_Dt_ice / MAX( at_i(ji,jj), epsi10 ) &  ! divided by at_i since this is (re)multiplied by a_i in icethd_dh.F90
+               &                                 - qsb_ice_bot(ji,jj) )
+            qlead(ji,jj) = 0._wp
+         ELSE
             fhld (ji,jj) = 0._wp
             ! upper bound for qlead: qlead should be equal to zqld
             !                        but before using this heat for ice formation, we suppose that the ocean cools down till the freezing point.
-            !                        The energy for this cooling down is zqfr and freezing point is reached if zqfr = zqld
-            !                        so the max heat that can be pulled out of the ocean is zqld - zqfr
-            !                        The following formulation is ok for both normal conditions and supercooling            
-            qlead(ji,jj) = MIN( 0._wp , zqld - zqfr )
-         ELSE
-            ! upper bound for fhld: fhld should be equal to zqld
-            !                        but we have to make sure that this heat will not make the sst drop below the freezing point
-            !                        so the max heat that can be pulled out of the ocean is zqld - zqfr_pos
+            !                        The energy for this cooling down is zqfr. Also some heat will be removed from the ocean from turbulent fluxes (qsb)
+            !                        and freezing point is reached if zqfr = zqld - qsb*a/dt
+            !                        so the max heat that can be pulled out of the ocean is zqld - qsb - zqfr
             !                        The following formulation is ok for both normal conditions and supercooling
-            fhld (ji,jj) = rswitch * MAX( 0._wp, ( zqld - zqfr_pos ) * r1_rdtice / MAX( at_i(ji,jj), epsi10 ) )  ! divided by at_i since this is (re)multiplied by a_i in icethd_dh.F90
-            qlead(ji,jj) = 0._wp
+            qlead(ji,jj) = MIN( 0._wp , zqld - ( qsb_ice_bot(ji,jj) * at_i(ji,jj) * rDt_ice ) - zqfr )
          ENDIF
          !
          ! If ice is landfast and ice concentration reaches its max
@@ -372,10 +362,10 @@ CONTAINS
          qsb_ice_bot(:,:) = 0._wp
          fhld       (:,:) = 0._wp
       ENDIF
-
+      
    END SUBROUTINE ice_flx_other
-
-
+   
+   
    SUBROUTINE ice_sbc_init
       !!-------------------------------------------------------------------
       !!                  ***  ROUTINE ice_sbc_init  ***
@@ -389,7 +379,7 @@ CONTAINS
       !!-------------------------------------------------------------------
       INTEGER ::   ios, ioptio   ! Local integer
       !!
-      NAMELIST/namsbc/ rn_cio, nn_snwfra, rn_blow_s, nn_flxdist, ln_cndflx, ln_cndemulate, nn_qtrice
+      NAMELIST/namsbc/ rn_cio, nn_snwfra, rn_snwblow, nn_flxdist, ln_cndflx, ln_cndemulate, nn_qtrice
       !!-------------------------------------------------------------------
       !
       READ  ( numnam_ice_ref, namsbc, IOSTAT = ios, ERR = 901)
@@ -405,7 +395,7 @@ CONTAINS
          WRITE(numout,*) '   Namelist namsbc:'
          WRITE(numout,*) '      drag coefficient for oceanic stress                       rn_cio        = ', rn_cio
          WRITE(numout,*) '      fraction of ice covered by snow (options 0,1,2)           nn_snwfra     = ', nn_snwfra
-         WRITE(numout,*) '      coefficient for ice-lead partition of snowfall            rn_snwblow    = ', rn_blow_s
+         WRITE(numout,*) '      coefficient for ice-lead partition of snowfall            rn_snwblow    = ', rn_snwblow
          WRITE(numout,*) '      Multicategory heat flux formulation                       nn_flxdist    = ', nn_flxdist
          WRITE(numout,*) '      Use conduction flux as surface condition                  ln_cndflx     = ', ln_cndflx
          WRITE(numout,*) '         emulate conduction flux                                ln_cndemulate = ', ln_cndemulate
