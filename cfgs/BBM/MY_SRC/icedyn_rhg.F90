@@ -16,8 +16,8 @@ MODULE icedyn_rhg
    USE dom_oce        ! ocean space and time domain
    USE ice            ! sea-ice: variables
    USE icedyn_rhg_evp ! sea-ice: EVP rheology
-   USE icedyn_rhg_eap ! sea-ice: EAP rheology
-   USE icedyn_rhg_vp  ! sea-ice: VP  rheology
+   !USE icedyn_rhg_eap ! sea-ice: EAP rheology
+   !USE icedyn_rhg_vp  ! sea-ice: VP  rheology
    USE icedyn_rhg_bbm ! sea-ice: BBM rheology !#bbm
    USE icectl         ! sea-ice: control prints
    !
@@ -85,12 +85,12 @@ CONTAINS
          !                             !------------------------!
       CASE( np_rhgVP  )                ! Viscous-Plastic        !
          !                             !------------------------!
-         CALL ice_dyn_rhg_vp ( kt, shear_i, divu_i, delta_i )
+         !CALL ice_dyn_rhg_vp ( kt, shear_i, divu_i, delta_i )
          !
          !                             !----------------------------!
       CASE( np_rhgEAP )                ! Elasto-Anisotropic-Plastic !
          !                             !----------------------------!
-         CALL ice_dyn_rhg_eap( kt, Kmm, stress1_i, stress2_i, stress12_i, shear_i, divu_i, delta_i, aniso_11, aniso_12, rdg_conv )
+         !CALL ice_dyn_rhg_eap( kt, Kmm, stress1_i, stress2_i, stress12_i, shear_i, divu_i, delta_i, aniso_11, aniso_12, rdg_conv )
          !
          !                             !-------------------------!
       CASE( np_rhgBBM )                ! Brittle Bingham Maxwell !
@@ -101,7 +101,7 @@ CONTAINS
       !
       IF( lrst_ice ) THEN
          IF( ln_rhg_EVP )   CALL rhg_evp_rst( 'WRITE', kt ) !* write EVP fields in the restart file
-         IF( ln_rhg_EAP )   CALL rhg_eap_rst( 'WRITE', kt ) !* write EAP fields in the restart file
+         !IF( ln_rhg_EAP )   CALL rhg_eap_rst( 'WRITE', kt ) !* write EAP fields in the restart file
          ! MV note: no restart needed for VP as there is no time equation for stress tensor
          IF( ln_rhg_BBM )   CALL rhg_bbm_rst( 'WRITE', kt )
       ENDIF
@@ -214,13 +214,13 @@ CONTAINS
       !                             !== set the choice of ice advection ==!
       ioptio = 0
       IF( ln_rhg_EVP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEVP    ;   ENDIF
-      IF( ln_rhg_EAP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEAP    ;   ENDIF
-      IF( ln_rhg_VP  ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgVP     ;   ENDIF
+      !IF( ln_rhg_EAP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEAP    ;   ENDIF
+      !IF( ln_rhg_VP  ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgVP     ;   ENDIF
       IF( ln_rhg_BBM ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgBBM    ;   ENDIF
       IF( ioptio /= 1 )   CALL ctl_stop( 'ice_dyn_rhg_init: choose one and only one ice rheology' )
       !
       IF( ln_rhg_EVP  )   CALL rhg_evp_rst( 'READ' )  !* read or initialize all required files
-      IF( ln_rhg_EAP  )   CALL rhg_eap_rst( 'READ' )  !* read or initialize all required files
+      !IF( ln_rhg_EAP  )   CALL rhg_eap_rst( 'READ' )  !* read or initialize all required files
 
       IF( ln_rhg_BBM  ) THEN
          CALL ice_dyn_rhg_bbm_init() !* allocation of BBM-specific arrays (LB: needs to be done before reading restarts...)
