@@ -31,7 +31,7 @@ MODULE iceupdate
    USE lib_fortran    ! fortran utilities (glob_sum + no signed zero)
    USE lbclnk         ! lateral boundary conditions (or mpp links)
    USE timing         ! Timing
-   USE oce
+
    IMPLICIT NONE
    PRIVATE
 
@@ -39,8 +39,8 @@ MODULE iceupdate
    PUBLIC   ice_update_flx    ! called by ice_stp
    PUBLIC   ice_update_tau    ! called by ice_stp
 
-   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:) ::   utau_oce, vtau_oce   ! air-ocean surface i- & j-stress       [N/m2]
-   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:) ::   tmod_io              ! modulus of the ice-ocean velocity @T  [m/s]
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:) ::   utau_oce, vtau_oce   ! air-ocean surface i- & j-stress     [N/m2]
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:) ::   tmod_io              ! modulus of the ice-ocean velocity   [m/s]
 
    !! * Substitutions
 #  include "do_loop_substitute.h90"
@@ -91,8 +91,7 @@ CONTAINS
       !
       INTEGER  ::   ji, jj, jl, jk   ! dummy loop indices
       REAL(wp) ::   zqsr             ! New solar flux received by the ocean
-      !REAL(wp), ALLOCATABLE, DIMENSION(:,:) ::   z2d                  ! 2D workspace
-      REAL(wp), DIMENSION(jpi,jpj) ::   z2d                  ! 2D workspace
+      REAL(wp), ALLOCATABLE, DIMENSION(:,:) ::   z2d                  ! 2D workspace
       !!---------------------------------------------------------------------
       IF( ln_timing )   CALL timing_start('iceupdate')
 
@@ -108,7 +107,7 @@ CONTAINS
          qt_atm_oi(:,:) = ( 1._wp - at_i_b(:,:) ) * ( qns_oce(:,:) + qsr_oce(:,:) ) + qemp_oce(:,:) + &
             &             SUM( a_i_b * ( qcn_ice + qml_ice + qtr_ice_top ), dim=3 ) + qemp_ice(:,:)
       ELSE                   ! ice-atm interface = solar and non-solar fluxes
-         qt_atm_oi(:,:) = qns_tot(:,:) + qsr_tot(:,:)
+         qt_atm_oi(:,:) = qns_tot(:,:) + qsr_tot(:,:) 
       ENDIF
 
       ! --- case we bypass ice thermodynamics --- !
@@ -138,7 +137,7 @@ CONTAINS
                &                                + hfx_thd(ji,jj) + hfx_dyn(ji,jj) + hfx_res(ji,jj) &
                &                                + hfx_sub(ji,jj) - SUM( qevap_ice(ji,jj,:) * a_i_b(ji,jj,:) ) + hfx_spr(ji,jj)
          ENDIF
-
+         
          ! New qsr and qns used to compute the oceanic heat flux at the next time step
          !----------------------------------------------------------------------------
          ! if warming and some ice remains, then we suppose that the whole solar flux has been consumed to melt the ice
@@ -185,7 +184,7 @@ CONTAINS
          !                                               ! new mass per unit area
          snwice_mass  (ji,jj) = tmask(ji,jj,1) * ( rhos * vt_s(ji,jj) + rhoi * vt_i(ji,jj) + rhow * (vt_ip(ji,jj) + vt_il(ji,jj)) )
          !                                               ! time evolution of snow+ice mass
-         snwice_fmass (ji,jj) = ( snwice_mass(ji,jj) - snwice_mass_b(ji,jj) ) * r1_rdtice
+         snwice_fmass (ji,jj) = ( snwice_mass(ji,jj) - snwice_mass_b(ji,jj) ) * r1_Dt_ice
 
       END_2D
 
@@ -239,14 +238,12 @@ CONTAINS
       CALL iom_put( 'vfxsub_err', wfx_err_sub )   ! "excess" of sublimation sent to ocean
 
       IF ( iom_use( 'vfxthin' ) ) THEN   ! mass flux from ice growth in open water + thin ice (<20cm) => comparable to observations
-         !ALLOCATE( z2d(jpi,jpj) )
-         WHERE( hm_i(:,:) < 0.2 .AND. hm_i(:,:) > 0. )
-            z2d = wfx_bog
-         ELSEWHERE
-            z2d = 0._wp
+         ALLOCATE( z2d(jpi,jpj) )
+         WHERE( hm_i(:,:) < 0.2 .AND. hm_i(:,:) > 0. ) ; z2d = wfx_bog
+         ELSEWHERE                                     ; z2d = 0._wp
          END WHERE
          CALL iom_put( 'vfxthin', wfx_opw + z2d )
-         !DEALLOCATE( z2d )
+         DEALLOCATE( z2d )
       ENDIF
 
       !                            ! vfxsnw = vfxsnw_sni + vfxsnw_dyn + vfxsnw_sum
@@ -259,34 +256,18 @@ CONTAINS
 
       ! --- heat fluxes [W/m2] --- !
       !                              ! qt_atm_oi - qt_oce_ai = hfxdhc - ( dihctrp + dshctrp )
-
-      !LB:
-      z2d(:,:) = tmask(:,:,1)
-      !!
-      IF( iom_use('qsr_oce_si') .OR. iom_use('qns_oce_si') .OR. iom_use('qemp_oce_si') .OR. iom_use('qns_atmo') ) THEN
-         !! LB: '_si' means we just keep regions where there is sea-ice (field will be 0 where A=0) !
-         WHERE( at_i_b(:,:) <= 0.01_wp ) z2d(:,:) = 0._wp
-         IF( iom_use('qemp_oce_si') ) CALL iom_put( 'qemp_oce_si', qemp_oce                      * z2d ) ! Downward Heat Flux from E-P over ocean
-         IF( iom_use('qsr_oce_si' ) ) CALL iom_put( 'qsr_oce_si' , qsr_oce  * ( 1._wp - at_i_b ) * z2d ) !     solar flux at ocean surface
-         IF( iom_use('qns_oce_si' ) ) CALL iom_put( 'qns_oce_si' , qns_oce  * ( 1._wp - at_i_b ) * z2d ) ! non-solar flux at ocean surface !LOLO: add `qemp_oce` ??? don't get it...
-         IF( iom_use('qns_atmo'   ) ) CALL iom_put( 'qns_atmo'   , ( -SUM( qns_ice * a_i_b, dim=3 ) - qns_oce*( 1._wp - at_i_b ) ) * z2d ) ! Non solar heat flux to the atmosphere
-         !!
-         z2d(:,:) = tmask(:,:,1)
-      ENDIF
-      !LB.
-
-      IF( iom_use('qsr_oce'    ) ) CALL iom_put( 'qsr_oce'    , (qsr_oce * ( 1._wp - at_i_b )                              ) * z2d ) !     solar flux at ocean surface
-      IF( iom_use('qns_oce'    ) ) CALL iom_put( 'qns_oce'    , (qns_oce * ( 1._wp - at_i_b ) + qemp_oce                   ) * z2d ) ! non-solar flux at ocean surface
-      IF( iom_use('qsr_ice'    ) ) CALL iom_put( 'qsr_ice'    , (SUM( qsr_ice * a_i_b, dim=3 )                             ) * z2d ) !     solar flux at ice surface
-      IF( iom_use('qns_ice'    ) ) CALL iom_put( 'qns_ice'    , (SUM( qns_ice * a_i_b, dim=3 ) + qemp_ice                  ) * z2d ) ! non-solar flux at ice surface
-      IF( iom_use('qtr_ice_bot') ) CALL iom_put( 'qtr_ice_bot', (SUM( qtr_ice_bot * a_i_b, dim=3 )                         ) * z2d ) !     solar flux transmitted thru ice
-      IF( iom_use('qtr_ice_top') ) CALL iom_put( 'qtr_ice_top', (SUM( qtr_ice_top * a_i_b, dim=3 )                         ) * z2d ) !     solar flux transmitted thru ice surface
-      IF( iom_use('qt_oce'     ) ) CALL iom_put( 'qt_oce'     , (     ( qsr_oce + qns_oce ) * ( 1._wp - at_i_b ) + qemp_oce) * z2d )
-      IF( iom_use('qt_ice'     ) ) CALL iom_put( 'qt_ice'     , (SUM( ( qns_ice + qsr_ice ) * a_i_b, dim=3 )     + qemp_ice) * z2d )
-      IF( iom_use('qt_oce_ai'  ) ) CALL iom_put( 'qt_oce_ai'  , qt_oce_ai                                                    * z2d ) ! total heat flux at the ocean   surface: interface oce-(ice+atm)
-      IF( iom_use('qt_atm_oi'  ) ) CALL iom_put( 'qt_atm_oi'  , qt_atm_oi                                                    * z2d ) ! total heat flux at the oce-ice surface: interface atm-(ice+oce)
-      IF( iom_use('qemp_oce'   ) ) CALL iom_put( 'qemp_oce'   , (qemp_oce                                                  ) * z2d ) ! Downward Heat Flux from E-P over ocean
-      IF( iom_use('qemp_ice'   ) ) CALL iom_put( 'qemp_ice'   , (qemp_ice                                                  ) * z2d ) ! Downward Heat Flux from E-P over ice
+      IF( iom_use('qsr_oce'    ) )   CALL iom_put( 'qsr_oce'    , qsr_oce * ( 1._wp - at_i_b )                               )   !     solar flux at ocean surface
+      IF( iom_use('qns_oce'    ) )   CALL iom_put( 'qns_oce'    , qns_oce * ( 1._wp - at_i_b ) + qemp_oce                    )   ! non-solar flux at ocean surface
+      IF( iom_use('qsr_ice'    ) )   CALL iom_put( 'qsr_ice'    , SUM( qsr_ice * a_i_b, dim=3 )                              )   !     solar flux at ice surface
+      IF( iom_use('qns_ice'    ) )   CALL iom_put( 'qns_ice'    , SUM( qns_ice * a_i_b, dim=3 ) + qemp_ice                   )   ! non-solar flux at ice surface
+      IF( iom_use('qtr_ice_bot') )   CALL iom_put( 'qtr_ice_bot', SUM( qtr_ice_bot * a_i_b, dim=3 )                          )   !     solar flux transmitted thru ice
+      IF( iom_use('qtr_ice_top') )   CALL iom_put( 'qtr_ice_top', SUM( qtr_ice_top * a_i_b, dim=3 )                          )   !     solar flux transmitted thru ice surface
+      IF( iom_use('qt_oce'     ) )   CALL iom_put( 'qt_oce'     ,      ( qsr_oce + qns_oce ) * ( 1._wp - at_i_b ) + qemp_oce )
+      IF( iom_use('qt_ice'     ) )   CALL iom_put( 'qt_ice'     , SUM( ( qns_ice + qsr_ice ) * a_i_b, dim=3 )     + qemp_ice )
+      IF( iom_use('qt_oce_ai'  ) )   CALL iom_put( 'qt_oce_ai'  , qt_oce_ai * tmask(:,:,1)                                   )   ! total heat flux at the ocean   surface: interface oce-(ice+atm)
+      IF( iom_use('qt_atm_oi'  ) )   CALL iom_put( 'qt_atm_oi'  , qt_atm_oi * tmask(:,:,1)                                   )   ! total heat flux at the oce-ice surface: interface atm-(ice+oce)
+      IF( iom_use('qemp_oce'   ) )   CALL iom_put( 'qemp_oce'   , qemp_oce                                                   )   ! Downward Heat Flux from E-P over ocean
+      IF( iom_use('qemp_ice'   ) )   CALL iom_put( 'qemp_ice'   , qemp_ice                                                   )   ! Downward Heat Flux from E-P over ice
 
       ! heat fluxes from ice transformations
       !                            ! hfxdhc = hfxbog + hfxbom + hfxsum + hfxopw + hfxdif + hfxsnw - ( hfxthd + hfxdyn + hfxres + hfxsub + hfxspr )
@@ -310,8 +291,8 @@ CONTAINS
       IF( iom_use('hfxcndbot'  ) )   CALL iom_put( 'hfxcndbot'  , SUM( qcn_ice_bot * a_i_b, dim=3 ) )   ! Bottom conduction flux
       IF( iom_use('hfxcndtop'  ) )   CALL iom_put( 'hfxcndtop'  , SUM( qcn_ice_top * a_i_b, dim=3 ) )   ! Surface conduction flux
       IF( iom_use('hfxmelt'    ) )   CALL iom_put( 'hfxmelt'    , SUM( qml_ice     * a_i_b, dim=3 ) )   ! Surface melt flux
-      IF( iom_use('hfxldmelt'  ) )   CALL iom_put( 'hfxldmelt'  ,      fhld        * at_i_b         )   ! Heat in lead for ice melting
-   IF( iom_use('hfxldgrow'  ) )   CALL iom_put( 'hfxldgrow'  ,      qlead       * r1_rdtice      )   ! Heat in lead for ice growth
+      IF( iom_use('hfxldmelt'  ) )   CALL iom_put( 'hfxldmelt'  ,      fhld        * at_i_b         )   ! Heat in lead for ice melting 
+      IF( iom_use('hfxldgrow'  ) )   CALL iom_put( 'hfxldgrow'  ,      qlead       * r1_Dt_ice      )   ! Heat in lead for ice growth
 
       ! controls
       !---------
@@ -366,7 +347,7 @@ CONTAINS
          WRITE(numout,*)'~~~~~~~~~~~~~~'
       ENDIF
 
-      zrhoco = rau0 * rn_cio
+      zrhoco = rho0 * rn_cio
       !
       IF( MOD( kt-1, nn_fsbc ) == 0 ) THEN     !==  Ice time-step only  ==!   (i.e. surface module time-step)
          DO_2D( 0, 0, 0, 0 )                          !* update the modulus of stress at ocean surface (T-point)
@@ -389,7 +370,7 @@ CONTAINS
       !                                      !==  every ocean time-step  ==!
       IF ( ln_drgice_imp ) THEN
          ! Save drag with right sign to update top drag in the ocean implicit friction
-         rCdU_ice(:,:) = -r1_rau0 * tmod_io(:,:) * at_i(:,:) * tmask(:,:,1)
+         rCdU_ice(:,:) = -r1_rho0 * tmod_io(:,:) * at_i(:,:) * tmask(:,:,1)
          zflagi = 0._wp
       ELSE
          zflagi = 1._wp
@@ -402,8 +383,8 @@ CONTAINS
          zat_v  = ( at_i(ji,jj) * tmask(ji,jj,1) + at_i (ji  ,jj+1  ) * tmask(ji  ,jj+1,1) )  &
             &     / MAX( 1.0_wp , tmask(ji,jj,1) + tmask(ji  ,jj+1,1) )
          !                                                   ! linearized quadratic drag formulation
-         zutau_ice   = 0.5_wp * ( tmod_io(ji,jj) + tmod_io(ji+1,jj) ) * ( u_ice(ji,jj) - zflagi * pu_oce(ji,jj) )
-         zvtau_ice   = 0.5_wp * ( tmod_io(ji,jj) + tmod_io(ji,jj+1) ) * ( v_ice(ji,jj) - zflagi * pv_oce(ji,jj) )
+         zutau_ice   = 0.5_wp * ( tmod_io(ji,jj) + tmod_io(ji+1,jj) ) * ( u_ice(ji,jj) - pu_oce(ji,jj) )
+         zvtau_ice   = 0.5_wp * ( tmod_io(ji,jj) + tmod_io(ji,jj+1) ) * ( v_ice(ji,jj) - pv_oce(ji,jj) )
          !                                                   ! stresses at the ocean surface
          utau(ji,jj) = ( 1._wp - zat_u ) * utau_oce(ji,jj) + zat_u * zutau_ice
          vtau(ji,jj) = ( 1._wp - zat_v ) * vtau_oce(ji,jj) + zat_v * zvtau_ice
@@ -461,19 +442,16 @@ CONTAINS
             id1 = iom_varid( numrir, 'snwice_mass' , ldstop = .FALSE. )
             !
             IF( id1 > 0 ) THEN                       ! fields exist
-               CALL iom_get( numrir, jpdom_autoglo, 'snwice_mass'  , snwice_mass   )
-               CALL iom_get( numrir, jpdom_autoglo, 'snwice_mass_b', snwice_mass_b )
+               CALL iom_get( numrir, jpdom_auto, 'snwice_mass'  , snwice_mass   )
+               CALL iom_get( numrir, jpdom_auto, 'snwice_mass_b', snwice_mass_b )
             ELSE                                     ! start from rest
                IF(lwp) WRITE(numout,*) '   ==>>   previous run without snow-ice mass output then set it'
-               snwice_mass  (:,:) = tmask(:,:,1) * ( rhos * vt_s(:,:) + rhoi * vt_i(:,:) &
-                                                &  + rhow * (vt_ip(:,:) + vt_il(:,:))  )
+               snwice_mass  (:,:) = tmask(:,:,1) * ( rhos * vt_s(:,:) + rhoi * vt_i(:,:) )
                snwice_mass_b(:,:) = snwice_mass(:,:)
             ENDIF
          ELSE                                   !* Start from rest
-!JC: I think this is useless with what is now done in ice_istate
             IF(lwp) WRITE(numout,*) '   ==>>   start from rest: set the snow-ice mass'
-            snwice_mass  (:,:) = tmask(:,:,1) * ( rhos * vt_s(:,:) + rhoi * vt_i(:,:) &
-                                             &  + rhow * (vt_ip(:,:) + vt_il(:,:))  )
+            snwice_mass  (:,:) = tmask(:,:,1) * ( rhos * vt_s(:,:) + rhoi * vt_i(:,:) )
             snwice_mass_b(:,:) = snwice_mass(:,:)
          ENDIF
          !
