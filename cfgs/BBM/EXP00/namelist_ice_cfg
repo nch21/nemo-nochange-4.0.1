@@ -42,6 +42,9 @@
 !------------------------------------------------------------------------------
 &namdyn_rdgrft  !   Ice ridging/rafting
 !------------------------------------------------------------------------------
+ln_str_H79       = .true.          !  ice strength param.: Hibler_79   => P = pstar*<h>*exp(-c_rhg*A)                      
+
+      
 /
 !------------------------------------------------------------------------------
 &namdyn_rhg     !   Ice rheology
@@ -97,6 +100,10 @@
 !------------------------------------------------------------------------------
 &namthd_da      !   Ice lateral melting
 !------------------------------------------------------------------------------
+ rn_beta          =   0.3           !  coef. beta for lateral melting param. Recommended range=[0.8-1.2]
+                                      !   => decrease = more melt and melt peaks toward higher concentration (A~0.5 for beta=1 ; A~0.8 for beta=0.2)
+                                      !      0.3 = best fit for western Fram Strait and Antarctica
+                                      !      1.4 = best fit for eastern Fram Strait     
 /
 !------------------------------------------------------------------------------
 &namthd_do      !   Ice growth in open water
@@ -113,30 +120,12 @@
 !------------------------------------------------------------------------------
 &namini         !   Ice initialization
 !------------------------------------------------------------------------------
-   ln_iceini        = .true.          !  activate ice initialization (T) or not (F)
-   nn_iceini_file   = 0      !     0 = Initialise sea ice based on SSTs
-                                      !     1 = Initialise sea ice from single category netcdf file
-                                      !     2 = Initialise sea ice from multi category restart file
+   ln_iceini        = .true.
    rn_thres_sst     =   2.0           !  max temp. above Tfreeze with initial ice = (sst - tfreeze)
-   rn_hti_ini_n     =   1.5           !  initial ice thickness       (m), North
-   rn_hts_ini_n     =   0.3           !  initial snow thickness      (m), North
-   rn_ati_ini_n     =   1.0           !  initial ice concentration   (-), North
-   rn_dmg_ini_n     =   0.0           !  initial ice damage          (-), North  (if `ln_rhg_BBM`!)
-   rn_dmg_ini_s     =   0.0           !        "            "             South  (if `ln_rhg_BBM`!)
-   !
-   ! -- for nn_iceini_file = 1
-   !       !  file name       ! frequency (hours) !  variable   ! time interp.!  clim  ! 'yearly'/ ! weights filename ! rotation ! land/sea mask !
-   !       !                  !  (if <0  months)  !    name     !   (logical) !  (T/F) ! 'monthly' !                  ! pairing  !    filename   !
-   sn_hti = 'Ice_initialization_19970215.nc', -12. ,'hti'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_hts = 'Ice_initialization_19970215.nc', -12. ,'hts'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_ati = 'Ice_initialization_19970215.nc', -12. ,'ati'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_smi = 'NOT USED'                     , -12. ,'smi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_tmi = 'NOT USED'                     , -12. ,'tmi'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_tsu = 'NOT USED'                     , -12. ,'tsu'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   sn_tms = 'NOT USED'                     , -12. ,'tms'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   ! BBM:
-   sn_dmg = 'Ice_initialization_19970215.nc', -12. ,'dmg'   ,  .false.  , .true., 'yearly'  , '' , '', ''
-   cn_dir='./'
+   rn_hti_ini_n     =   0.0           !  initial ice thickness       (m), North
+   rn_hti_ini_s     =   0.5           !        "            "             South
+   rn_hts_ini_n     =   0.0           !  initial snow thickness      (m), North
+   rn_hts_ini_s     =   0.0           !        "            "             South
 /
 !------------------------------------------------------------------------------
 &namalb         !   albedo parameters
