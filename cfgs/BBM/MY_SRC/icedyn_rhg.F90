@@ -16,9 +16,8 @@ MODULE icedyn_rhg
    USE dom_oce        ! ocean space and time domain
    USE ice            ! sea-ice: variables
    USE icedyn_rhg_evp ! sea-ice: EVP rheology
-   !USE icedyn_rhg_eap ! sea-ice: EAP rheology
-   !USE icedyn_rhg_vp  ! sea-ice: VP  rheology
-   USE icedyn_rhg_bbm ! sea-ice: BBM rheology !#bbm
+   USE icedyn_rhg_eap ! sea-ice: EAP rheology
+   USE icedyn_rhg_vp  ! sea-ice: VP  rheology
    USE icectl         ! sea-ice: control prints
    !
    USE in_out_manager ! I/O manager
@@ -32,14 +31,11 @@ MODULE icedyn_rhg
    PUBLIC   ice_dyn_rhg        ! called by icestp.F90
    PUBLIC   ice_dyn_rhg_init   ! called by icestp.F90
 
-
-
    INTEGER ::              nice_rhg   ! choice of the type of rheology
    !                                        ! associated indices:
    INTEGER, PARAMETER ::   np_rhgEVP = 1   ! EVP rheology
    INTEGER, PARAMETER ::   np_rhgEAP = 2   ! EAP rheology
    INTEGER, PARAMETER ::   np_rhgVP  = 3   ! VP rheology
-   INTEGER, PARAMETER ::   np_rhgBBM = 4   ! BBM rheology
 
    !
    !!----------------------------------------------------------------------
@@ -85,25 +81,18 @@ CONTAINS
          !                             !------------------------!
       CASE( np_rhgVP  )                ! Viscous-Plastic        !
          !                             !------------------------!
-         !CALL ice_dyn_rhg_vp ( kt, shear_i, divu_i, delta_i )
+         CALL ice_dyn_rhg_vp ( kt, shear_i, divu_i, delta_i )
          !
          !                             !----------------------------!
       CASE( np_rhgEAP )                ! Elasto-Anisotropic-Plastic !
          !                             !----------------------------!
-         !CALL ice_dyn_rhg_eap( kt, Kmm, stress1_i, stress2_i, stress12_i, shear_i, divu_i, delta_i, aniso_11, aniso_12, rdg_conv )
-         !
-         !                             !-------------------------!
-      CASE( np_rhgBBM )                ! Brittle Bingham Maxwell !
-         !                             !-------------------------!
-         CALL ice_dyn_rhg_bbm( kt, Kmm, stress1_i, stress2_i, stress12_i, shear_i, divu_i )
-         !
+         CALL ice_dyn_rhg_eap( kt, Kmm, stress1_i, stress2_i, stress12_i, shear_i, divu_i, delta_i, aniso_11, aniso_12, rdg_conv )
       END SELECT
       !
       IF( lrst_ice ) THEN
          IF( ln_rhg_EVP )   CALL rhg_evp_rst( 'WRITE', kt ) !* write EVP fields in the restart file
-         !IF( ln_rhg_EAP )   CALL rhg_eap_rst( 'WRITE', kt ) !* write EAP fields in the restart file
+         IF( ln_rhg_EAP )   CALL rhg_eap_rst( 'WRITE', kt ) !* write EAP fields in the restart file
          ! MV note: no restart needed for VP as there is no time equation for stress tensor
-         IF( ln_rhg_BBM )   CALL rhg_bbm_rst( 'WRITE', kt )
       ENDIF
       !
       ! controls
@@ -131,10 +120,6 @@ CONTAINS
       INTEGER ::   ios, ioptio   ! Local integer output status for namelist read
       !!
       NAMELIST/namdyn_rhg/  ln_rhg_EVP, ln_aEVP, ln_rhg_EAP, rn_creepl, rn_ecc , nn_nevp, rn_relast, nn_rhg_chkcvg, &  !-- evp
-         &                  ln_rhg_BBM, ln_idealized, rn_Nref, rn_E0, rn_eta0, rn_P0, rn_kth, nn_nbbm, nn_d_adv,    &  !-- bbm
-         &                  rn_crndg, ln_boost_CN_coast, rn_max_CN_coast, ln_boost_CN_high_dmg, rn_max_CN_dmg,      &  !-- bbm
-         &                  rn_dmg_max, rn_C0, rn_alrlx, rn_btrlx, rn_c_ref, rn_l_ref, ln_damaged_E,                &  !-- bbm
-         &                  ln_tame_ini_ws, rn_half_tame,                                                           &  !-- bbm
          &                  ln_rhg_VP, nn_vp_nout, nn_vp_ninn, nn_vp_chkcvg                                            !-- vp
       !!-------------------------------------------------------------------
       !
@@ -149,7 +134,6 @@ CONTAINS
          WRITE(numout,*) 'ice_dyn_rhg_init: ice parameters for ice dynamics '
          WRITE(numout,*) '~~~~~~~~~~~~~~~'
          WRITE(numout,*) '   Namelist : namdyn_rhg:'
-         IF( ln_rhg_EVP .OR. ln_rhg_EAP ) THEN
          WRITE(numout,*) '      rheology EVP (icedyn_rhg_evp)                        ln_rhg_EVP    = ', ln_rhg_EVP
          WRITE(numout,*) '         use adaptive EVP (aEVP)                           ln_aEVP       = ', ln_aEVP
          WRITE(numout,*) '         creep limit                                       rn_creepl     = ', rn_creepl ! also used by vp
@@ -157,50 +141,10 @@ CONTAINS
          WRITE(numout,*) '         number of iterations for subcycling               nn_nevp       = ', nn_nevp
          WRITE(numout,*) '         ratio of elastic timescale over ice time step     rn_relast     = ', rn_relast
          WRITE(numout,*) '         check convergence of rheology                     nn_rhg_chkcvg = ', nn_rhg_chkcvg
-         ENDIF
-         IF( ln_rhg_VP ) THEN
          WRITE(numout,*) '      rheology VP   (icedyn_rhg_VP)                        ln_rhg_VP     = ', ln_rhg_VP
          WRITE(numout,*) '         number of outer iterations                        nn_vp_nout    = ', nn_vp_nout
          WRITE(numout,*) '         number of inner iterations                        nn_vp_ninn    = ', nn_vp_ninn
          WRITE(numout,*) '         iteration step for convergence check              nn_vp_chkcvg  = ', nn_vp_chkcvg
-         ENDIF
-         IF( ln_rhg_BBM ) THEN
-            IF(.NOT.ln_damage) CALL ctl_stop( 'ice_dyn_rhg_init: BBM rheology => set `ln_damage=.true` in `nampar`' )
-            WRITE(numout,*) '    rheology BBM (icedyn_rhg_bbm)                          ln_rhg_BBM    = ', ln_rhg_BBM !#bbm
-            !IF(ln_MEB) WRITE(numout,*) '         will use the MEB rheology variant rather than pure BBM!'
-            IF(ln_idealized) WRITE(numout,*) '         disregarding Coriolis & SSH terms in the momentum eq. !' !#bbm
-            WRITE(numout,*) '         max. compressive stress at the ref. scale [Pa]    rn_Nref       = ', rn_Nref  !#bbm
-            WRITE(numout,*) '         elasticity of undamaged ice [Pa]                  rn_E0         = ', rn_E0  !#bbm
-            WRITE(numout,*) '         viscosity of undamaged ice  [Pa.s]                rn_eta0       = ', rn_eta0  !#bbm
-            WRITE(numout,*) '         compression factor "P" at play in "P_max"         rn_P0         = ', rn_P0  !#bbm
-            WRITE(numout,*) '         healing constant for damage                       rn_kth        = ', rn_kth  !#bbm
-            WRITE(numout,*) '         number of iterations for subcycling               nn_nbbm       = ', nn_nbbm !#bbm
-            WRITE(numout,*) '         advection of damage and stresses @T & @F          nn_d_adv  = ', nn_d_adv !#bbm
-            IF( nn_d_adv==0 ) WRITE(numout,*) '           => no advection at all!' !#bbm
-            IF( nn_d_adv==1 ) WRITE(numout,*) '           => advection of damage only' !#bbm
-            IF( nn_d_adv >1 ) WRITE(numout,*) '           => advection of damage + stress tensors' !#bbm
-            IF( nn_d_adv==3 ) WRITE(numout,*) '             ==> add "lower-convected" term in tensor advection' !#bbm
-            IF( nn_d_adv==4 ) WRITE(numout,*) '             ==> add "upper-convected" term in tensor advection' !#bbm
-            IF( nn_d_adv >4 ) CALL ctl_stop( 'ice_dyn_rhg_init: valid choices for `nn_d_adv` span 0 to 4' )
-            WRITE(numout,*) '         cross-nudging coeff. for stress tensor            rn_crndg      = ', rn_crndg !#bbm
-            IF(rn_crndg>0._wp) THEN
-               WRITE(numout,*) '      => boost the CN at the coastline?             ln_boost_CN_coast = ', ln_boost_CN_coast
-               IF(ln_boost_CN_coast) WRITE(numout,*) '                   ==>          rn_max_CN_coast = ', rn_max_CN_coast
-               WRITE(numout,*) '      => boost the CN where damage is high?      ln_boost_CN_high_dmg = ', ln_boost_CN_high_dmg
-               IF(ln_boost_CN_high_dmg) WRITE(numout,*) '                   ==>         rn_max_CN_dmg = ', rn_max_CN_dmg
-            ENDIF
-            WRITE(numout,*) '         ceiling value to cap damage with                  rn_dmg_max    = ', rn_dmg_max !#bbm
-            WRITE(numout,*) '         compaction paramater (coeff. of exponential)      rn_C0         = ', rn_C0 !#bbm
-            WRITE(numout,*) '         `alpha` of viscosity (dep. on `A` and `h`)        rn_alrlx      = ', rn_alrlx !#bbm
-            WRITE(numout,*) '         `alpha`-like of Olason/Boutin in `lamdda`         rn_btrlx      = ', rn_btrlx !#bbm
-            WRITE(numout,*) '         ice cohesion value at the lab scale               rn_c_ref      = ', rn_c_ref !#bbm
-            WRITE(numout,*) '         scaling parameter for cohesion                    rn_l_ref      = ', rn_l_ref  !#bbm
-            WRITE(numout,*) '         use damaged elasticity in MC test                 ln_damaged_E  = ', ln_damaged_E !#bbm
-            WRITE(numout,*) '         gently increase wind stress from 0 if cold start  ln_tame_ini_ws= ', ln_tame_ini_ws !#bbm
-            IF( ln_tame_ini_ws ) &
-               & WRITE(numout,*) '         => delay (h) at which half of increase done       rn_half_tame  = ', rn_half_tame !#bbm
-         END IF
-
          IF( ln_rhg_EVP ) THEN
             IF    ( nn_rhg_chkcvg == 0 ) THEN   ;   WRITE(numout,*) '         no check cvg'
             ELSEIF( nn_rhg_chkcvg == 1 ) THEN   ;   WRITE(numout,*) '         check cvg at the main time step'
@@ -210,22 +154,15 @@ CONTAINS
          WRITE(numout,*) '      rheology EAP (icedyn_rhg_eap)                        ln_rhg_EAP = ', ln_rhg_EAP
       ENDIF
       !
-
       !                             !== set the choice of ice advection ==!
       ioptio = 0
       IF( ln_rhg_EVP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEVP    ;   ENDIF
-      !IF( ln_rhg_EAP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEAP    ;   ENDIF
-      !IF( ln_rhg_VP  ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgVP     ;   ENDIF
-      IF( ln_rhg_BBM ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgBBM    ;   ENDIF
+      IF( ln_rhg_EAP ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgEAP    ;   ENDIF
+      IF( ln_rhg_VP  ) THEN   ;   ioptio = ioptio + 1   ;   nice_rhg = np_rhgVP     ;   ENDIF
       IF( ioptio /= 1 )   CALL ctl_stop( 'ice_dyn_rhg_init: choose one and only one ice rheology' )
       !
       IF( ln_rhg_EVP  )   CALL rhg_evp_rst( 'READ' )  !* read or initialize all required files
-      !IF( ln_rhg_EAP  )   CALL rhg_eap_rst( 'READ' )  !* read or initialize all required files
-
-      IF( ln_rhg_BBM  ) THEN
-         CALL ice_dyn_rhg_bbm_init() !* allocation of BBM-specific arrays (LB: needs to be done before reading restarts...)
-         CALL rhg_bbm_rst( 'READ' )  !* read or initialize all required files
-      END IF
+      IF( ln_rhg_EAP  )   CALL rhg_eap_rst( 'READ' )  !* read or initialize all required files
       ! no restart for VP as there is no explicit time dependency in the equation
       !
    END SUBROUTINE ice_dyn_rhg_init
