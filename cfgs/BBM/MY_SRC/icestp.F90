@@ -151,11 +151,7 @@ CONTAINS
          ! It provides the following fields used in sea ice model:
          !    utau_ice, vtau_ice = surface ice stress [N/m2]
          !------------------------------------------------!
-         IF( ln_rhg_BBM ) THEN
-                                        CALL ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice, utauVice=utauVice, vtauUice=vtauUice )
-         ELSE
                                         CALL ice_sbc_tau( kt, ksbc, utau_ice, vtau_ice )
-         END IF
          !-------------------------------------!
          ! --- ice dynamics and advection  --- !
          !-------------------------------------!
@@ -316,7 +312,7 @@ CONTAINS
       INTEGER  ::   ios                 ! Local integer
       !!
       NAMELIST/nampar/ jpl, nlay_i, nlay_s, ln_virtual_itd, ln_icedyn, ln_icethd, rn_amax_n, rn_amax_s,  &
-         &             cn_icerst_in, cn_icerst_indir, cn_icerst_out, cn_icerst_outdir, ln_damage
+         &             cn_icerst_in, cn_icerst_indir, cn_icerst_out, cn_icerst_outdir
       !!-------------------------------------------------------------------
       !
       READ  ( numnam_ice_ref, nampar, IOSTAT = ios, ERR = 901)
@@ -338,7 +334,6 @@ CONTAINS
          WRITE(numout,*) '         Ice thermodynamics (T) or not (F)                   ln_icethd = ', ln_icethd
          WRITE(numout,*) '         maximum ice concentration for NH                              = ', rn_amax_n
          WRITE(numout,*) '         maximum ice concentration for SH                              = ', rn_amax_s
-         WRITE(numout,*) '         use of "ice damage" tracer (for brittle rheologies) ln_damage = ', ln_damage
       ENDIF
       !                                        !--- change max ice concentration for roundoff errors
       rn_amax_n = MIN( rn_amax_n, 1._wp - epsi10 )
@@ -354,10 +349,10 @@ CONTAINS
          CALL ctl_stop( 'STOP', 'par_init: in coupled mode, nn_cats_cpl should be either 1 or jpl' )
       ENDIF
       !
-      rDt_ice   = REAL(nn_fsbc) * rn_rdt          !--- sea-ice timestep and its inverse
-      r1_rdtice = 1._wp / rDt_ice
+      rDt_ice   = REAL(nn_fsbc) * rn_Dt          !--- sea-ice timestep and its inverse
+      r1_Dt_ice = 1._wp / rDt_ice
       IF(lwp) WRITE(numout,*)
-      IF(lwp) WRITE(numout,*) '      ice timestep rDt_ice = nn_fsbc*rn_rdt = ', rDt_ice
+      IF(lwp) WRITE(numout,*) '      ice timestep rDt_ice = nn_fsbc*rn_Dt = ', rDt_ice
       !
       r1_nlay_i = 1._wp / REAL( nlay_i, wp )   !--- inverse of nlay_i and nlay_s
       r1_nlay_s = 1._wp / REAL( nlay_s, wp )
@@ -380,7 +375,6 @@ CONTAINS
       v_ip_b(:,:,:)   = v_ip(:,:,:)     ! pond volume
       v_il_b(:,:,:)   = v_il(:,:,:)     ! pond lid volume
       sv_i_b(:,:,:)   = sv_i(:,:,:)     ! salt content
-      oa_i_b(:,:,:)   = oa_i(:,:,:)     ! areal age content
       e_s_b (:,:,:,:) = e_s (:,:,:,:)   ! snow thermal energy
       e_i_b (:,:,:,:) = e_i (:,:,:,:)   ! ice thermal energy
       WHERE( a_i_b(:,:,:) >= epsi20 )
@@ -409,7 +403,7 @@ CONTAINS
       INTEGER  ::   ji, jj, jl      ! dummy loop index
       !!----------------------------------------------------------------------
 
-      DO_2D( nn_hls, nn_hls, nn_hls, nn_hls )   ! needed for (at least) diag_adv_mass -> to be removed
+      DO_2D( nn_hls, nn_hls, nn_hls, nn_hls )   ! needed for (at least) diag_adv_mass -> to be removed 
          sfx    (ji,jj) = 0._wp   ;
          sfx_bri(ji,jj) = 0._wp   ;   sfx_lam(ji,jj) = 0._wp
          sfx_sni(ji,jj) = 0._wp   ;   sfx_opw(ji,jj) = 0._wp
@@ -489,16 +483,16 @@ CONTAINS
       IF( ln_icediachk .OR. iom_use('hfxdhc') ) THEN
          !
          diag_heat(:,:) = diag_heat(:,:) &
-            &             - SUM(SUM( e_i (:,:,1:nlay_i,:) - e_i_b (:,:,1:nlay_i,:), dim=4 ), dim=3 ) * r1_rdtice &
-            &             - SUM(SUM( e_s (:,:,1:nlay_s,:) - e_s_b (:,:,1:nlay_s,:), dim=4 ), dim=3 ) * r1_rdtice
+            &             - SUM(SUM( e_i (:,:,1:nlay_i,:) - e_i_b (:,:,1:nlay_i,:), dim=4 ), dim=3 ) * r1_Dt_ice &
+            &             - SUM(SUM( e_s (:,:,1:nlay_s,:) - e_s_b (:,:,1:nlay_s,:), dim=4 ), dim=3 ) * r1_Dt_ice
          diag_sice(:,:) = diag_sice(:,:) &
-            &             + SUM(     sv_i(:,:,:)          - sv_i_b(:,:,:)                  , dim=3 ) * r1_rdtice * rhoi
+            &             + SUM(     sv_i(:,:,:)          - sv_i_b(:,:,:)                  , dim=3 ) * r1_Dt_ice * rhoi
          diag_vice(:,:) = diag_vice(:,:) &
-            &             + SUM(     v_i (:,:,:)          - v_i_b (:,:,:)                  , dim=3 ) * r1_rdtice * rhoi
+            &             + SUM(     v_i (:,:,:)          - v_i_b (:,:,:)                  , dim=3 ) * r1_Dt_ice * rhoi
          diag_vsnw(:,:) = diag_vsnw(:,:) &
-            &             + SUM(     v_s (:,:,:)          - v_s_b (:,:,:)                  , dim=3 ) * r1_rdtice * rhos
+            &             + SUM(     v_s (:,:,:)          - v_s_b (:,:,:)                  , dim=3 ) * r1_Dt_ice * rhos
          diag_vpnd(:,:) = diag_vpnd(:,:) &
-            &             + SUM(     v_ip + v_il          - v_ip_b - v_il_b                , dim=3 ) * r1_rdtice * rhow
+            &             + SUM(     v_ip + v_il          - v_ip_b - v_il_b                , dim=3 ) * r1_Dt_ice * rhow
          !
          IF( kn == 2 )    CALL iom_put ( 'hfxdhc' , diag_heat )   ! output of heat trend
          !
@@ -507,10 +501,10 @@ CONTAINS
       ! --- trends of concentration (used for simip outputs)
       IF( iom_use('afxdyn') .OR. iom_use('afxthd') .OR. iom_use('afxtot') ) THEN
          !
-         diag_aice(:,:) = diag_aice(:,:) + SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_rdtice
+         diag_aice(:,:) = diag_aice(:,:) + SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_Dt_ice
          !
          IF( kn == 1 )   CALL iom_put( 'afxdyn' , diag_aice )                                           ! dyn trend
-         IF( kn == 2 )   CALL iom_put( 'afxthd' , SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_rdtice ) ! thermo trend
+         IF( kn == 2 )   CALL iom_put( 'afxthd' , SUM( a_i(:,:,:) - a_i_b(:,:,:), dim=3 ) * r1_Dt_ice ) ! thermo trend
          IF( kn == 2 )   CALL iom_put( 'afxtot' , diag_aice )                                           ! total trend
          !
       ENDIF
