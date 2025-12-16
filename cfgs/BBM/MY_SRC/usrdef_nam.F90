@@ -13,7 +13,7 @@ MODULE usrdef_nam
    !!   usr_def_nam   : read user defined namelist and set global domain size
    !!   usr_def_hgr   : initialize the horizontal mesh 
    !!----------------------------------------------------------------------
-   USE dom_oce       ! ocean space and time domain
+   USE dom_oce  , ONLY: nimpp, njmpp       ! ocean space and time domain
    USE par_oce        ! ocean space and time domain
    USE phycst         ! physical constants
    !
@@ -39,10 +39,10 @@ MODULE usrdef_nam
    !!----------------------------------------------------------------------
 CONTAINS
 
-   SUBROUTINE usr_def_nam( cd_cfg, kk_cfg, kpi, kpj, kpk, ldIperio, ldJperio, ldNFold, cdNFtype )
+   SUBROUTINE  usr_def_nam( cd_cfg, kk_cfg, kpi, kpj, kpk, kperio )
       !!----------------------------------------------------------------------
       !!                     ***  ROUTINE dom_nam  ***
-      !!
+      !!                    
       !! ** Purpose :   read user defined namelist and define the domain size
       !!
       !! ** Method  :   read in namusr_def containing all the user specific namelist parameter
@@ -51,19 +51,17 @@ CONTAINS
       !!
       !! ** input   : - namusr_def namelist found in namelist_cfg
       !!----------------------------------------------------------------------
-      CHARACTER(len=*), INTENT(out) ::   cd_cfg               ! configuration name
-      INTEGER         , INTENT(out) ::   kk_cfg               ! configuration resolution
-      INTEGER         , INTENT(out) ::   kpi, kpj, kpk        ! global domain sizes
-      LOGICAL         , INTENT(out) ::   ldIperio, ldJperio   ! i- and j- periodicity
-      LOGICAL         , INTENT(out) ::   ldNFold              ! North pole folding
-      CHARACTER(len=1), INTENT(out) ::   cdNFtype             ! Folding type: T or F
+      CHARACTER(len=*), INTENT(out) ::   cd_cfg          ! configuration name
+      INTEGER         , INTENT(out) ::   kk_cfg          ! configuration resolution
+      INTEGER         , INTENT(out) ::   kpi, kpj, kpk   ! global domain sizes 
+      INTEGER         , INTENT(out) ::   kperio          ! lateral global domain b.c. 
       !
       INTEGER ::   ios   ! Local integer
       !!
       NAMELIST/namusr_def/ nn_GYRE, ln_bench, jpkglo
       !!----------------------------------------------------------------------
       !
-      !REWIND( numnam_cfg )          ! Namelist namusr_def (exist in namelist_cfg only)
+      REWIND( numnam_cfg )          ! Namelist namusr_def (exist in namelist_cfg only)
       READ  ( numnam_cfg, namusr_def, IOSTAT = ios, ERR = 902 )
 902   IF( ios /= 0 )   CALL ctl_nam ( ios , 'namusr_def in configuration namelist' )
       !
@@ -88,9 +86,7 @@ write(*,*) "nghost=",nghost
 #endif
       kpk = jpkglo
       !                             ! Set the lateral boundary condition of the global domain
-      !kperio = 1                    ! GYRE configuration : closed domain
-      ldIperio = .TRUE.   ;   ldJperio = .FALSE.   ! GYRE configuration : closed domain
-      ldNFold  = .FALSE.   ;   cdNFtype = '-'
+      kperio = 1                    ! GYRE configuration : closed domain
       !
       !                             ! control print
       IF(lwp) THEN
@@ -110,7 +106,7 @@ write(*,*) "nghost=",nghost
 #endif
          WRITE(numout,*) '      number of model levels                              jpkglo = ', kpk
          WRITE(numout,*) '   '
-
+         WRITE(numout,*) '   Lateral b.c. of the global domain set to closed        jperio = ', kperio
       ENDIF
       !
    END SUBROUTINE usr_def_nam

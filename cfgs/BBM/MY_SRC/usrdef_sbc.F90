@@ -45,7 +45,7 @@ MODULE usrdef_sbc
    !!----------------------------------------------------------------------
 CONTAINS
 
-   SUBROUTINE usrdef_sbc_oce( kt,Kbb )
+   SUBROUTINE usrdef_sbc_oce( kt)
       !!---------------------------------------------------------------------
       !!                    ***  ROUTINE usrdef_sbc  ***
       !!              
@@ -60,7 +60,7 @@ CONTAINS
       !!
       !! Reference : Hazeleger, W., and S. Drijfhout, JPO, 30, 677-695, 2000.
       !!----------------------------------------------------------------------
-      INTEGER, INTENT(in) ::   kt ,Kbb  ! ocean time step
+      INTEGER, INTENT(in) ::   kt  ! ocean time step
       !!
       INTEGER  ::   ji, jj                 ! dummy loop indices
       INTEGER  ::   zyear0                 ! initial year 

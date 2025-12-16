@@ -10,7 +10,6 @@ key_iomput
 key_isf
 key_linssh
 key_mpi2
-key_mpi_off
 key_mpp_mpi
 key_nemocice_decomp
 key_netcdf4
